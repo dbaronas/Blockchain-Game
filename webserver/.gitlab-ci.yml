@@ -21,9 +21,11 @@ cache: &global_cache
 build:
   stage: build_stage
   extends: .base-rules
+  before_script:
+    - cd webserver
   script:
     - "node --version"
-    - npm i /webserver
+    - npm i
   cache:
     <<: *global_cache
     policy: push
