@@ -39,4 +39,4 @@ deploy:
     <<: *global_cache
     policy: pull
   tags:
-    - local_runner
+    - webserver
