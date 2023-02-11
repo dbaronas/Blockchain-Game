@@ -5,6 +5,8 @@ stages:
 .base-rules:
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
+      changes:
+        - paths: 'webserver/*'
       when: always
     - if: '$CI_PIPELINE_SOURCE == "push"'
       when: never
@@ -19,11 +21,6 @@ cache: &global_cache
     - package-lock.json
 
 build:
-  only:
-    refs:
-      - branches
-    changes:
-      - webserver/*
   stage: build_stage
   extends: .base-rules
   before_script:
@@ -38,11 +35,6 @@ build:
     - local_runner
 
 deploy:
-  only:
-    refs:
-      - branches
-    changes:
-      - webserver/*
   stage: deploy_stage
   extends: .base-rules
   before_script:
