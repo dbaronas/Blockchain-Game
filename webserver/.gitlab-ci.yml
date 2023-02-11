@@ -23,7 +23,7 @@ build:
   extends: .base-rules
   script:
     - "node --version"
-    - npm i
+    - npm i /webserver
   cache:
     <<: *global_cache
     policy: push
