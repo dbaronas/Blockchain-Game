@@ -19,6 +19,11 @@ cache: &global_cache
     - package-lock.json
 
 build:
+  only:
+    refs:
+      - branches
+    changes:
+      - webserver/*
   stage: build_stage
   extends: .base-rules
   before_script:
@@ -26,9 +31,6 @@ build:
   script:
     - "node --version"
     - npm i
-  only:
-    changes:
-      - webserver/*
   cache:
     <<: *global_cache
     policy: push
@@ -36,15 +38,17 @@ build:
     - local_runner
 
 deploy:
+  only:
+    refs:
+      - branches
+    changes:
+      - webserver/*
   stage: deploy_stage
   extends: .base-rules
   before_script:
     - cd webserver
   script:
     - "pm2 start ecosystem.config.js"
-  only:
-    changes:
-      - webserver/*
   cache:
     <<: *global_cache
     policy: pull
