@@ -26,6 +26,11 @@ build:
   script:
     - "node --version"
     - npm i
+  only:
+    refs:
+      - branches
+    changes:
+      - webserver/*
   cache:
     <<: *global_cache
     policy: push
@@ -39,6 +44,11 @@ deploy:
     - cd webserver
   script:
     - "pm2 start ecosystem.config.js"
+  only:
+    refs:
+      - branches
+    changes:
+      - webserver/*
   cache:
     <<: *global_cache
     policy: pull
