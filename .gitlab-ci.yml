@@ -28,7 +28,7 @@ build:
     <<: *global_cache
     policy: push
   tags:
-    - local_runner
+    - webserver
 
 deploy:
   stage: deploy_stage
