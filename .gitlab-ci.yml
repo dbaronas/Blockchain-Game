@@ -27,8 +27,6 @@ build:
     - "node --version"
     - npm i
   only:
-    refs:
-      - master
     changes:
       - webserver/*
   cache:
@@ -45,8 +43,6 @@ deploy:
   script:
     - "pm2 start ecosystem.config.js"
   only:
-    refs:
-      - master
     changes:
       - webserver/*
   cache:
