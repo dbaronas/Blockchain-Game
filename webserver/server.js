@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const PORT = 3000
 
-app.get('/start', (req, res) => {
+app.get('/test', (req, res) => {
     res.send('TEST')
 })
 
