@@ -8,13 +8,20 @@ export default class BeginningScene extends Phaser.Scene {
     
     preload() {
         Player.preload(this)
+        this.inputKeys = this.input.keyboard.addKeys({
+            up: Phaser.Input.Keyboard.KeyCodes.W,
+            down: Phaser.Input.Keyboard.KeyCodes.S,
+            left: Phaser.Input.Keyboard.KeyCodes.A,
+            right: Phaser.Input.Keyboard.KeyCodes.D,
+            shift: Phaser.Input.Keyboard.KeyCodes.SHIFT,
+        })
         this.load.atlas('boy', 'assets/boy.png', 'assets/boy_atlas.json')
         this.load.image('tiles', 'assets/RPG Nature Tileset.png')
         this.load.tilemapTiledJSON('map', 'assets/tiledmap.json')
     }
     create() {
         let map = this.make.tilemap({ key: 'map' });
-        var tileset = map.addTilesetImage('RPG Nature Tileset', 'tiles', 16, 16);
+        var tileset = map.addTilesetImage('tileset', 'tiles', 32, 32);
         var ground = map.createLayer('ground', tileset, 0, 0);
         var water = map.createLayer('water', tileset, 0, 0);
         var fishing_zone = map.createLayer('fishingzone', tileset, 0, 0);
@@ -52,14 +59,6 @@ export default class BeginningScene extends Phaser.Scene {
                     otherPlayer.setPosition(playerInfo.x, playerInfo.y)
                 }
             })
-        })
-
-        this.inputKeys = this.input.keyboard.addKeys({
-            up: Phaser.Input.Keyboard.KeyCodes.W,
-            down: Phaser.Input.Keyboard.KeyCodes.S,
-            left: Phaser.Input.Keyboard.KeyCodes.A,
-            right: Phaser.Input.Keyboard.KeyCodes.D,
-            shift: Phaser.Input.Keyboard.KeyCodes.SHIFT,
         })
     }
 

@@ -5,6 +5,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.world.enable(this)
         this.scene.add.existing(this)
         this.body.setCircle(8, 16, 16)
+        this.setCollideWorldBounds(true)
     }
 
     static preload(scene) {
