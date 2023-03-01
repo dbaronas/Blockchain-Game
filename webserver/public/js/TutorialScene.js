@@ -17,9 +17,6 @@ export default class TutorialScene extends Phaser.Scene {
         const layer = map.createLayer('Tile Layer 1', tileset, 0, 0)
         this.player = new Player({scene:this, x:100, y:150, texture:'boy', frame:'96'})
         let testPlayer = new NPC({scene:this, x:100, y:100, texture:'boy', frame:'96'})
-        testPlayer.setImmovable(true).setSize(1, 1, true)
-        testPlayer.body.setCircle(6, 1, 1)
-        this.player.body.setCircle(6, 1, 1)
         testPlayer.update()
         this.physics.add.collider(this.player, testPlayer)
         this.inputKeys = this.input.keyboard.addKeys({
@@ -33,5 +30,9 @@ export default class TutorialScene extends Phaser.Scene {
 
     update() {
         this.player.update()
+        if(this.player.x > 412 && this.player.y > 412){
+            this.scene.stop(this).launch('BeginningScene')
+            //this.scene.start('BeginningScene')
+        }
     }
 }

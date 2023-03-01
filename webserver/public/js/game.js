@@ -6,7 +6,10 @@ const config = {
     parent: 'fisherman',
     width: 512,
 	  height: 512,
-    scene: [BeginningScene],
+    scene: [
+      TutorialScene,
+      BeginningScene
+    ],
     scale: {
       zoom: 1,
     },

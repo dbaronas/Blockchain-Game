@@ -14,14 +14,12 @@ export default class BeginningScene extends Phaser.Scene {
     }
     create() {
         let map = this.make.tilemap({ key: 'map' });
-        var tileset = map.addTilesetImage('tileset', 'tiles');
-        var ground = map.createStaticLayer('ground', tileset, 0, 0);
-        var water = map.createStaticLayer('water', tileset, 0, 0);
-        var fishing_zone = map.createStaticLayer('fishingzone', tileset, 0, 0);
+        var tileset = map.addTilesetImage('RPG Nature Tileset', 'tiles', 16, 16);
+        var ground = map.createLayer('ground', tileset, 0, 0);
+        var water = map.createLayer('water', tileset, 0, 0);
+        var fishing_zone = map.createLayer('fishingzone', tileset, 0, 0);
         water.setCollisionBetween(41, 42)
         let testPlayer = new NPC({scene:this, x:100, y:100, texture:'boy', frame:'96'})
-        testPlayer.setImmovable(true).setSize(1, 1, true)
-        testPlayer.body.setCircle(10, 15, 15)
         testPlayer.update()
 
         var self = this
@@ -31,7 +29,6 @@ export default class BeginningScene extends Phaser.Scene {
             Object.keys(players).forEach(function (id) {
                 if (players[id].playerId === self.socket.id) {
                     self.addPlayer(self, players[id])
-                    self.player.body.setCircle(10, 15, 15)
                     self.physics.add.collider(self.player, water)
                     self.physics.add.collider(self.player, testPlayer)
                 } else {
@@ -67,7 +64,7 @@ export default class BeginningScene extends Phaser.Scene {
     }
 
     addPlayer(self, playerInfo) {
-        self.player = new Player({scene:this, x: playerInfo.x, y: playerInfo.y, texture: 'player_male', frame: 'townsfolk_m_idle_1'})
+        self.player = new Player({scene:this, x: playerInfo.x, y: playerInfo.y, texture: 'boy', frame: '96'})
     }
 
     addOtherPlayers(self, playerInfo) {

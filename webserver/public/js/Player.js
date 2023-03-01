@@ -1,9 +1,10 @@
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(data) {
-        let {scene, x, y, texture, frame} = data
+        let {scene, x, y, texture, frame, collision} = data
         super(scene, x, y, texture, frame)
         this.scene.physics.world.enable(this)
         this.scene.add.existing(this)
+        this.body.setCircle(8, 16, 16)
     }
 
     static preload(scene) {
