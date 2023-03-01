@@ -4,15 +4,15 @@ import TutorialScene from "./TutorialScene.js"
 const config = {
     type: Phaser.AUTO,
     parent: 'fisherman',
-    width: 800,
-	  height: 608,
+    width: 512,
+	  height: 512,
     scene: [BeginningScene],
     scale: {
       zoom: 1,
     },
     physics: {
       default: 'arcade',
-      matter: {
+      arcade: {
         debug: true,
         gravity: {y: 0}
       }
