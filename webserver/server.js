@@ -25,8 +25,8 @@ var players = {}
 io.on('connection', function (socket) {
     console.log('a user connected: ', socket.id)
     players[socket.id] = {
-      x: 100,
-      y: 150,
+      x: 300,
+      y: 300,
       playerId: socket.id,
     }
     socket.emit('currentPlayers', players)
