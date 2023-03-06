@@ -1,4 +1,7 @@
 frontend:
+  tags: local_runner
+  script:
+    - echo frontend
   .base-rules:
     rules:
       - if: '$CI_COMMIT_BRANCH == "master"'
@@ -44,6 +47,9 @@ frontend:
     tags:
       - local_runner
 backend:
+  tags: local_runner2
+  script:
+    - echo backend
   .base-rules:
     rules:
       - if: '$CI_COMMIT_BRANCH == "master"'
@@ -66,7 +72,7 @@ backend:
     stage: build_stage
     extends: .base-rules
     before_script:
-      - cd webserver
+      - cd backend-webserver
     script:
       - "node --version"
       - npm i
@@ -80,7 +86,7 @@ backend:
     stage: deploy_stage
     extends: .base-rules
     before_script:
-      - cd webserver
+      - cd backend-webserver
     script:
       - "pm2 start ecosystem.config.js"
     cache:
