@@ -1,5 +1,5 @@
 frontend:
-  .base-rules:
+  rules:
     rules:
       - if: '$CI_COMMIT_BRANCH == "master"'
         changes:
@@ -25,7 +25,6 @@ frontend:
 
   build:
     stage: build_stage
-    extends: .base-rules
     before_script:
       - cd webserver
     script:
@@ -39,7 +38,6 @@ frontend:
 
   deploy:
     stage: deploy_stage
-    extends: .base-rules
     before_script:
       - cd webserver
     script:
@@ -50,7 +48,7 @@ frontend:
     tags:
       - local_runner
 backend:
-  .base-rules:
+  rules:
     rules:
       - if: '$CI_COMMIT_BRANCH == "master"'
         changes:
@@ -60,9 +58,9 @@ backend:
         when: never
       - if: $CI_COMMIT_TAG
         when: never
-    stages:
-      - build_stage
-      - deploy_stage
+  stages:
+    - build_stage
+    - deploy_stage
   tags: local_runner2
   script:
     - echo backend
@@ -76,7 +74,6 @@ backend:
 
   build:
     stage: build_stage
-    extends: .base-rules
     before_script:
       - cd backend-webserver
     script:
@@ -90,7 +87,6 @@ backend:
 
   deploy:
     stage: deploy_stage
-    extends: .base-rules
     before_script:
       - cd backend-webserver
     script:
