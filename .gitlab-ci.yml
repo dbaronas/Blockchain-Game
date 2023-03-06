@@ -11,6 +11,9 @@
         when: never
 
 frontend:
+  stages:
+    - build
+    - deploy
   tags: local_runner
   script:
     - echo frontend
@@ -49,6 +52,9 @@ frontend:
     tags:
       - local_runner
 backend:
+    stages:
+      - build
+      - deploy
   tags: local_runner2
   script:
     - echo backend
