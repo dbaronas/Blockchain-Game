@@ -59,7 +59,7 @@ deploy:
   tags:
     - local_runner
 
-build:
+build2:
   stage: build_stage2
   extends: .base-rules2
   before_script:
@@ -73,7 +73,7 @@ build:
   tags:
     - local-runner2
 
-deploy:
+deploy2:
   stage: deploy_stage2
   extends: .base-rules2
   before_script:
