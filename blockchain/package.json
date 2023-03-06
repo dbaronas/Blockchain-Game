@@ -1,10 +1,10 @@
 {
-  "name": "contractslera",
+  "name": "blockchain",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "blockchain": "npx ganache -d -a 1 --chain.chainId 5777 --db ./db -h 0.0.0.0"
   },
   "keywords": [],
   "author": "",

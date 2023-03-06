@@ -1,4 +1,4 @@
-const Token = artifacts.require('Poseidon')
+const Token = artifacts.require('PoseidonToken')
 const NFT = artifacts.require('PoseidonNFT')
 const GameItem = artifacts.require('GameItem')
 
