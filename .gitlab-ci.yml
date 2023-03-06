@@ -12,8 +12,8 @@
 
 frontend:
   stages:
-    - build
-    - deploy
+    - build_stage
+    - deploy_stage
   tags: local_runner
   script:
     - echo frontend
@@ -53,8 +53,8 @@ frontend:
       - local_runner
 backend:
     stages:
-      - build
-      - deploy
+      - build_stage
+      - deploy_stage
   tags: local_runner2
   script:
     - echo backend
