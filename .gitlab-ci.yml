@@ -71,7 +71,7 @@ build:
     <<: *global_cache
     policy: push
   tags:
-    - local_runner2
+    - local-runner2
 
 deploy:
   stage: deploy_stage2
@@ -84,4 +84,4 @@ deploy:
     <<: *global_cache
     policy: pull
   tags:
-    - local_runner2
+    - local-runner2
