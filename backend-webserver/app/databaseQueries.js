@@ -8,8 +8,12 @@ const pool = new Pool({
     port: process.env.DB_PORT
 })
 
-async function main(){
-    console.log(await pool.query('SELECT NOW()'))
+const getTime = (req, res) => {
+    pool.query('SELECT NOW()', (err, result) => {
+        res.json(result.rows)
+    })
 }
 
-main()
+module.exports = {
+    getTime
+}
