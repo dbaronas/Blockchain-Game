@@ -8,7 +8,7 @@ stages:
   rules:
     - if: '$CI_COMMIT_BRANCH == "master"'
       changes:
-        - webserver/*
+        - frontend-webserver/*
       when: always
     - if: '$CI_PIPELINE_SOURCE == "push"'
       when: never
@@ -36,7 +36,7 @@ build:
   stage: build_stage
   extends: .base-rules
   before_script:
-    - cd webserver
+    - cd frontend-webserver
   script:
     - "node --version"
     - npm i
@@ -50,7 +50,7 @@ deploy:
   stage: deploy_stage
   extends: .base-rules
   before_script:
-    - cd webserver
+    - cd frontend-webserver
   script:
     - "pm2 start ecosystem.config.js"
   cache:
