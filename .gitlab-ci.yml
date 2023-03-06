@@ -1,17 +1,19 @@
-frontend:
-  tags: local_runner
-  script:
-    - echo frontend
-  .base-rules:
+.base-rules:
     rules:
       - if: '$CI_COMMIT_BRANCH == "master"'
         changes:
           - webserver/*
+          - backend-webserver/*
         when: always
       - if: '$CI_PIPELINE_SOURCE == "push"'
         when: never
       - if: $CI_COMMIT_TAG
         when: never
+
+frontend:
+  tags: local_runner
+  script:
+    - echo frontend
 
   cache: &global_cache
     key: $CI_COMMIT_REF_SLUG
@@ -50,16 +52,6 @@ backend:
   tags: local_runner2
   script:
     - echo backend
-  .base-rules:
-    rules:
-      - if: '$CI_COMMIT_BRANCH == "master"'
-        changes:
-          - webserver/*
-        when: always
-      - if: '$CI_PIPELINE_SOURCE == "push"'
-        when: never
-      - if: $CI_COMMIT_TAG
-        when: never
 
   cache: &global_cache
     key: $CI_COMMIT_REF_SLUG
