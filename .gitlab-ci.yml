@@ -1,98 +1,98 @@
 job1:
-stages:
-  - build_stage
-  - deploy_stage
+  stages:
+    - build_stage
+    - deploy_stage
 
-.base-rules:
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
-      changes:
-        - webserver/*
-      when: always
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-      when: never
-    - if: $CI_COMMIT_TAG
-      when: never
+  .base-rules:
+    rules:
+      - if: '$CI_COMMIT_BRANCH == "master"'
+        changes:
+          - webserver/*
+        when: always
+      - if: '$CI_PIPELINE_SOURCE == "push"'
+        when: never
+      - if: $CI_COMMIT_TAG
+        when: never
 
-cache: &global_cache
-  key: $CI_COMMIT_REF_SLUG
-  policy: pull-push
-  paths:
-    - node_modules/
-    - package-lock.json
+  cache: &global_cache
+    key: $CI_COMMIT_REF_SLUG
+    policy: pull-push
+    paths:
+      - node_modules/
+      - package-lock.json
 
-build:
-  stage: build_stage
-  extends: .base-rules
-  before_script:
-    - cd webserver
-  script:
-    - "node --version"
-    - npm i
-  cache:
-    <<: *global_cache
-    policy: push
-  tags:
-    - local_runner
+  build:
+    stage: build_stage
+    extends: .base-rules
+    before_script:
+      - cd webserver
+    script:
+      - "node --version"
+      - npm i
+    cache:
+      <<: *global_cache
+      policy: push
+    tags:
+      - local_runner
 
-deploy:
-  stage: deploy_stage
-  extends: .base-rules
-  before_script:
-    - cd webserver
-  script:
-    - "pm2 start ecosystem.config.js"
-  cache:
-    <<: *global_cache
-    policy: pull
-  tags:
-    - local_runner
+  deploy:
+    stage: deploy_stage
+    extends: .base-rules
+    before_script:
+      - cd webserver
+    script:
+      - "pm2 start ecosystem.config.js"
+    cache:
+      <<: *global_cache
+      policy: pull
+    tags:
+      - local_runner
 job2:
-stages:
-  - build_stage
-  - deploy_stage
+  stages:
+    - build_stage
+    - deploy_stage
 
-.base-rules:
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
-      changes:
-        - backend-webserver/*
-      when: always
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-      when: never
-    - if: $CI_COMMIT_TAG
-      when: never
+  .base-rules:
+    rules:
+      - if: '$CI_COMMIT_BRANCH == "master"'
+        changes:
+          - backend-webserver/*
+        when: always
+      - if: '$CI_PIPELINE_SOURCE == "push"'
+        when: never
+      - if: $CI_COMMIT_TAG
+        when: never
 
-cache: &global_cache
-  key: $CI_COMMIT_REF_SLUG
-  policy: pull-push
-  paths:
-    - node_modules/
-    - package-lock.json
+  cache: &global_cache
+    key: $CI_COMMIT_REF_SLUG
+    policy: pull-push
+    paths:
+      - node_modules/
+      - package-lock.json
 
-build:
-  stage: build_stage
-  extends: .base-rules
-  before_script:
-    - cd webserver
-  script:
-    - "node --version"
-    - npm i
-  cache:
-    <<: *global_cache
-    policy: push
-  tags:
-    - local_runner
+  build:
+    stage: build_stage
+    extends: .base-rules
+    before_script:
+      - cd webserver
+    script:
+      - "node --version"
+      - npm i
+    cache:
+      <<: *global_cache
+      policy: push
+    tags:
+      - local_runner
 
-deploy:
-  stage: deploy_stage
-  extends: .base-rules
-  before_script:
-    - cd webserver
-  script:
-    - "pm2 start ecosystem.config.js"
-  cache:
-    <<: *global_cache
-    policy: pull
-  tags:
-    - local_runner
+  deploy:
+    stage: deploy_stage
+    extends: .base-rules
+    before_script:
+      - cd webserver
+    script:
+      - "pm2 start ecosystem.config.js"
+    cache:
+      <<: *global_cache
+      policy: pull
+    tags:
+      - local_runner
