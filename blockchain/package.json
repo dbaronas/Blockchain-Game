@@ -1,17 +1,19 @@
 {
-  "name": "contractslera",
+  "name": "blockchain",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "blockchain": "npx ganache -d -a 1 --chain.chainId 5777 --db ./db -h 0.0.0.0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@openzeppelin/contracts": "^4.8.1",
+    "express": "^4.18.2",
     "ganache": "^7.7.4",
-    "truffle": "^5.7.6"
+    "truffle": "^5.7.6",
+    "web3": "^1.8.2"
   }
 }

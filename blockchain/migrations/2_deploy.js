@@ -1,7 +1,9 @@
-const Box = artifacts.require('Box');
-const Poseidon = artifacts.require('Poseidon')
+const Token = artifacts.require('PoseidonToken')
+const NFT = artifacts.require('PoseidonNFT')
+const GameItem = artifacts.require('GameItem')
 
 module.exports = async function (deployer) {
-    await deployer.deploy(Poseidon)
-    await deployer.deploy(Box);
-};
+    deployer.deploy(Token)
+    deployer.deploy(NFT)
+    deployer.deploy(GameItem)
+}

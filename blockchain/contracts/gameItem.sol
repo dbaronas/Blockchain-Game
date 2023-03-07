@@ -1,24 +1,28 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
 
-contract GameItem is ERC721URIStorage {
-    using Counters for Counters.Counter;
-    Counters.Counter private _tokenIds;
+contract GameItem is ERC1155, Ownable, ERC1155Burnable {
+    constructor() ERC1155("") {}
 
-    constructor() ERC721("GameItem", "ITM") {}
+    function setURI(string memory newuri) public onlyOwner {
+        _setURI(newuri);
+    }
 
-    function awardItem(address player, string memory tokenURI)
+    function mint(address account, uint256 id, uint256 amount, bytes memory data)
         public
-        returns (uint256)
+        onlyOwner
     {
-        uint256 newItemId = _tokenIds.current();
-        _mint(player, newItemId);
-        _setTokenURI(newItemId, tokenURI);
+        _mint(account, id, amount, data);
+    }
 
-        _tokenIds.increment();
-        return newItemId;
+    function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data)
+        public
+        onlyOwner
+    {
+        _mintBatch(to, ids, amounts, data);
     }
 }
