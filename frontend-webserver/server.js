@@ -25,9 +25,10 @@ var players = {}
 io.on('connection', function (socket) {
     console.log('a user connected: ', socket.id)
     players[socket.id] = {
-      x: 300,
-      y: 300,
+      x: 500,
+      y: 500,
       playerId: socket.id,
+      animation: 'idle'
     }
     socket.emit('currentPlayers', players)
     socket.broadcast.emit('newPlayer', players[socket.id])
@@ -41,6 +42,8 @@ io.on('connection', function (socket) {
     socket.on('playerMovement', function (movementData) {
       players[socket.id].x = movementData.x
       players[socket.id].y = movementData.y
+      players[socket.id].animation = movementData.animation
       socket.broadcast.emit('playerMoved', players[socket.id])
+      socket.broadcast.emit('playerAnimation', players[socket.id])
     })
 })

@@ -5,7 +5,7 @@ export default class NPC extends Phaser.Physics.Arcade.Sprite {
         this.scene = scene
         this.scene.physics.world.enable(this)
         this.scene.add.existing(this)
-        this.body.setCircle(8, 16, 16)
+        this.body.setCircle(12, 5, 5)
         this.setImmovable(true)
     }
 

@@ -2,7 +2,7 @@ import NPC from "./NPC.js"
 import Player from "./Player.js"
 
 export default class BeginningScene extends Phaser.Scene {
-    constructor()   {
+    constructor() {
         super('BeginningScene')
     }
     
@@ -17,18 +17,24 @@ export default class BeginningScene extends Phaser.Scene {
             shift: Phaser.Input.Keyboard.KeyCodes.SHIFT,
             e: Phaser.Input.Keyboard.KeyCodes.E
         })
-        this.load.atlas('boy', 'assets/boy.png', 'assets/boy_atlas.json')
+        this.load.image('salmon', 'assets/fishes/salmon.png')
+        this.load.image('bass', 'assets/fishes/bass.png')
+        this.load.image('pike', 'assets/fishes/pike.png')
+        this.load.image('pufferfish', 'assets/fishes/pufferfish.png')
+        this.load.atlas('bateman', 'assets/bateman/bateman.png', 'assets/bateman/bateman_atlas.json')
         this.load.image('tiles', 'assets/tileset.png')
-        this.load.tilemapTiledJSON('map', 'assets/tiledmap.json')
+        this.load.tilemapTiledJSON('map', 'assets/map3.json')
     }
+
     create() {
+        this.fishTypes = ['salmon', 'bass', 'pike', 'pufferfish']
         let map = this.make.tilemap({ key: 'map' });
-        var tileset = map.addTilesetImage('tileset', 'tiles', 32, 32);
+        var tileset = map.addTilesetImage('tileset', 'tiles', 32, 32, 2, 3);
         var water = map.createLayer('water', tileset, 0, 0);
         this.fishing_zone = map.createLayer('fishingZone', tileset, 0, 0);
         var ground = map.createLayer('ground', tileset, 0, 0);
-        water.setCollisionBetween(1, 2)
-        let testPlayer = new NPC({scene:this, x:250, y:250, texture:'boy', frame:'96'})
+        water.setCollisionBetween(3, 4)
+        let testPlayer = new NPC({scene:this, x:250, y:250, texture:'bateman', frame:'bateman_13'})
         testPlayer.update()
 
         var self = this
@@ -41,6 +47,9 @@ export default class BeginningScene extends Phaser.Scene {
                     self.physics.add.collider(self.player, water)
                     self.physics.add.collider(self.player, testPlayer)
                     self.physics.add.collider(self.player, self.fishing_zone)
+                    self.physics.add.collider(self.player.username, water)
+                    self.physics.add.collider(self.player.username, testPlayer)
+                    self.physics.add.collider(self.player.username, self.fishing_zone)
                 } else {
                     self.addOtherPlayers(self, players[id])
                 }
@@ -63,15 +72,24 @@ export default class BeginningScene extends Phaser.Scene {
                 }
             })
         })
+        this.socket.on('playerAnimation', function (playerInfo) {
+            self.otherPlayers.getChildren().forEach(function (otherPlayer) {
+                if (playerInfo.playerId === otherPlayer.playerId) {
+                    otherPlayer.anims.play(playerInfo.animation, true)
+                }
+            })
+        })
     }
 
     addPlayer(self, playerInfo) {
-        self.player = new Player({scene:this, x: playerInfo.x, y: playerInfo.y, texture: 'boy', frame: '96'})
+        self.player = new Player({scene:this, x: playerInfo.x, y: playerInfo.y, texture: 'bateman', frame: 'bateman_13', isLocal: true})
+        self.player.setUsername("Arthur")
     }
 
     addOtherPlayers(self, playerInfo) {
-        const otherPlayer = self.add.sprite(playerInfo.x, playerInfo.y, 'boy').setOrigin(0.5, 0.5).setDisplaySize(50, 50)
+        const otherPlayer = new Player({scene: this, x: playerInfo.x, y: playerInfo.y, texture: 'bateman', frame: 'bateman_13', isLocal: false})
         otherPlayer.playerId = playerInfo.playerId
+        otherPlayer.animation = playerInfo.animation
         self.otherPlayers.add(otherPlayer)
     }
 
@@ -87,6 +105,9 @@ export default class BeginningScene extends Phaser.Scene {
                     delay: randomDelay,
                     callback: () => {
                         this.canMove = true
+                        const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes);
+                        console.log(randomFishType)
+                        this.player.inventory.addFish(randomFishType)
                         console.log("you just got a fish boi")
                     },
                     callbackScope: this,
@@ -99,7 +120,7 @@ export default class BeginningScene extends Phaser.Scene {
             var x = this.player.x
             var y = this.player.y
             if (this.player.oldPosition && (x !== this.player.oldPosition.x || y !== this.player.oldPosition.y)) {
-                this.socket.emit('playerMovement', { x: this.player.x, y: this.player.y })
+                this.socket.emit('playerMovement', { x: this.player.x, y: this.player.y, animation: this.player.animation })
             }
             this.player.oldPosition = {
                 x: this.player.x,

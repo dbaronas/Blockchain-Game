@@ -4,8 +4,8 @@ import TutorialScene from "./TutorialScene.js"
 const config = {
     type: Phaser.AUTO,
     parent: 'fisherman',
-    width: 512,
-	  height: 512,
+    width: 1280,
+	  height: 720,
     scene: [
       TutorialScene,
       BeginningScene
