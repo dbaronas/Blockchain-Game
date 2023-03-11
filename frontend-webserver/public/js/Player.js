@@ -14,8 +14,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.inventory = new PlayerInventory(scene, this)
         }
         this.username = new DisplayName({scene: this.scene, x: this.x, y: this.y})
-        this.depth = 1
         this.username.depth = 1
+        this.depth = 1
         this.body.setCircle(12, 5, 5)
         this.animation = 'idle'
     }

@@ -14,7 +14,7 @@ export default class PlayerInventory {
         // t.y atsiustu koki item idet is scene
 
         this.inventory = scene.add.container(10, 10)
-        const bg = scene.add.rectangle(740, 500, 80, 160, 0x000000, 0.8)
+        const bg = scene.add.rectangle(900, 440, 80, 160, 0x000000, 0.8)
 
         this.inventory.add([bg])
         Object.values(this.items).forEach(item => {

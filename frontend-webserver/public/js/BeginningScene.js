@@ -62,6 +62,7 @@ export default class BeginningScene extends Phaser.Scene {
             self.otherPlayers.getChildren().forEach(function (otherPlayer) {
                 if (playerId === otherPlayer.playerId) {
                     otherPlayer.destroy()
+                    otherPlayer.username.destroy()
                 }
             })
         })
@@ -69,12 +70,7 @@ export default class BeginningScene extends Phaser.Scene {
             self.otherPlayers.getChildren().forEach(function (otherPlayer) {
                 if (playerInfo.playerId === otherPlayer.playerId) {
                     otherPlayer.setPosition(playerInfo.x, playerInfo.y)
-                }
-            })
-        })
-        this.socket.on('playerAnimation', function (playerInfo) {
-            self.otherPlayers.getChildren().forEach(function (otherPlayer) {
-                if (playerInfo.playerId === otherPlayer.playerId) {
+                    otherPlayer.username.setPosition(playerInfo.usernamex, playerInfo.usernamey)
                     otherPlayer.anims.play(playerInfo.animation, true)
                 }
             })
@@ -120,7 +116,7 @@ export default class BeginningScene extends Phaser.Scene {
             var x = this.player.x
             var y = this.player.y
             if (this.player.oldPosition && (x !== this.player.oldPosition.x || y !== this.player.oldPosition.y)) {
-                this.socket.emit('playerMovement', { x: this.player.x, y: this.player.y, animation: this.player.animation })
+                this.socket.emit('playerMovement', { x: this.player.x, y: this.player.y, animation: this.player.animation, usernamex: this.player.username.x, usernamey: this.player.username.y })
             }
             this.player.oldPosition = {
                 x: this.player.x,
@@ -132,7 +128,7 @@ export default class BeginningScene extends Phaser.Scene {
             if (this.fishingTimer) {
                 this.fishingTimer.remove()
                 this.fishingTimer = null
-            } // cancel timer so if the player cancels, he wouldnt get fish after the timer ends
+            } // cancel timer so if the player cancels fishing, he wouldnt get fish after the timer ends
         }
     }
 }

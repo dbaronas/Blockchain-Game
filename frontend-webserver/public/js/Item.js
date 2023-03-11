@@ -7,7 +7,7 @@ export default class Item {
         this.countText = scene.add.text(0, 0, `x${count}`, { font: '16px Arial', color: '#ffffff' })
         this.countText.setName(`${name}CountText`)
   
-        const container = scene.add.container(710, 510 + positionY, [this.icon, this.countText])
+        const container = scene.add.container(875, 450 + positionY, [this.icon, this.countText])
         this.container = container
     }
   
