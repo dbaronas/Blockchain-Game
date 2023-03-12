@@ -41,8 +41,9 @@ build:
     - "node --version"
     - npm ci
     - npm run build
-    - cd server
-    - npm ci
+  artifacts:
+    paths:
+      - build
   cache:
     <<: *global_cache
     policy: push
@@ -55,6 +56,7 @@ deploy:
   before_script:
     - cd frontend-webserver/server
   script:
+    - npm ci
     - "pm2 start ecosystem.config.js"
   cache:
     <<: *global_cache
