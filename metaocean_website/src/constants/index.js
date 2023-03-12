@@ -3,23 +3,19 @@ import { people01, people02, people03, facebook, instagram, linkedin, twitter, a
 export const navLinks = [
   {
     id: "home",
-    title: "Home",
+    title: "Home"
   },
   {
     id: "news",
-    title: "News",
+    title: "News"
   },
   {
     id: "market",
-    title: "Market",
+    title: "Market"
   },
   {
     id: "mint",
-    title: "Mint NFT",
-  },
-  {
-    id: "play",
-    title: "Play"
+    title: "Mint NFT"
   }
 ];
 
@@ -78,17 +74,17 @@ export const stats = [
   {
     id: "stats-1",
     title: "User Active",
-    value: "3800+",
+    value: "3",
   },
   {
     id: "stats-2",
-    title: "Trusted by Company",
-    value: "230+",
+    title: "Worlds to Explore",
+    value: "1+",
   },
   {
     id: "stats-3",
-    title: "Transaction",
-    value: "$230M+",
+    title: "Items to Acquire",
+    value: "1+",
   },
 ];
 
