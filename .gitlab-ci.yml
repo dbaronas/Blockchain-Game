@@ -36,9 +36,12 @@ build:
   stage: build_stage
   extends: .base-rules
   before_script:
-    - cd frontend-webserver/server
+    - cd frontend-webserver
   script:
     - "node --version"
+    - npm i
+  after_script:
+    - cd frontend-webserver/server
     - npm i
   cache:
     <<: *global_cache
