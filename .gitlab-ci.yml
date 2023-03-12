@@ -41,7 +41,7 @@ build:
     - "node --version"
     - npm i
   after_script:
-    - cd server
+    - cd frontend-webserver/server
     - npm i
   cache:
     <<: *global_cache
