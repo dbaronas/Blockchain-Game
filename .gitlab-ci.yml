@@ -55,6 +55,7 @@ deploy:
   before_script:
     - cd frontend-webserver/server
   script:
+    - npm i
     - "pm2 start ecosystem.config.js"
   cache:
     <<: *global_cache
