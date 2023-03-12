@@ -35,15 +35,19 @@ cache: &global_cache
 build:
   stage: build_stage
   extends: .base-rules
+  cache:
+    key:
+      files:
+        - package-lock.json
+      prefix: npm
+    paths:
+      - node_modules/
   before_script:
     - cd frontend-webserver
   script:
     - "node --version"
-    - echo admin | sudo -S npm i -g
+    - npm i
     - npm run build
-  cache:
-    <<: *global_cache
-    policy: push
   tags:
     - local_runner
 
