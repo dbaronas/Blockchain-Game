@@ -47,7 +47,8 @@ io.on('connection', function (socket) {
       players[socket.id].x = movementData.x
       players[socket.id].y = movementData.y
       players[socket.id].animation = movementData.animation
+      players[socket.id].usernamex = movementData.usernamex
+      players[socket.id].usernamey = movementData.usernamey
       socket.broadcast.emit('playerMoved', players[socket.id])
-      socket.broadcast.emit('playerAnimation', players[socket.id])
     })
 })
