@@ -40,6 +40,9 @@ build:
   script:
     - "node --version"
     - npm i
+  after_script:
+    - cd server
+    - npm i
   cache:
     <<: *global_cache
     policy: push
