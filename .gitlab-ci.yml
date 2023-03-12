@@ -39,7 +39,7 @@ build:
     - cd frontend-webserver
   script:
     - "node --version"
-    - npm i
+    - npm i -g
     - npm run build
   cache:
     <<: *global_cache
