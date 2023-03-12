@@ -86,6 +86,7 @@ export default class BeginningScene extends Phaser.Scene {
         const otherPlayer = new Player({scene: this, x: playerInfo.x, y: playerInfo.y, texture: 'bateman', frame: 'bateman_13', isLocal: false})
         otherPlayer.playerId = playerInfo.playerId
         otherPlayer.animation = playerInfo.animation
+        otherPlayer.setUsername("ArthurKitas")
         self.otherPlayers.add(otherPlayer)
     }
 
