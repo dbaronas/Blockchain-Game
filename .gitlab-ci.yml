@@ -41,6 +41,9 @@ build:
     - "node --version"
     - npm ci
     - npm run build
+  artifacts:
+    paths:
+      - build
   cache:
     <<: *global_cache
     policy: push
