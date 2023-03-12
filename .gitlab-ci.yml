@@ -39,9 +39,9 @@ buildweb:
     paths:
       - frontend-webserver/build
   cache:
-      paths:
-        - frontend-webserver/node_modules/
-        - frontend-webserver/package-lock.json
+    paths:
+      - frontend-webserver/node_modules/
+      - frontend-webserver/package-lock.json
     policy: push
   tags:
     - local_runner
@@ -50,14 +50,14 @@ buildserver:
   stage: build_server_stage
   extends: .base-rules
   before_script:
-    - cd frontend-webserver
+    - cd frontend-webserver/server
   script:
     - "node --version"
     - npm ci
   cache:
-      paths:
-        - frontend-webserver/server/node_modules/
-        - frontend-webserver/server/package-lock.json
+    paths:
+      - frontend-webserver/server/node_modules/
+      - frontend-webserver/server/package-lock.json
     policy: push
   tags:
     - local_runner
