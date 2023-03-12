@@ -7,7 +7,7 @@ const [toggle, setToggle] = useState(false)
 
   return (
     <nav className='w-full flex py-6 justify-between items-center navbar'>
-      <img src={logo} alt='hoobank'
+      <img src={logo} alt='metaocean'
       className='w-[266px] h-[73px]'/>
 
       <ul className='list-none sm:flex hidden justify-end items-center flex-1'>
