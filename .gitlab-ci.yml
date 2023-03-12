@@ -36,7 +36,7 @@ build:
   stage: build_stage
   extends: .base-rules
   before_script:
-    - cd frontend-webserver
+    - cd frontend-webserver/server
   script:
     - "node --version"
     - npm i
@@ -50,7 +50,7 @@ deploy:
   stage: deploy_stage
   extends: .base-rules
   before_script:
-    - cd frontend-webserver
+    - cd frontend-webserver/server
   script:
     - "pm2 start ecosystem.config.js"
   cache:
