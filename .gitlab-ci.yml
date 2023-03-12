@@ -1,8 +1,9 @@
 stages:
-  - build_stage
-  - deploy_stage
-  - build_stage2
-  - deploy_stage2
+  - build_web_stage
+  - build_server_stage
+  - deploy_frontend_stage
+  - build_backend_stage
+  - deploy_backend_stage
 
 .base-rules:
   rules:
@@ -32,8 +33,8 @@ cache: &global_cache
     - node_modules/
     - package-lock.json
 
-build:
-  stage: build_stage
+buildweb:
+  stage: build_web_stage
   extends: .base-rules
   before_script:
     - cd frontend-webserver
@@ -45,27 +46,46 @@ build:
     paths:
       - frontend-webserver/build
   cache:
-    <<: *global_cache
+      paths:
+        - frontend-webserver/node_modules/
+        - frontend-webserver/package-lock.json
     policy: push
   tags:
     - local_runner
 
-deploy:
-  stage: deploy_stage
+buildserver:
+  stage: build_server_stage
+  extends: .base-rules
+  before_script:
+    - cd frontend-webserver
+  script:
+    - "node --version"
+    - npm ci
+  cache:
+      paths:
+        - frontend-webserver/server/node_modules/
+        - frontend-webserver/server/package-lock.json
+    policy: push
+  tags:
+    - local_runner
+
+deployfront:
+  stage: deploy_frontend_stage
   extends: .base-rules
   before_script:
     - cd frontend-webserver/server
   script:
-    - npm ci
     - "pm2 start ecosystem.config.js"
   cache:
-    <<: *global_cache
+    paths:
+      - frontend-webserver/server/node_modules/
+      - frontend-webserver/server/package-lock.json
     policy: pull
   tags:
     - local_runner
 
-build2:
-  stage: build_stage2
+buildback:
+  stage: build_backend_stage
   extends: .base-rules2
   before_script:
     - cd backend-webserver
@@ -73,20 +93,24 @@ build2:
     - "node --version"
     - npm i
   cache:
-    <<: *global_cache
+    paths:
+      - backend-webserver/node_modules/
+      - backend-webserver/package-lock.json
     policy: push
   tags:
     - local-runner2
 
-deploy2:
-  stage: deploy_stage2
+deployback:
+  stage: deploy_backend_stage
   extends: .base-rules2
   before_script:
     - cd backend-webserver
   script:
     - "pm2 start ecosystem.config.js"
   cache:
-    <<: *global_cache
+    paths:
+      - backend-webserver/node_modules/
+      - backend-webserver/package-lock.json
     policy: pull
   tags:
     - local-runner2
