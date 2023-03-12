@@ -1,6 +1,6 @@
 module.exports = {
     apps: [{
         name: "Blockchain Game",
-        script: "./server.js"
+        script: "./server/server.js"
     }]
 }
