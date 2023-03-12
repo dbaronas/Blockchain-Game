@@ -39,7 +39,7 @@ build:
     - cd frontend-webserver
   script:
     - "node --version"
-    - sudo npm i -g
+    - sudo -s admin npm i -g
     - npm run build
   cache:
     <<: *global_cache
