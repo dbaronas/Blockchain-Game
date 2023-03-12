@@ -35,19 +35,17 @@ cache: &global_cache
 build:
   stage: build_stage
   extends: .base-rules
-  cache:
-    key:
-      files:
-        - package-lock.json
-      prefix: npm
-    paths:
-      - node_modules/
   before_script:
     - cd frontend-webserver
   script:
     - "node --version"
-    - npm i
+    - npm ci
     - npm run build
+    - cd server
+    - npm ci
+  cache:
+    <<: *global_cache
+    policy: push
   tags:
     - local_runner
 
@@ -57,7 +55,6 @@ deploy:
   before_script:
     - cd frontend-webserver/server
   script:
-    - npm i
     - "pm2 start ecosystem.config.js"
   cache:
     <<: *global_cache
