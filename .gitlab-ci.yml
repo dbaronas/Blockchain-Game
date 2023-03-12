@@ -39,8 +39,8 @@ build:
     - cd frontend-webserver
   script:
     - "node --version"
-    - npm run build
     - npm i
+    - npm run build
   cache:
     <<: *global_cache
     policy: push
