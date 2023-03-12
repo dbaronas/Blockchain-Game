@@ -9,9 +9,6 @@ export default class PlayerInventory {
             pike: new Item(scene, 'pike', 'pike', 0, 0),
             bass: new Item(scene, 'bass', 'bass', 0, 40)
         }
-        // reikia padaryti kad butu nusettinti itemai tik kai juos gauna zaidejas ir kad itemus imtu is probability listo kai
-        //zvejoja (ten ir image tikriausiai paloadint, kad nereiktu loading visu iskart)
-        // t.y atsiustu koki item idet is scene
 
         this.inventory = scene.add.container(10, 10)
         const bg = scene.add.rectangle(900, 440, 80, 160, 0x000000, 0.8)
