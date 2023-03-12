@@ -10,7 +10,7 @@ const PlayNow = () => (
       </div>
       
       <p className="font-vt323 font-medium text-[40px] leading-[24px]">
-        <span className="text-gradient">Now!</span>
+        <span className="text-gradient">Now</span>
       </p>
     </div>
   </div>
