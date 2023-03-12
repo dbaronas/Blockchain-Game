@@ -5,8 +5,6 @@ const io = require('socket.io')(server)
 const PORT = 3000
 var players = {}
 
-
-//test
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('../public'))
