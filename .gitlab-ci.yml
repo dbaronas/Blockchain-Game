@@ -39,7 +39,7 @@ build:
     - cd frontend-webserver/server
   script:
     - "node --version"
-    - npm i
+    -  "npm i"
   cache:
     <<: *global_cache
     policy: push
@@ -66,7 +66,7 @@ build2:
     - cd backend-webserver
   script:
     - "node --version"
-    - npm i
+    - "npm i"
   cache:
     <<: *global_cache
     policy: push
