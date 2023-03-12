@@ -43,7 +43,7 @@ build:
     - npm run build
   artifacts:
     paths:
-      - build
+      - webserver/build
   cache:
     <<: *global_cache
     policy: push
