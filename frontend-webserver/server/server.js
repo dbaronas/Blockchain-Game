@@ -7,14 +7,13 @@ var players = {}
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use(express.static('../public'))
 app.use(express.static('../build'))
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '../build/index.html')
 })
 app.get('/game', (req, res) => {
-    res.sendFile(__dirname + '../public/game/index.html')
+    res.sendFile(__dirname + '../build/game/index.html')
 })
 
 
