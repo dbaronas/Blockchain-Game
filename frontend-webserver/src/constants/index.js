@@ -54,8 +54,7 @@ export const feedback = [
   },
   {
     id: "feedback-2",
-    content:
-      "Poseidon coin to the moon",
+    content: "2 TIME ELDEN LORD. ABSOLUTE GIGACHAD. NEVER HAD AN ERROR WHILE CODING. EXPERT AT EVERYTHING. CANT LOSE, WONT LOSE.",    
     name: "Martynas Muižys",
     title: "Founder & Leader",
     img: people02,

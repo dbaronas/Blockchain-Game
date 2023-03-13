@@ -10,9 +10,9 @@ const Testimonials = () => (
     <div className='absolute z-[0] w-[60%] h-[60%] -right-[50%] rounded-full blue__gradient'/>
 
     <div className='w-full flex justify-between items-center md:flex-row flex-col sm:mb-16 mb-6 relative z-[1]'>
-      <h1 className={styles.heading2}>What people are <br className='sm:block hidden'/> saying about us</h1>
+      <h1 className={styles.heading2}>Our MetaOcean <br className='sm:block hidden'/> development team</h1>
       <div className='w-full md:mt-0 mt-6'>
-        <p className={`${styles.paragraph} text-left max-w-[450px]`}>Bing Bong tralialia tekstas cia kazkoks yra</p>
+        <p className={`${styles.paragraph} text-left max-w-[450px]`}>GG WP BETTER TEAM WINS! GOOD LUCK NEXT TIME, SOLDIER!</p>
       </div>
     </div>
 
