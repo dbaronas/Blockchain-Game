@@ -82,6 +82,7 @@ export default class BeginningScene extends Phaser.Scene {
     addPlayer(self, playerInfo) {
         self.player = new Player({scene:this, x: playerInfo.x, y: playerInfo.y, texture: 'bateman', frame: 'bateman_13', isLocal: true})
         self.player.setUsername("Arthur")
+        self.inventoryScene = self.scene.launch('InventoryScene', {scene: this})
     }
 
     addOtherPlayers(self, playerInfo) {
@@ -97,7 +98,7 @@ export default class BeginningScene extends Phaser.Scene {
             this.player.update()
     
             if (this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0) && Phaser.Input.Keyboard.JustDown(this.inputKeys.e)) {
-                const randomDelay = Phaser.Math.Between(5000, 10000)
+                const randomDelay = Phaser.Math.Between(1000, 2000)
                 this.canMove = false
                 console.log("fishing")
                 this.fishingTimer = this.time.addEvent({
@@ -106,7 +107,8 @@ export default class BeginningScene extends Phaser.Scene {
                         this.canMove = true
                         const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes);
                         console.log(randomFishType)
-                        this.player.inventory.addFish(randomFishType)
+                        this.player.inventory.addItem({name: randomFishType, quantity: 1})
+                        this.scene.get('InventoryScene').refresh()
                         this.modal = new CatchModal()
                         this.add.existing(this.modal)
                         this.scene.launch('modal')

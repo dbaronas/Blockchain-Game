@@ -1,5 +1,6 @@
 import BeginningScene from "./BeginningScene.js"
 import CatchModal from "./CatchModal.js"
+import InventoryScene from "./InventoryScene.js"
 import TutorialScene from "./TutorialScene.js"
 
 const config = {
@@ -10,7 +11,8 @@ const config = {
     scene: [
       TutorialScene,
       BeginningScene,
-      CatchModal
+      CatchModal,
+      InventoryScene
     ],
     scale: {
       zoom: 1,

@@ -1,5 +1,5 @@
-import PlayerInventory from "./PlayerInventory.js"
 import DisplayName from "./DisplayName.js"
+import Inventory from "./Inventory.js"
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(data) {
@@ -11,7 +11,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.scene.cameras.main.setBounds(0, 0, 1280, 720)
             this.scene.cameras.main.startFollow(this)
             this.scene.cameras.main.zoom = 2
-            this.inventory = new PlayerInventory(scene, this)
+            this.inventory = new Inventory()
         }
         this.username = new DisplayName({scene: this.scene, x: this.x, y: this.y})
         this.username.depth = 1
@@ -23,6 +23,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     static preload(scene) {
         scene.load.atlas('bateman', 'assets/bateman/bateman.png', 'assets/bateman/bateman_atlas.json')
         scene.load.animation('bateman_animation', 'assets/bateman/bateman_anim.json')
+        scene.load.spritesheet('items', 'assets/items.png', {frameWidth: 32, frameHeight: 32})
     }
 
     get velocity() {

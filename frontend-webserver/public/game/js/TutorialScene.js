@@ -28,7 +28,7 @@ export default class TutorialScene extends Phaser.Scene {
         let testPlayer = new NPC({scene:this, x:100, y:100, texture:'bateman', frame:'bateman_13'})
         testPlayer.update()
         this.physics.add.collider(this.player, testPlayer)
-        this.player.inventory.inventory.setVisible(false)
+        //this.player.inventory.inventory.setVisible(false)
     }
 
     update() {
