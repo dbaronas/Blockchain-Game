@@ -1,3 +1,4 @@
+import CatchModal from "./CatchModal.js"
 import NPC from "./NPC.js"
 import Player from "./Player.js"
 
@@ -8,6 +9,7 @@ export default class BeginningScene extends Phaser.Scene {
     
     preload() {
         Player.preload(this)
+        CatchModal.preload(this)
         this.canMove = true
         this.inputKeys = this.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -105,6 +107,9 @@ export default class BeginningScene extends Phaser.Scene {
                         const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes);
                         console.log(randomFishType)
                         this.player.inventory.addFish(randomFishType)
+                        this.modal = new CatchModal()
+                        this.add.existing(this.modal)
+                        this.scene.launch('modal')
                         console.log("you just got a fish boi")
                     },
                     callbackScope: this,
