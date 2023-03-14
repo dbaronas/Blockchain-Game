@@ -5,8 +5,6 @@ Contract.setProvider(new Web3.providers.HttpProvider(process.env.BLOCKCHAIN_RPC)
 const abi = require('../ABI/GameItem.json').abi
 const contract = new Contract(abi, process.env.ERC1155)
 
-console.log(contract)
-
 module.exports = {
 
 }
