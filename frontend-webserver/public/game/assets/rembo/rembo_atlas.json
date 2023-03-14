@@ -1,0 +1,203 @@
+{
+    "frames": [
+        {
+            "filename": "rembo_01",
+            "frame": {
+                "w": 32,
+                "h": 32,
+                "x": 2,
+                "y": 2
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "rembo_02",
+            "frame": {
+                "w": 32,
+                "h": 32,
+                "x": 36,
+                "y": 2
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "rembo_03",
+            "frame": {
+                "w": 32,
+                "h": 32,
+                "x": 2,
+                "y": 36
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "rembo_04",
+            "frame": {
+                "w": 32,
+                "h": 32,
+                "x": 36,
+                "y": 36
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "rembo_05",
+            "frame": {
+                "w": 32,
+                "h": 32,
+                "x": 70,
+                "y": 2
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "rembo_06",
+            "frame": {
+                "w": 32,
+                "h": 32,
+                "x": 70,
+                "y": 36
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "rembo_07",
+            "frame": {
+                "w": 32,
+                "h": 32,
+                "x": 2,
+                "y": 70
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "rembo_08",
+            "frame": {
+                "w": 32,
+                "h": 32,
+                "x": 36,
+                "y": 70
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "rembo_09",
+            "frame": {
+                "w": 32,
+                "h": 32,
+                "x": 70,
+                "y": 70
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "rembo_10",
+            "frame": {
+                "w": 32,
+                "h": 32,
+                "x": 2,
+                "y": 104
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "rembo_11",
+            "frame": {
+                "w": 32,
+                "h": 32,
+                "x": 36,
+                "y": 104
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "rembo_12",
+            "frame": {
+                "w": 32,
+                "h": 32,
+                "x": 70,
+                "y": 104
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "rembo_13",
+            "frame": {
+                "w": 32,
+                "h": 32,
+                "x": 2,
+                "y": 138
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "rembo_14",
+            "frame": {
+                "w": 32,
+                "h": 32,
+                "x": 36,
+                "y": 138
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        },
+        {
+            "filename": "rembo_15",
+            "frame": {
+                "w": 32,
+                "h": 32,
+                "x": 70,
+                "y": 138
+            },
+            "anchor": {
+                "x": 0.5,
+                "y": 0.5
+            }
+        }
+    ],
+    "meta": {
+        "description": "Atlas generado con Atlas Packer Gamma V2",
+        "web": "https://gammafp.github.io/atlas-packer-phaser/"
+    }
+}

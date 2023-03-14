@@ -1,0 +1,104 @@
+{
+    "anims": [
+        {
+            "key": "idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 4,
+            "frames": [
+                {
+                    "key": "fisherman",
+                    "frame": "fisherman_13"
+                },
+                {
+                    "key": "fisherman",
+                    "frame": "fisherman_14"
+                },
+                {
+                    "key": "fisherman",
+                    "frame": "fisherman_15"
+                }
+            ]
+        },
+        {
+            "key": "down",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "fisherman",
+                    "frame": "fisherman_01"
+                },
+                {
+                    "key": "fisherman",
+                    "frame": "fisherman_02"
+                },
+                {
+                    "key": "fisherman",
+                    "frame": "fisherman_03"
+                }
+            ]
+        },
+        {
+            "key": "up",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "fisherman",
+                    "frame": "fisherman_10"
+                },
+                {
+                    "key": "fisherman",
+                    "frame": "fisherman_11"
+                },
+                {
+                    "key": "fisherman",
+                    "frame": "fisherman_12"
+                }
+            ]
+        },
+        {
+            "key": "left",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "fisherman",
+                    "frame": "fisherman_06"
+                },
+                {
+                    "key": "fisherman",
+                    "frame": "fisherman_05"
+                },
+                {
+                    "key": "fisherman",
+                    "frame": "fisherman_04"
+                }
+            ]
+        },
+        {
+            "key": "right",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "fisherman",
+                    "frame": "fisherman_07"
+                },
+                {
+                    "key": "fisherman",
+                    "frame": "fisherman_08"
+                },
+                {
+                    "key": "fisherman",
+                    "frame": "fisherman_09"
+                }
+            ]
+        }
+    ]
+}

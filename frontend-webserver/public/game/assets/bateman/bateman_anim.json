@@ -1,0 +1,108 @@
+{
+    "anims": [
+        {
+            "key": "idle",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 4,
+            "frames": [
+                {
+                    "key": "bateman",
+                    "frame": "bateman_13"
+                },
+                {
+                    "key": "bateman",
+                    "frame": "bateman_14"
+                },
+                {
+                    "key": "bateman",
+                    "frame": "bateman_15"
+                },
+                {
+                    "key": "bateman",
+                    "frame": "bateman_14"
+                }
+            ]
+        },
+        {
+            "key": "down",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "bateman",
+                    "frame": "bateman_01"
+                },
+                {
+                    "key": "bateman",
+                    "frame": "bateman_02"
+                },
+                {
+                    "key": "bateman",
+                    "frame": "bateman_03"
+                }
+            ]
+        },
+        {
+            "key": "up",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 6,
+            "frames": [
+                {
+                    "key": "bateman",
+                    "frame": "bateman_10"
+                },
+                {
+                    "key": "bateman",
+                    "frame": "bateman_11"
+                },
+                {
+                    "key": "bateman",
+                    "frame": "bateman_12"
+                }
+            ]
+        },
+        {
+            "key": "left",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "bateman",
+                    "frame": "bateman_06"
+                },
+                {
+                    "key": "bateman",
+                    "frame": "bateman_05"
+                },
+                {
+                    "key": "bateman",
+                    "frame": "bateman_04"
+                }
+            ]
+        },
+        {
+            "key": "right",
+            "type": "frames",
+            "repeat": -1,
+            "frameRate": 8,
+            "frames": [
+                {
+                    "key": "bateman",
+                    "frame": "bateman_07"
+                },
+                {
+                    "key": "bateman",
+                    "frame": "bateman_08"
+                },
+                {
+                    "key": "bateman",
+                    "frame": "bateman_09"
+                }
+            ]
+        }
+    ]
+}
