@@ -24,8 +24,10 @@ import people01 from "./people01.png";
 import people02 from "./people02.png";
 import people03 from "./people03.png";
 import award from './award.png'
+import logo2 from './logo_1.mp4'
 
 export {
+  logo2,
   award,
   airbnb,
   bill,

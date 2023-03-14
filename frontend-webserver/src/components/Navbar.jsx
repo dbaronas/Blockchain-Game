@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { close, logo, menu } from '../assets'
+import ReactPlayer from 'react-player'
+import { close, logo2, menu } from '../assets'
 import { navLinks } from '../constants'
 
 const Navbar = () => {
@@ -7,9 +8,7 @@ const [toggle, setToggle] = useState(false)
 
   return (
     <nav className='w-full flex py-6 justify-between items-center navbar'>
-      <img src={logo} alt='metaocean'
-      className='w-[266px] h-[73px]'/>
-
+        <ReactPlayer url={logo2} playing={true} controls={false} loop={true} muted={true} onReady={onloadeddata} width={266} height={73} />
       <ul className='list-none sm:flex hidden justify-end items-center flex-1'>
         {navLinks.map((nav, index) => (
           <li
