@@ -1,6 +1,0 @@
-{
-    "name": "Beginner's Fishing Rod",
-    "description": "Fishing rod used by beginner fisherman.",
-    "image": "http://localhost:3000/gameitems/NFTs/item/fishing_rod.png",
-    "rarity": "common" 
-}
