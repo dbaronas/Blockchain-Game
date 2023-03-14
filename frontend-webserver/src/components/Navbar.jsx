@@ -7,7 +7,7 @@ const Navbar = () => {
 const [toggle, setToggle] = useState(false)
 
   return (
-    <nav className='w-full flex py-6 justify-between items-center navbar'>
+    <nav className='w-full flex py-6 justify-between items-center navbar pb-0'>
 
         <ReactPlayer url={logo2} playing={true} controls={false} playsinline={true} loop={true} muted={true} width={266} height={73} />
 
@@ -15,7 +15,7 @@ const [toggle, setToggle] = useState(false)
         {navLinks.map((nav, index) => (
           <li
             key={nav.id}
-            className={`font-vt323 font-semibold cursor-pointer text-[32px] ${index === navLinks.length - 1 ? 'mr-0' : 'mr-10'} text-gold tracking-wider`}
+            className={`font-vt323 font-semibold cursor-pointer text-[32px] ${index === navLinks.length - 1 ? 'mr-0' : 'mr-10'} text-gold hover:text-secondary tracking-wider`}
           >
             <a href={`${nav.link}`}>
               {nav.title}
