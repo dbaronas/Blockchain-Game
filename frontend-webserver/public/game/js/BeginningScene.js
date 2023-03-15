@@ -5,6 +5,7 @@ import Player from "./Player.js"
 export default class BeginningScene extends Phaser.Scene {
     constructor() {
         super('BeginningScene')
+        //this.selectedItemSprite = null
     }
     
     preload() {
@@ -19,16 +20,13 @@ export default class BeginningScene extends Phaser.Scene {
             shift: Phaser.Input.Keyboard.KeyCodes.SHIFT,
             e: Phaser.Input.Keyboard.KeyCodes.E
         })
-        this.load.image('salmon', 'assets/fishes/salmon.png')
-        this.load.image('bass', 'assets/fishes/bass.png')
-        this.load.image('pike', 'assets/fishes/pike.png')
-        this.load.image('pufferfish', 'assets/fishes/pufferfish.png')
         this.load.atlas('bateman', 'assets/bateman/bateman.png', 'assets/bateman/bateman_atlas.json')
         this.load.image('tiles', 'assets/tileset.png')
         this.load.tilemapTiledJSON('map', 'assets/map3.json')
     }
 
     create() {
+        //this.selectedItemSprite = this.add.sprite(500, 500, 'items', 0);
         this.fishTypes = ['salmon', 'bass', 'pike', 'pufferfish']
         let map = this.make.tilemap({ key: 'map' });
         var tileset = map.addTilesetImage('tileset', 'tiles', 32, 32, 2, 3);
@@ -49,6 +47,9 @@ export default class BeginningScene extends Phaser.Scene {
                     self.physics.add.collider(self.player, water)
                     self.physics.add.collider(self.player, testPlayer)
                     self.physics.add.collider(self.player, self.fishing_zone)
+                    self.physics.add.collider(self.player.selectedItem, water)
+                    self.physics.add.collider(self.player.selectedItem, testPlayer)
+                    self.physics.add.collider(self.player.selectedItem, self.fishing_zone)
                     self.physics.add.collider(self.player.username, water)
                     self.physics.add.collider(self.player.username, testPlayer)
                     self.physics.add.collider(self.player.username, self.fishing_zone)
@@ -77,6 +78,19 @@ export default class BeginningScene extends Phaser.Scene {
                 }
             })
         })
+
+        this.scene.get('InventoryScene').events.on('select-item', (frame) => {
+            if (frame === -1) {
+                this.player.selectedItem.visible = false;
+            } else if (frame !== null) {
+                if (!this.player.selectedItem) {
+                    this.player.selectedItem = this.add.sprite(this.player.x, this.player.y, 'items', frame);
+                } else {
+                    this.player.selectedItem.setTexture('items', frame);
+                }
+                this.player.selectedItem.visible = true;
+            }
+        });
     }
 
     addPlayer(self, playerInfo) {
@@ -125,6 +139,7 @@ export default class BeginningScene extends Phaser.Scene {
             var y = this.player.y
             if (this.player.oldPosition && (x !== this.player.oldPosition.x || y !== this.player.oldPosition.y)) {
                 this.socket.emit('playerMovement', { x: this.player.x, y: this.player.y, animation: this.player.animation, usernamex: this.player.username.x, usernamey: this.player.username.y })
+                //this.selectedItemSprite.setPosition(this.player.x - 50, this.player.y - 50)
             }
             this.player.oldPosition = {
                 x: this.player.x,

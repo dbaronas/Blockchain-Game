@@ -9,6 +9,7 @@ export default class InventoryScene extends Phaser.Scene {
         this.margin = 8
         this._tileSize = 32
         this.inventorySlots = []
+        this.selectedItemIndex = 0
     }
 
     init(data) {
@@ -42,9 +43,14 @@ export default class InventoryScene extends Phaser.Scene {
             inventorySlot.setInteractive()
             inventorySlot.on('pointerover', pointer => {
                 this.hoverIndex = index
-            })   
+            })
+
+            if(index === this.selectedItemIndex) {
+                inventorySlot.setTexture('items', 5)
+            }
 
             let item = this.inventory.getItem(index)
+
             if(item) {
                 inventorySlot.item = this.add.sprite(inventorySlot.x, inventorySlot.y - this.tileSize / 12, 'items', items[item.name].frame).setScale(1.5)
                 inventorySlot.quantityText = this.add.text(inventorySlot.x, inventorySlot.y +  this.tileSize / 6, item.quantity, {
@@ -53,6 +59,13 @@ export default class InventoryScene extends Phaser.Scene {
                 }).setOrigin(0.5, 0)
                 inventorySlot.item.setInteractive()
                 this.input.setDraggable(inventorySlot.item)
+                if(index === this.selectedItemIndex) {
+                    this.events.emit('select-item', items[item.name].frame)
+                }
+            } else {
+                if(index === this.selectedItemIndex) {
+                  this.events.emit('select-item', -1)
+                }
             }
             this.inventorySlots.push(inventorySlot)
         }
@@ -65,6 +78,16 @@ export default class InventoryScene extends Phaser.Scene {
         })
 
         this.input.setTopOnly(false)
+
+        this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
+            if (deltaY > 0) {
+                this.selectedItemIndex = Phaser.Math.Wrap(this.selectedItemIndex - 1, 0, this.maxColumns * this.rows)
+            } else {
+                this.selectedItemIndex = Phaser.Math.Wrap(this.selectedItemIndex + 1, 0, this.maxColumns * this.rows)
+            }
+            this.refresh()
+        })
+
         this.input.on('dragstart', () => {
             this.startIndex = this.hoverIndex
             this.inventorySlots[this.startIndex].quantityText.destroy()

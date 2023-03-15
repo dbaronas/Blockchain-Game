@@ -8,8 +8,6 @@ export default class Inventory {
 
     addItem(item){
         let existingKey = Object.keys(this.items).find(key => this.items[key].name === item.name)
-        console.log(item)
-        console.log(this)
         if(existingKey) {
             this.items[existingKey].quantity += item.quantity
         } else {

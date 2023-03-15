@@ -13,10 +13,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.scene.cameras.main.zoom = 2
             this.inventory = new Inventory()
         }
+        this.selectedItem = this.scene.physics.add.sprite(this.x, this.y, 'items', 0)
+        this.selectedItem.visible = false
+        this.selectedItem.setCircle(24, 10, 10)
+        this.selectedItem.setOrigin(1, 0)
+        this.selectedItem.setOffset(11, -22)
+        this.selectedItem.setScale(0.5)
         this.username = new DisplayName({scene: this.scene, x: this.x, y: this.y})
         this.username.depth = 1
         this.depth = 1
         this.body.setCircle(12, 5, 5)
+        this.selectedItem.depth = 2
         this.animation = 'idle'
     }
 
@@ -38,14 +45,17 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         const speed = 200
         let playerVelocity = new Phaser.Math.Vector2()
         let usernameVelocity = new Phaser.Math.Vector2()
+        let selectedItemVelocity = new Phaser.Math.Vector2()
         if(this.scene.inputKeys.left.isDown) {
             playerVelocity.x = -1
             usernameVelocity.x = -1
+            selectedItemVelocity.x = -1
             this.anims.play('left', true)
             this.animation = 'left'
         } else if(this.scene.inputKeys.right.isDown) {
             playerVelocity.x = 1
             usernameVelocity.x = 1
+            selectedItemVelocity.x = 1
             this.anims.play('right', true)
             this.animation = 'right'
         } else {
@@ -55,20 +65,28 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if(this.scene.inputKeys.up.isDown) {
             playerVelocity.y = -1
             usernameVelocity.y = -1
+            selectedItemVelocity.y = -1
         } else if(this.scene.inputKeys.down.isDown) {
             playerVelocity.y = 1
             usernameVelocity.y = 1
+            selectedItemVelocity.y = 1
         }
         playerVelocity.normalize()
         usernameVelocity.normalize()
+        selectedItemVelocity.normalize()
         if(this.scene.inputKeys.shift.isDown) {
             playerVelocity.scale(speed * 1.5)
             usernameVelocity.scale(speed * 1.5)
+            selectedItemVelocity.scale(speed * 1.5)
         } else {
             playerVelocity.scale(speed)
             usernameVelocity.scale(speed)
+            selectedItemVelocity.scale(speed)
         }
         this.setVelocity(playerVelocity.x, playerVelocity.y)
         this.username.body.setVelocity(usernameVelocity.x, usernameVelocity.y)
+        if(this.selectedItem.body) {
+            this.selectedItem.body.setVelocity(selectedItemVelocity.x, selectedItemVelocity.y)
+        }
     }
 }
