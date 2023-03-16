@@ -21,10 +21,10 @@ const App = () => (
           <Stats />
           <Business />
           <Billing />
+          <CTA />
           <CardDeal /> 
           <Testimonials />
           <Clients />
-          <CTA />
           <Footer />
         </div>
       </div>

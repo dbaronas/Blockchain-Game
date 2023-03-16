@@ -24,7 +24,7 @@ const Hero = () => {
         </div>
 
         <h1 className="font-vt323 font-semibold ss:text-[88px] text-[72px] text-gold-gradient ss:leading-[100.8px] leading-[75px] w-full">
-          NFT Game.
+          NFT Game
         </h1>
         <p className={`${styles.paragraph} max-w-[470px] mt-5 text-white`}>
           Our team of experts used advanced blockchain technology

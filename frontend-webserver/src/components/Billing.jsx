@@ -1,5 +1,5 @@
 import React from "react";
-import { apple, bill, google } from "../assets";
+import { bill } from "../assets";
 import styles, { layout } from "../style";
 
 const Billing = () => {
@@ -18,24 +18,11 @@ const Billing = () => {
       <div className={layout.sectionInfo}>
         <h2 className={styles.heading2}>
           Enjoy the game while <br className="sm:block hidden" /> earning
-          exclusive rewards.
+          exclusive rewards
         </h2>
         <p className={`${styles.paragraph} max-w[470px] mt-5`}>
           Something to be discovered through game-play experience.
         </p>
-
-        <div className="flex flex-row flex-wrap sm:mt-10 mt-6">
-          <img
-            src={apple}
-            alt="apple_store"
-            className="w-[128px] h-[42px] object-contain mr-5 cursor-pointer"
-          />
-          <img
-            src={google}
-            alt="google_store"
-            className="w-[128px] h-[42px] object-contain cursor-pointer"
-          />
-        </div>
       </div>
     </section>
   );

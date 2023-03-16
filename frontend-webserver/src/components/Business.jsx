@@ -1,7 +1,7 @@
 import React from "react";
 import { features } from "../constants";
 import styles, { layout } from "../style";
-import Button from "./Button";
+import Button from "./ExploreButton";
 
 const FeatureCard = ({ icon, title, content, index }) => (
   <div
@@ -21,19 +21,6 @@ const FeatureCard = ({ icon, title, content, index }) => (
       <p className="font-poppins font-normal text-dimWhite text-[1rem] leading-[1.35rem] mb-1">
         {content}
       </p>
-
-      {/* <div className="flex flex-row flex-wrap sm:mt-10 mt-6">
-        <img
-          src={apple}
-          alt="apple_store"
-          className="w-[8rem] h-[3.5rem] object-contain mr-5 cursor-pointer"
-        />
-        <img
-          src={google}
-          alt="apple_store"
-          className="w-[8rem] h-[3.5rem] object-contain cursor-pointer"
-        />
-      </div> */}
     </div>
   </div>
 );

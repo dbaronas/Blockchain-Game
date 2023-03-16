@@ -1,17 +1,14 @@
 import React from 'react'
+import ReactPlayer from 'react-player'
 import styles from '../style'
-import { logo } from '../assets'
+import { logo2 } from '../assets'
 import { footerLinks, socialMedia } from '../constants'
 
 const Footer = () => (
   <section className={`${styles.flexCenter} ${styles.paddingY} flex-col`}>
     <div className={`${styles.flexStart} md:flex-row flex-col mb-8 w-full`}>
       <div className='flex-1 flex flex-col justify-start mr-10'>
-        <img
-          src={logo}
-          alt="metaocean"
-          className='w-[266px] h-[72px] object-contain'
-        />
+      <ReactPlayer url={logo2} playing={true} controls={false} playsinline={true} loop={true} muted={true} width={266} height={73} />
         <p className={`${styles.paragraph} mt-4 max-w-[310px]`}>
           MetaOcean is the best game you will ever find! Pls buy some NFTs
         </p>

@@ -13,8 +13,8 @@ export const navLinks = [
   },
   {
     id: "market",
-    title: "Market",
-    link: '/market'
+    title: "Marketplace",
+    link: '/marketplace'
   },
   {
     id: "mint",
@@ -29,21 +29,21 @@ export const features = [
     icon: star,
     title: "Rewards",
     content:
-      "The best credit cards offer some tantalizing combinations of promotions and prizes",
+      "Fish to earn exclusive NFTs and many other items",
   },
   {
     id: "feature-2",
     icon: shield,
     title: "100% Secured",
     content:
-      "We take proactive steps make sure your information and transactions are secure.",
+      "All transactions are made using blockchain technology",
   },
   {
     id: "feature-3",
     icon: send,
-    title: "Balance Transfer",
+    title: "Marketplace",
     content:
-      "A balance transfer credit card can save you a lot of money in interest charges.",
+      'Trade and sell earned NFTs and other items in "MetaOcean Marketplace"',
   },
 ];
 
