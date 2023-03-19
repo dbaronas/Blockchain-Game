@@ -1,14 +1,15 @@
-import React, { useEffect, useRef } from "react";
-import { getGameInstance } from "../game/game";
+import React, { useEffect, useRef } from "react"
+import { getGameInstance } from "../game/game"
+import styles from "../style"
 
 const Game = () => {
-  const gameRef = useRef(null);
+  const gameRef = useRef(null)
 
   useEffect(() => {
-    getGameInstance();
-  }, []);
+    getGameInstance()
+  }, [])
 
-  return <div id="fisherman" ref={gameRef}></div>;
-};
+  return <div className={`${styles.flexCenter}`} id="fisherman" ref={gameRef}></div>
+}
 
-export default Game;
+export default Game

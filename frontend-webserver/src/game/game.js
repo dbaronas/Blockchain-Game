@@ -1,11 +1,11 @@
-import Phaser from "phaser";
-import BeginningScene from "./BeginningScene.js";
-import CatchModal from "./CatchModal.js";
-import InventoryScene from "./InventoryScene.js";
-import TutorialScene from "./TutorialScene.js";
+import Phaser from "phaser"
+import BeginningScene from "./BeginningScene.js"
+import CatchModal from "./CatchModal.js"
+import InventoryScene from "./InventoryScene.js"
+import TutorialScene from "./TutorialScene.js"
 
 
-let game = null;
+let game = null
 
 export const getGameInstance = () => {
   if (!game) {
@@ -31,7 +31,7 @@ export const getGameInstance = () => {
         }
       }
     };
-    game = new Phaser.Game(config);
+    game = new Phaser.Game(config)
   }
-  return game;
-};
+  return game
+}
