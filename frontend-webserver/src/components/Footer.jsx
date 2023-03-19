@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactPlayer from 'react-player'
 import styles from '../style'
 import { logo2 } from '../assets'

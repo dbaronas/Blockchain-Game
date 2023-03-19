@@ -1,4 +1,3 @@
-import React from "react";
 import { bill } from "../assets";
 import styles, { layout } from "../style";
 

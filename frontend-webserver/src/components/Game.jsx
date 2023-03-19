@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Game = () => (
     <div>
         <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
