@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 export default class CatchModal extends Phaser.Scene {
     constructor() {
         super('modal')
