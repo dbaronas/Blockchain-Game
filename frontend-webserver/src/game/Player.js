@@ -11,8 +11,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.scene.cameras.main.setBounds(0, 0, 1280, 720)
             this.scene.cameras.main.startFollow(this)
             this.scene.cameras.main.zoom = 2
-            this.inventory = new Inventory()
         }
+        this.inventory = new Inventory()
         this.selectedItem = this.scene.physics.add.sprite(this.x, this.y, 'items', 0)
         this.selectedItem.visible = false
         this.selectedItem.setCircle(24, 10, 10)
@@ -22,8 +22,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.username = new DisplayName({scene: this.scene, x: this.x, y: this.y})
         this.username.depth = 1
         this.depth = 1
-        this.body.setCircle(12, 5, 5)
         this.selectedItem.depth = 2
+        this.body.setCircle(12, 5, 5)
         this.animation = 'idle'
     }
 

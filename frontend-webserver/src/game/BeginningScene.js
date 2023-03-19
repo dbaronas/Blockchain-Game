@@ -5,7 +5,6 @@ import Player from "./Player.js"
 export default class BeginningScene extends Phaser.Scene {
     constructor() {
         super('BeginningScene')
-        //this.selectedItemSprite = null
     }
     
     preload() {
@@ -26,7 +25,6 @@ export default class BeginningScene extends Phaser.Scene {
     }
 
     create() {
-        //this.selectedItemSprite = this.add.sprite(500, 500, 'items', 0);
         this.fishTypes = ['salmon', 'bass', 'pike', 'pufferfish']
         let map = this.make.tilemap({ key: 'map' });
         var tileset = map.addTilesetImage('tileset', 'tiles', 32, 32, 2, 3);
@@ -66,6 +64,7 @@ export default class BeginningScene extends Phaser.Scene {
                 if (playerId === otherPlayer.playerId) {
                     otherPlayer.destroy()
                     otherPlayer.username.destroy()
+                    otherPlayer.selectedItem.destroy()
                 }
             })
         })
@@ -75,22 +74,37 @@ export default class BeginningScene extends Phaser.Scene {
                     otherPlayer.setPosition(playerInfo.x, playerInfo.y)
                     otherPlayer.username.setPosition(playerInfo.usernamex, playerInfo.usernamey)
                     otherPlayer.anims.play(playerInfo.animation, true)
+                    otherPlayer.selectedItem.setPosition(playerInfo.itemx, playerInfo.itemy)
+                }
+            })
+        })
+
+        this.socket.on('item-selected', function(playerInfo) {
+            self.otherPlayers.getChildren().forEach(function (otherPlayer) {
+                if (playerInfo.playerId === otherPlayer.playerId) {
+                    if (playerInfo.frame === -1) {
+                        otherPlayer.selectedItem.visible = false
+                    } else {
+                        otherPlayer.selectedItem.visible = true
+                        otherPlayer.selectedItem.setTexture('items', playerInfo.frame)
+                        console.log(otherPlayer.selectedItem)
+                    }
                 }
             })
         })
 
         this.scene.get('InventoryScene').events.on('select-item', (frame) => {
             if (frame === -1) {
-                this.player.selectedItem.visible = false;
-            } else if (frame !== null) {
-                if (!this.player.selectedItem) {
-                    this.player.selectedItem = this.add.sprite(this.player.x, this.player.y, 'items', frame);
-                } else {
-                    this.player.selectedItem.setTexture('items', frame);
+                this.player.selectedItem.visible = false
+                this.socket.emit('select-item-img', { frame: frame }) //geriau butu turet tuscia frame, nereiktu if'u tiek (ji det image pradzioj kad butu galima paskui papildyt items.png)
+            } else {
+                if (this.player.selectedItem) {
+                    this.player.selectedItem.setTexture('items', frame)
+                    this.socket.emit('select-item-img', { frame: frame })
                 }
-                this.player.selectedItem.visible = true;
+                this.player.selectedItem.visible = true
             }
-        });
+        })
     }
 
     addPlayer(self, playerInfo) {
@@ -138,8 +152,8 @@ export default class BeginningScene extends Phaser.Scene {
             var x = this.player.x
             var y = this.player.y
             if (this.player.oldPosition && (x !== this.player.oldPosition.x || y !== this.player.oldPosition.y)) {
-                this.socket.emit('playerMovement', { x: this.player.x, y: this.player.y, animation: this.player.animation, usernamex: this.player.username.x, usernamey: this.player.username.y })
-                //this.selectedItemSprite.setPosition(this.player.x - 50, this.player.y - 50)
+                this.socket.emit('playerMovement', { x: this.player.x, y: this.player.y, animation: this.player.animation, usernamex: this.player.username.x,
+                usernamey: this.player.username.y, itemx: this.player.selectedItem.x, itemy: this.player.selectedItem.y })
             }
             this.player.oldPosition = {
                 x: this.player.x,
