@@ -8,7 +8,7 @@ const contract = new Contract(abi, process.env.ERC721)
 const mint = async(req, res) => {
     const address = req.body.address
     const item_id = req.body.id
-    const uri = `${process.env.IP}/gameitems/NFTs/metadata/${id}.json`
+    const uri = `${process.env.IP}/gameitems/NFTs/metadata/${item_id}.json`
     const data = {
         address: address,
         id: item_id

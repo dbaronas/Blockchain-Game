@@ -1,7 +1,6 @@
 const express = require('express')
 const app = express()
 require('dotenv').config()
-require('./routes')(app)
 
 /*app.use(function (req, res, next) {
     if (req.ip !== '1') {
@@ -11,8 +10,10 @@ require('./routes')(app)
     next()
 })*/
 app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.static('game'))
+
+require('./routes')(app)
 
 app.listen(process.env.PORT, () => {
     console.log('Server running...')
