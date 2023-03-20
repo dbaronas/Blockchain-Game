@@ -6,6 +6,7 @@ const io = require('socket.io')(server)
 const PORT = 3000
 var players = {}
 
+
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('../build'))
@@ -13,7 +14,6 @@ app.use(express.static('../build'))
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../build', 'index.html'))
 })
-
 
 server.listen(PORT, () => {
     console.log('3000')
@@ -44,6 +44,13 @@ io.on('connection', function (socket) {
       players[socket.id].animation = movementData.animation
       players[socket.id].usernamex = movementData.usernamex
       players[socket.id].usernamey = movementData.usernamey
+      players[socket.id].itemx = movementData.itemx
+      players[socket.id].itemy = movementData.itemy
       socket.broadcast.emit('playerMoved', players[socket.id])
+    })
+
+    socket.on('select-item-img', function(data) {
+      players[socket.id].frame = data.frame
+      socket.broadcast.emit('item-selected', players[socket.id]);
     })
 })
