@@ -26,6 +26,7 @@ export default class BeginningScene extends Phaser.Scene {
 
     create() {
         this.fishTypes = ['salmon', 'bass', 'pike', 'pufferfish']
+        this.fishRodFrames = ['0', '1', '2', '3']
         let map = this.make.tilemap({ key: 'map' });
         var tileset = map.addTilesetImage('tileset', 'tiles', 32, 32, 2, 3);
         var water = map.createLayer('water', tileset, 0, 0);
@@ -133,14 +134,19 @@ export default class BeginningScene extends Phaser.Scene {
                     delay: randomDelay,
                     callback: () => {
                         this.canMove = true
-                        const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes);
-                        console.log(randomFishType)
-                        this.player.inventory.addItem({name: randomFishType, quantity: 1})
-                        this.scene.get('InventoryScene').refresh()
-                        this.modal = new CatchModal()
-                        this.add.existing(this.modal)
-                        this.scene.launch('modal')
-                        console.log("you just got a fish boi")
+                        const options = ['fish', 'fishrod']
+                        const randomNum = Math.floor(Math.random() * 2)
+                        const selectedOption = options[randomNum]
+                        if (selectedOption === 'fishrod') {
+                            const randomFishRod = Phaser.Utils.Array.GetRandom(this.fishRodFrames)
+                            this.modal = new CatchModal()
+                            this.add.existing(this.modal)
+                            this.scene.launch('modal', { randomFishRod: randomFishRod })
+                        } else {
+                            const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes)
+                            this.player.inventory.addItem({name: randomFishType, quantity: 1})
+                            this.scene.get('InventoryScene').refresh()
+                        }
                     },
                     callbackScope: this,
                     loop: false
