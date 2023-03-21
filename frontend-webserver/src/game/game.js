@@ -14,6 +14,7 @@ export const getGameInstance = () => {
       parent: 'fisherman',
       width: 1280,
       height: 720,
+      disableContextMenu: true,
       scene: [
         TutorialScene,
         BeginningScene,
@@ -27,7 +28,9 @@ export const getGameInstance = () => {
         default: 'arcade',
         arcade: {
           debug: true,
-          gravity: {y: 0}
+          gravity: {y: 0},
+          fps: 60,
+          antialias: false
         }
       }
     };
