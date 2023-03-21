@@ -51,6 +51,7 @@ io.on('connection', function (socket) {
 
     socket.on('select-item-img', function(data) {
       players[socket.id].frame = data.frame
+      players[socket.id].textureKey = data.textureKey
       socket.broadcast.emit('item-selected', players[socket.id]);
     })
 })
