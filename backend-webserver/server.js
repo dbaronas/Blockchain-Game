@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 require('dotenv').config()
 
 /*app.use(function (req, res, next) {
@@ -9,6 +10,7 @@ require('dotenv').config()
     }
     next()
 })*/
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('game'))
