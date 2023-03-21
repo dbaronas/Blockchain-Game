@@ -21,15 +21,12 @@ export const getGameInstance = () => {
         CatchModal,
         InventoryScene
       ],
-      scale: {
-        zoom: 1,
-      },
       physics: {
         default: 'arcade',
         arcade: {
           debug: true,
           gravity: {y: 0},
-          fps: 240
+          fps: 60
         }
       }
     };
