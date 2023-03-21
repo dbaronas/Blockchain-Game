@@ -29,6 +29,7 @@ export const getGameInstance = () => {
         arcade: {
           debug: true,
           gravity: {y: 0},
+          fps: 240
         }
       }
     };
