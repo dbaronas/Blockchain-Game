@@ -17,7 +17,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.selectedItem.visible = false
         this.selectedItem.setCircle(24, 10, 10)
         this.selectedItem.setOrigin(1, 0)
-        this.selectedItem.setOffset(11, -22)
+        this.selectedItem.setOffset(10, -22)
         this.selectedItem.setScale(0.5)
         this.username = new DisplayName({scene: this.scene, x: this.x, y: this.y})
         this.username.depth = 1
@@ -31,6 +31,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         scene.load.atlas('bateman', 'assets/bateman/bateman.png', 'assets/bateman/bateman_atlas.json')
         scene.load.animation('bateman_animation', 'assets/bateman/bateman_anim.json')
         scene.load.spritesheet('items', 'assets/items.png', {frameWidth: 32, frameHeight: 32})
+        scene.load.spritesheet('rods', 'assets/fishing_rods.png', {frameWidth: 32, frameHeight: 32})
     }
 
     get velocity() {
@@ -66,10 +67,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             playerVelocity.y = -1
             usernameVelocity.y = -1
             selectedItemVelocity.y = -1
+            if (this.animation !== 'left' && this.animation !== 'right') {
+                this.anims.play('up', true)
+                this.animation = 'up'
+            }
         } else if(this.scene.inputKeys.down.isDown) {
             playerVelocity.y = 1
             usernameVelocity.y = 1
             selectedItemVelocity.y = 1
+            if (this.animation !== 'left' && this.animation !== 'right') {
+                this.anims.play('down', true)
+                this.animation = 'down'
+            }
         }
         playerVelocity.normalize()
         usernameVelocity.normalize()

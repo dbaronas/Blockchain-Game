@@ -1,4 +1,5 @@
 import items from "./Items.js"
+import rods from "./FishingRods.js"
 
 export default class InventoryScene extends Phaser.Scene {
     constructor() {
@@ -51,8 +52,19 @@ export default class InventoryScene extends Phaser.Scene {
 
             let item = this.inventory.getItem(index)
 
+            let textureKey = 'items'
+            let frame = -1
+
             if(item) {
-                inventorySlot.item = this.add.sprite(inventorySlot.x, inventorySlot.y - this.tileSize / 12, 'items', items[item.name].frame).setScale(1.5)
+                if (item.type === 'fish') {
+                    textureKey = 'items'
+                    frame = items[item.name].frame
+                } else {
+                    textureKey = 'rods'
+                    frame = rods[item.name].frame
+                }
+
+                inventorySlot.item = this.add.sprite(inventorySlot.x, inventorySlot.y - this.tileSize / 12, textureKey, frame).setScale(1.5)
                 inventorySlot.quantityText = this.add.text(inventorySlot.x, inventorySlot.y +  this.tileSize / 6, item.quantity, {
                     font: '16px Arial',
                     fill: '#111'
@@ -60,11 +72,11 @@ export default class InventoryScene extends Phaser.Scene {
                 inventorySlot.item.setInteractive()
                 this.input.setDraggable(inventorySlot.item)
                 if(index === this.selectedItemIndex) {
-                    this.events.emit('select-item', items[item.name].frame)
+                    this.events.emit('select-item', { frame, textureKey })
                 }
             } else {
                 if(index === this.selectedItemIndex) {
-                  this.events.emit('select-item', -1)
+                  this.events.emit('select-item', { frame, textureKey })
                 }
             }
             this.inventorySlots.push(inventorySlot)

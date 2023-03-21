@@ -26,7 +26,7 @@ export default class BeginningScene extends Phaser.Scene {
 
     create() {
         this.fishTypes = ['salmon', 'bass', 'pike', 'pufferfish']
-        this.fishRodFrames = ['0', '1', '2', '3']
+        this.fishRod = ['fr_1', 'fr_2', 'fr_3', 'fr_4']
         let map = this.make.tilemap({ key: 'map' });
         var tileset = map.addTilesetImage('tileset', 'tiles', 32, 32, 2, 3);
         var water = map.createLayer('water', tileset, 0, 0);
@@ -87,21 +87,22 @@ export default class BeginningScene extends Phaser.Scene {
                         otherPlayer.selectedItem.visible = false
                     } else {
                         otherPlayer.selectedItem.visible = true
-                        otherPlayer.selectedItem.setTexture('items', playerInfo.frame)
+                        otherPlayer.selectedItem.setTexture(playerInfo.textureKey, playerInfo.frame)
                         console.log(otherPlayer.selectedItem)
                     }
                 }
             })
         })
 
-        this.scene.get('InventoryScene').events.on('select-item', (frame) => {
-            if (frame === -1) {
+        this.scene.get('InventoryScene').events.on('select-item', (data) => {
+            if (data.frame === -1) {
                 this.player.selectedItem.visible = false
-                this.socket.emit('select-item-img', { frame: frame }) //geriau butu turet tuscia frame, nereiktu if'u tiek (ji det image pradzioj kad butu galima paskui papildyt items.png)
+                this.socket.emit('select-item-img', { frame: data.frame }) //geriau butu turet tuscia frame, nereiktu if'u tiek (ji det image pradzioj kad butu galima paskui papildyt items.png)
             } else {
                 if (this.player.selectedItem) {
-                    this.player.selectedItem.setTexture('items', frame)
-                    this.socket.emit('select-item-img', { frame: frame })
+                    console.log(data.textureKey)
+                    this.player.selectedItem.setTexture(data.textureKey, data.frame)
+                    this.socket.emit('select-item-img', { frame: data.frame, textureKey: data.textureKey })
                 }
                 this.player.selectedItem.visible = true
             }
@@ -138,13 +139,15 @@ export default class BeginningScene extends Phaser.Scene {
                         const randomNum = Math.floor(Math.random() * 2)
                         const selectedOption = options[randomNum]
                         if (selectedOption === 'fishrod') {
-                            const randomFishRod = Phaser.Utils.Array.GetRandom(this.fishRodFrames)
+                            const randomFishRod = Phaser.Utils.Array.GetRandom(this.fishRod)
                             this.modal = new CatchModal()
                             this.add.existing(this.modal)
                             this.scene.launch('modal', { randomFishRod: randomFishRod })
+                            this.player.inventory.addItem({name: randomFishRod, quantity: 1, type: 'fishing-rod'})
+                            this.scene.get('InventoryScene').refresh()
                         } else {
                             const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes)
-                            this.player.inventory.addItem({name: randomFishType, quantity: 1})
+                            this.player.inventory.addItem({name: randomFishType, quantity: 1, type: 'fish'})
                             this.scene.get('InventoryScene').refresh()
                         }
                     },

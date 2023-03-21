@@ -1,3 +1,5 @@
+import rods from "./FishingRods.js"
+
 export default class CatchModal extends Phaser.Scene {
     constructor() {
         super('modal')
@@ -10,7 +12,6 @@ export default class CatchModal extends Phaser.Scene {
     static preload(scene) {
         scene.load.image('modal', 'assets/modal.png')
         scene.load.image('button', 'assets/button.png')
-        scene.load.spritesheet('rods', 'assets/fishing_rods.png', {frameWidth: 32, frameHeight: 32})
     }
 
     create(data) {
@@ -20,9 +21,9 @@ export default class CatchModal extends Phaser.Scene {
         var button = this.add.image(0, 0, 'button').setInteractive().setScale(0.5).setOrigin(0.5, 0)
         var buttonText = this.add.text(0, 0, 'MINT').setOrigin(0.5, -1).setFontSize(40)
         var text = this.add.text(0, 0, 'YOU GOT A FISH GG!').setOrigin(0.5, 2).setFontSize(20)
-        var fishing_rod = this.add.sprite(0, 0, 'rods', this.randomFishRod).setOrigin(0.5, 2).setScale(2)
-
+        var fishing_rod = this.add.sprite(0, 0, 'rods', rods[this.randomFishRod].frame).setOrigin(0.5, 2).setScale(2)
         this.container = this.add.container(650, 200, [modal, button, buttonText, text, fishing_rod])
+
         this.container.setScale(0)
         this.tween = this.tweens.add({
             targets: this.container,
