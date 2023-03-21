@@ -10,8 +10,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if(isLocal) {
             this.scene.cameras.main.setBounds(0, 0, 1280, 720)
             this.scene.cameras.main.startFollow(this)
-            this.scene.cameras.main.setLerp(0.1)
-            this.scene.cameras.main.setRoundPixels(true)
             this.scene.cameras.main.zoom = 2
         }
         this.inventory = new Inventory()
