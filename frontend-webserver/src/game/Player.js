@@ -15,7 +15,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.inventory = new Inventory()
         this.selectedItem = this.scene.physics.add.sprite(this.x, this.y, 'items', 0)
         this.selectedItem.visible = false
-        this.selectedItem.setCircle(24, -31.6, -16)
+        this.selectedItem.setCircle(24, -31.6, -15.6)
         this.selectedItem.setOrigin(-0.3, 0.2)
         this.selectedItem.setScale(0.5)
         this.username = new DisplayName({scene: this.scene, x: this.x, y: this.y})
