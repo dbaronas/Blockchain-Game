@@ -92,7 +92,7 @@ export default class InventoryScene extends Phaser.Scene {
         this.input.setTopOnly(false)
 
         this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
-            if (deltaY > 0) {
+            if (deltaY < 0) {
                 this.selectedItemIndex = Phaser.Math.Wrap(this.selectedItemIndex - 1, 0, this.maxColumns * this.rows)
             } else {
                 this.selectedItemIndex = Phaser.Math.Wrap(this.selectedItemIndex + 1, 0, this.maxColumns * this.rows)
