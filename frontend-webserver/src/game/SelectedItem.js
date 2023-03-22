@@ -6,9 +6,8 @@ export default class SelectedItem extends Phaser.Physics.Arcade.Sprite {
         this.scene.add.existing(this)
         this.scene.physics.add.sprite(this.x, this.y, this.texture, this.frame)
         this.visible = false
-        this.body.setCircle(24, 10, 10)
-        this.body.setOrigin(1, 0)
-        this.body.setOffset(11, -22)
+        this.body.setCircle(24, -31.6, -15.6)
+        this.body.setOrigin(-0.3, 0.2)
         this.body.setScale(0.5)
     }
 
