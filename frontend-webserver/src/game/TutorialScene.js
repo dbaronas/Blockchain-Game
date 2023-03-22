@@ -34,7 +34,7 @@ export default class TutorialScene extends Phaser.Scene {
 
     update() {
         this.player.update()
-        if(this.player.x > 412 && this.player.y > 412){
+        if(this.player.x > 150 && this.player.y > 0){
             this.scene.start('BeginningScene')
         }
     }
