@@ -19,7 +19,7 @@ export default class BeginningScene extends Phaser.Scene {
             shift: Phaser.Input.Keyboard.KeyCodes.SHIFT,
             e: Phaser.Input.Keyboard.KeyCodes.E
         })
-        this.load.atlas('bateman', 'assets/bateman/bateman.png', 'assets/bateman/bateman_atlas.json')
+        this.load.atlas('fisherman', 'assets/fisherman/fisherman.png', 'assets/fisherman/fisherman_atlas.json')
         this.load.image('tiles', 'assets/tileset.png')
         this.load.tilemapTiledJSON('map', 'assets/map3.json')
     }
@@ -33,7 +33,7 @@ export default class BeginningScene extends Phaser.Scene {
         this.fishing_zone = map.createLayer('fishingZone', tileset, 0, 0);
         var ground = map.createLayer('ground', tileset, 0, 0);
         water.setCollisionBetween(3, 4)
-        let testPlayer = new NPC({scene:this, x:250, y:250, texture:'bateman', frame:'bateman_13'})
+        let testPlayer = new NPC({scene:this, x:250, y:250, texture:'fisherman', frame:'fisherman_13'})
         testPlayer.update()
 
         var self = this
@@ -110,13 +110,13 @@ export default class BeginningScene extends Phaser.Scene {
     }
 
     addPlayer(self, playerInfo) {
-        self.player = new Player({scene:this, x: playerInfo.x, y: playerInfo.y, texture: 'bateman', frame: 'bateman_13', isLocal: true})
+        self.player = new Player({scene:this, x: playerInfo.x, y: playerInfo.y, texture: 'fisherman', frame: 'fisherman_13', isLocal: true})
         self.player.setUsername("Arthur")
         self.inventoryScene = self.scene.launch('InventoryScene', {scene: this})
     }
 
     addOtherPlayers(self, playerInfo) {
-        const otherPlayer = new Player({scene: this, x: playerInfo.x, y: playerInfo.y, texture: 'bateman', frame: 'bateman_13', isLocal: false})
+        const otherPlayer = new Player({scene: this, x: playerInfo.x, y: playerInfo.y, texture: 'fisherman', frame: 'fisherman_13', isLocal: false})
         otherPlayer.playerId = playerInfo.playerId
         otherPlayer.animation = playerInfo.animation
         otherPlayer.setUsername("ArthurKitas")

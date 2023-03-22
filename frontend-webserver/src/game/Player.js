@@ -27,8 +27,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     static preload(scene) {
-        scene.load.atlas('bateman', 'assets/bateman/bateman.png', 'assets/bateman/bateman_atlas.json')
-        scene.load.animation('bateman_animation', 'assets/bateman/bateman_anim.json')
+        scene.load.atlas('fisherman', 'assets/fisherman/fisherman.png', 'assets/fisherman/fisherman_atlas.json')
+        scene.load.animation('fisherman_animation', 'assets/fisherman/fisherman_anim.json')
         scene.load.spritesheet('items', 'assets/items.png', {frameWidth: 32, frameHeight: 32})
         scene.load.spritesheet('rods', 'assets/fishing_rods.png', {frameWidth: 32, frameHeight: 32})
     }
@@ -46,38 +46,69 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         let playerVelocity = new Phaser.Math.Vector2()
         let usernameVelocity = new Phaser.Math.Vector2()
         let selectedItemVelocity = new Phaser.Math.Vector2()
-        if(this.scene.inputKeys.left.isDown) {
-            playerVelocity.x = -1
-            usernameVelocity.x = -1
-            selectedItemVelocity.x = -1
-            this.anims.play('left', true)
-            this.animation = 'left'
-        } else if(this.scene.inputKeys.right.isDown) {
-            playerVelocity.x = 1
-            usernameVelocity.x = 1
-            selectedItemVelocity.x = 1
-            this.anims.play('right', true)
-            this.animation = 'right'
+        if (this.scene.inputKeys.left.isDown && this.scene.inputKeys.up.isDown) {
+            playerVelocity.x = -1;
+            playerVelocity.y = -1;
+            usernameVelocity.x = -1;
+            usernameVelocity.y = -1;
+            selectedItemVelocity.x = -1;
+            selectedItemVelocity.y = -1;
+            this.anims.play('left', true);
+            this.animation = 'left';
+        } else if (this.scene.inputKeys.right.isDown && this.scene.inputKeys.up.isDown) {
+            playerVelocity.x = 1;
+            playerVelocity.y = -1;
+            usernameVelocity.x = 1;
+            usernameVelocity.y = -1;
+            selectedItemVelocity.x = 1;
+            selectedItemVelocity.y = -1;
+            this.anims.play('right', true);
+            this.animation = 'right';
+        } else if (this.scene.inputKeys.left.isDown && this.scene.inputKeys.down.isDown) {
+            playerVelocity.x = -1;
+            playerVelocity.y = 1;
+            usernameVelocity.x = -1;
+            usernameVelocity.y = 1;
+            selectedItemVelocity.x = -1;
+            selectedItemVelocity.y = 1;
+            this.anims.play('left', true);
+            this.animation = 'left';
+        } else if (this.scene.inputKeys.right.isDown && this.scene.inputKeys.down.isDown) {
+            playerVelocity.x = 1;
+            playerVelocity.y = 1;
+            usernameVelocity.x = 1;
+            usernameVelocity.y = 1;
+            selectedItemVelocity.x = 1;
+            selectedItemVelocity.y = 1;
+            this.anims.play('right', true);
+            this.animation = 'right';
+        } else if (this.scene.inputKeys.left.isDown) {
+            playerVelocity.x = -1;
+            usernameVelocity.x = -1;
+            selectedItemVelocity.x = -1;
+            this.anims.play('left', true);
+            this.animation = 'left';
+        } else if (this.scene.inputKeys.right.isDown) {
+            playerVelocity.x = 1;
+            usernameVelocity.x = 1;
+            selectedItemVelocity.x = 1;
+            this.anims.play('right', true);
+            this.animation = 'right';
+        } else if (this.scene.inputKeys.up.isDown) {
+            playerVelocity.y = -1;
+            usernameVelocity.y = -1;
+            selectedItemVelocity.y = -1;
+            this.anims.play('up', true);
+            this.animation = 'up';
+        } else if (this.scene.inputKeys.down.isDown) {
+            playerVelocity.y = 1;
+            usernameVelocity.y = 1;
+            selectedItemVelocity.y = 1;
+            this.anims.play('down', true);
+            this.animation = 'down';
         } else {
             this.anims.play('idle', true)
             this.animation = 'idle'
-        }
-        if(this.scene.inputKeys.up.isDown) {
-            playerVelocity.y = -1
-            usernameVelocity.y = -1
-            selectedItemVelocity.y = -1
-            if (this.animation !== 'left' && this.animation !== 'right') {
-                this.anims.play('up', true)
-                this.animation = 'up'
-            }
-        } else if(this.scene.inputKeys.down.isDown) {
-            playerVelocity.y = 1
-            usernameVelocity.y = 1
-            selectedItemVelocity.y = 1
-            if (this.animation !== 'left' && this.animation !== 'right') {
-                this.anims.play('down', true)
-                this.animation = 'down'
-            }
         }
         playerVelocity.normalize()
         usernameVelocity.normalize()
