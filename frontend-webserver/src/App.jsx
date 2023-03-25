@@ -1,6 +1,6 @@
 import styles from "./style";
 import { Navbar, Footer } from "./components";
-import { Main, Game } from "./pages";
+import { Main, Game, News } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
@@ -15,6 +15,7 @@ const App = () => (
       <Routes>
         <Route path="/" element={<Main />}/>
         <Route path="/game" element={<Game />} />
+        <Route path="/news" element={<News />}/>
       </Routes>
       <div className={`bg-black ${styles.paddingX} ${styles.flexStart}`}>
         <div className={`${styles.boxWidth}`}>
