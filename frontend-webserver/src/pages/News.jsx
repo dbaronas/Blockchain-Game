@@ -1,36 +1,43 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import NewsItem from "./NewsItem";
+import React, { useState, useEffect } from "react"
+import NewsItem from "./NewsItem"
+import $ from "jquery"
 
 const News = () => {
   const [articles, setArticles] = useState([]);
-  useEffect(() => {
-    const getArticles = async () => {
-      const response = await axios.get(
-        "http://193.219.91.103:6172/api/v1/news"
-      );
-      console.log(response);
-      console.log(response.data.articles);
-      setArticles(response.data);
-    };
-    getArticles();
+  const [error, setError] = useState(null);
 
-    // [] emtpy dependency area, data will be loaded once
-  }, []);
+  useEffect(() => {
+    $.ajax({
+      url: "http://193.219.91.103:6172/api/v1/news",
+      type: "GET",
+      dataType: "json",
+      success: function (response) {
+        setArticles(response)
+      },
+      error: function (xhr, status, err) {
+        setError(err.toString())
+      },
+    })
+  }, [])
+
+  if (error) {
+    return <div className="text-white flex justify-center p-3.5 font-medium text-[1.5rem]">Error: {error}</div>
+  }
+
   return (
     <div>
-      {articles.map((article) => {
+      {articles.map((article, index) => {
         return (
           <NewsItem
             key={article.news_id}
             release_date={article.release_date}
             content={article.content}
+            isFirst={index === 0}
           />
-        );
+        )
       })}
     </div>
-  );
-};
+  )
+}
 
 export default News

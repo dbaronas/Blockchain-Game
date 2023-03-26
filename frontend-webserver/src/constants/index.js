@@ -55,6 +55,7 @@ export const feedback = [
     name: "Arminas Attas",
     title: "Founder & Leader",
     img: people01,
+    link: "https://www.linkedin.com/in/arminas-attas-2b821826a"
   },
   {
     id: "feedback-2",
@@ -62,6 +63,7 @@ export const feedback = [
     name: "Martynas Muižys",
     title: "Founder & Leader",
     img: people02,
+    link: "https://lt.linkedin.com/in/martynas-mui%C5%BEys-872169254"
   },
   {
     id: "feedback-3",
@@ -70,6 +72,7 @@ export const feedback = [
     name: "Dominykas Baronas",
     title: "Founder & Leader",
     img: people03,
+    link: "https://www.linkedin.com/in/dominykas-baronas-44669626a"
   },
 ];
 
@@ -179,6 +182,7 @@ export const socialMedia = [
     link: "https://www.linkedin.com/",
   },
 ];
+
 
 export const clients = [
   {
