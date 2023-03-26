@@ -4,6 +4,7 @@ const server = require('http').Server(app)
 const path = require('path')
 const io = require('socket.io')(server)
 const PORT = 3000
+let maintenance = false
 var players = {}
 
 
@@ -11,9 +12,19 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('../build'))
 
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../build', 'index.html'))
+if(maintenance === true) {
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../build','maintenance.html'))
+  })
+} else {
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../build', 'index.html'), function(err) {
+      if(err) {
+        res.sendFile(path.resolve(__dirname, '../build', 'maintenance.html'))
+      }
+    })
 })
+}
 
 server.listen(PORT, () => {
     console.log('3000')
