@@ -20,6 +20,11 @@ export const navLinks = [
     id: "mint",
     title: "Mint NFT",
     link: '/mint'
+  },
+  {
+    id: "connect_wallet",
+    title: "Connect Wallet",
+    link: '/connectwallet'
   }
 ];
 

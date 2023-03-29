@@ -2,24 +2,99 @@ import { useState } from 'react'
 import ReactPlayer from 'react-player'
 import { close, logo2, menu } from '../assets'
 import { navLinks } from '../constants'
+import { useEffect } from "react";
 
 const Navbar = () => {
 const [toggle, setToggle] = useState(false)
+const [walletAddress, setWalletAddress] = useState("");
+
+  useEffect(() => {
+    getCurrentWalletConnected();
+    addWalletListener();
+  }, [walletAddress]);
+
+  const connectWallet = async () => {
+    if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+      try {
+        /* MetaMask is installed */
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        setWalletAddress(accounts[0]);
+        console.log(accounts[0]);
+      } catch (err) {
+        console.error(err.message);
+      }
+    } else {
+      /* MetaMask is not installed */
+      console.log("Please install MetaMask");
+    }
+  };
+
+  const getCurrentWalletConnected = async () => {
+    if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+      try {
+        const accounts = await window.ethereum.request({
+          method: "eth_accounts",
+        });
+        if (accounts.length > 0) {
+          setWalletAddress(accounts[0]);
+          console.log(accounts[0]);
+        } else {
+          console.log("Connect to MetaMask using the Connect button");
+        }
+      } catch (err) {
+        console.error(err.message);
+      }
+    } else {
+      /* MetaMask is not installed */
+      console.log("Please install MetaMask");
+    }
+  };
+
+  const addWalletListener = async () => {
+    if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+      window.ethereum.on("accountsChanged", (accounts) => {
+        setWalletAddress(accounts[0]);
+        console.log(accounts[0]);
+      });
+    } else {
+      /* MetaMask is not installed */
+      setWalletAddress("");
+      console.log("Please install MetaMask");
+    }
+  };
 
   return (
     <nav className='w-full flex py-6 justify-between items-center navbar pb-0'>
 
         <ReactPlayer url={logo2} playing={true} controls={false} playsinline={true} loop={true} muted={true} width={266} height={73} />
 
-      <ul className='list-none sm:flex hidden justify-end items-center flex-1'>
+        <ul className='list-none sm:flex hidden justify-end items-center flex-1'>
         {navLinks.map((nav, index) => (
           <li
             key={nav.id}
-            className={`font-vt323 font-semibold cursor-pointer text-[32px] ${index === navLinks.length - 1 ? 'mr-0' : 'mr-10'} text-gold hover:text-secondary tracking-wider`}
+            className={`font-vt323 font-semibold cursor-pointer text-[32px] ${index === 0 ? 'ml-10' : 'ml-0'} ${index === navLinks.length - 1 ? 'mr-0' : 'mr-10'} text-gold hover:text-secondary tracking-wider`}
           >
-            <a href={`${nav.link}`}>
-              {nav.title}
-            </a>
+            {index === navLinks.length - 1 ? (
+              <button
+                className="button is-white connect-wallet"
+                onClick={connectWallet}
+              >
+                <span className="is-link has-text-weight-bold">
+                  {walletAddress && walletAddress.length > 0
+                    ? `Connected: ${walletAddress.substring(
+                        0,
+                        6
+                      )}...${walletAddress.substring(38)}`
+                    : "Connect Wallet"}
+                </span>
+              </button>
+            ) : (
+              <a href={`${nav.link}`}>
+                {nav.title}
+              </a>
+            )}
           </li>
         ))}
       </ul>
@@ -39,7 +114,7 @@ const [toggle, setToggle] = useState(false)
                   key={nav.id}
                   className={`font-vt323 font-normal cursor-pointer text-[24px] ${index === navLinks.length - 1 ? 'mr-0' : 'mb-4'} text-gold tracking-wider hover:text-secondary`}
                 >
-                  <a href={`${nav.id}`}>
+                  <a href={`#${nav.id}`}>
                     {nav.title}
                   </a>
                 </li>
