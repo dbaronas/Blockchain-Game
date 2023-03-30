@@ -3,7 +3,7 @@ const app = express()
 const server = require('http').Server(app)
 const path = require('path')
 const io = require('socket.io')(server)
-require('dotenv').config
+require('dotenv').config()
 let maintenance = false
 var players = {}
 
