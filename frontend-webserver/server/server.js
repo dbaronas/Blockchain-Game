@@ -3,7 +3,7 @@ const app = express()
 const server = require('http').Server(app)
 const path = require('path')
 const io = require('socket.io')(server)
-const PORT = 3000
+require('dotenv').config
 let maintenance = false
 var players = {}
 
@@ -26,8 +26,8 @@ if(maintenance === true) {
 })
 }
 
-server.listen(PORT, () => {
-    console.log('3000')
+server.listen(process.env.PORT, () => {
+    console.log('Running...')
 })
 
 var players = {}
