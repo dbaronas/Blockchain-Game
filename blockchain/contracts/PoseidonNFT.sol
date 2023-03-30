@@ -10,6 +10,8 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 contract PoseidonNFT is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIdCounter;
+    address marketContract;
+    event NFTMinted(uint256);
 
     struct NFT {
         uint tokenId;
@@ -18,36 +20,29 @@ contract PoseidonNFT is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
         uint256 durability;
     }
 
-    NFT[] public allTokens;
-
     mapping(address => NFT[]) public tokenAddress;
     mapping(string => bool) public tokenExists;
 
-    constructor() ERC721("PoseidonNFT", "PNFT") {}
+    constructor(address _marketContract) ERC721("PoseidonNFT", "PNFT") {
+        marketContract = _marketContract;
+    }
 
     function mint(
-        address to,
         string memory uri,
         string calldata _tokenName,
         uint256 _durability
-    ) public onlyOwner returns (uint256) {
+    ) public {
         require(!tokenExists[_tokenName], "Token already exists!");
-        uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
+        uint256 tokenId = _tokenIdCounter.current();
 
-        _safeMint(to, tokenId);
-        _approve(msg.sender, tokenId);
+        _safeMint(msg.sender, tokenId);
         _setTokenURI(tokenId, uri);
+        setApprovalForAll(marketContract, true);
 
-        allTokens.push(NFT(tokenId, _tokenName, to, _durability));
-        tokenAddress[to].push(NFT(tokenId, _tokenName, to, _durability));
-
+        tokenAddress[msg.sender].push(NFT(tokenId, _tokenName, msg.sender, _durability));
         tokenExists[_tokenName] = true;
-        return tokenId;
-    }
-
-    function getAllTokens() public view returns (NFT[] memory) {
-        return allTokens;
+        emit NFTMinted(tokenId);
     }
 
     function getMyTokens() public view returns (NFT[] memory) {
@@ -65,27 +60,16 @@ contract PoseidonNFT is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
         revert("Token not found");
     }
 
-    function updateDurability(uint256 tokenId) public onlyOwner {
+    function updateDurability(uint256 tokenId, uint256 _durability) public {
         require(_exists(tokenId), "Token does not exist");
         NFT[] storage tokens = tokenAddress[ownerOf(tokenId)];
         for (uint i = 0; i < tokens.length; i++) {
             if (tokens[i].tokenId == tokenId) {
-                tokens[i].durability--;
-                for (uint y = 0; y < allTokens.length; y++) {
-                    if (allTokens[y].tokenId == tokenId) {
-                        allTokens[y].durability--;
-                    }
-                }
+                tokens[i].durability = _durability;
                 if (tokens[i].durability == 0) {
                     _burn(tokens[i].tokenId);
                     tokens[i] = tokens[tokens.length - 1];
                     tokens.pop();
-                    for (uint j = 0; j < allTokens.length; j++) {
-                        if (allTokens[j].tokenId == tokenId) {
-                            allTokens[j] = allTokens[allTokens.length - 1];
-                            allTokens.pop();
-                        }
-                    }
                     break;
                 }
             }

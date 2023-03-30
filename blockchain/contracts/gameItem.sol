@@ -9,25 +9,19 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 contract GameItem is ERC1155, Ownable, ERC1155Burnable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIdCounter;
+    address marketContract;
 
     uint256 public constant GOLD = 0;
-    uint256 public constant METAL_FR = 1;
+    uint256 public constant METAL_FISHING_ROD = 1;
     
-    struct Item {
-        address owner;
-        uint durability;
-    }
-
-    mapping(address => Item[]) public tokenAddress;
-    
-    constructor() ERC1155("http://193.219.91.103:6172/api/v1/gameitems/SFTs/{id}.json") {
+    constructor(address _marketContract) ERC1155("http://193.219.91.103:6172/api/v1/gameitems/SFTs/{id}.json") {
         _mint(msg.sender, GOLD, 10**18, "");
-        _mint(msg.sender, METAL_FR, 10**9, "");
+        _mint(msg.sender, METAL_FISHING_ROD, 10**9, "");
+        marketContract = _marketContract;
     }
 
-    function awardItem(address to, uint256 _id, uint256 _amount, uint256 _durability) public {
+    function awardItem(address to, uint256 _id, uint256 _amount) public onlyOwner {
         _safeTransferFrom(msg.sender, to, _id, _amount, "");
-        tokenAddress[to].push(Item(to, _durability));
     }
 
     function setURI(string memory newuri) public onlyOwner {
