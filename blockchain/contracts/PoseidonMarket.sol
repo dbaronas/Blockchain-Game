@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
@@ -10,8 +10,10 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "./IPSD.sol";
 
 contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
+    
     function onERC721Received(
         address,
         address,
@@ -204,6 +206,7 @@ contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
             );
         }
 
+        IPSD(coinContract).approveMarket(msg.sender, address(this), targetListing.price * 10 ** 18);
         IERC20(coinContract).transferFrom(
             msg.sender,
             address(this),
