@@ -1,0 +1,10 @@
+{
+    "name": "Golden Fishing Rod",
+    "description": "Golden fishing used by the richest fisherman in MetaOcean. It was forged by famous fisherman called Divan.",
+    "image": "http://localhost:3000/gameitems/NFTs/item/fr_2.png",
+    "stats": {
+        "rarity": "epic",
+        "fishing_speed": 15,
+        "luck": 5
+    }
+}

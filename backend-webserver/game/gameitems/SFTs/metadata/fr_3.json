@@ -1,0 +1,10 @@
+{
+    "name": "Metal Fishing Rod",
+    "description": "Standard fishing rod used by ameteur fishermen.",
+    "image": "http://localhost:3000/gameitems/SFTs/item/fr_3.png",
+    "stats": {
+        "rarity": "uncommon",
+        "fishing_speed": 7,
+        "luck": 2
+    }
+}
