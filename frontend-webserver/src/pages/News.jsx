@@ -8,7 +8,7 @@ const News = () => {
 
   useEffect(() => {
     $.ajax({
-      url: "http://193.219.91.103:6172/api/v1/news",
+      url: `${import.meta.env.VITE_BACKEND}/api/v1/db/news`,
       type: "GET",
       dataType: "json",
       success: function (response) {
