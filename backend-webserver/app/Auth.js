@@ -59,24 +59,7 @@ const login = async(req, res) => {
     }
 }
 
-const checkUser = async(req, res) => {
-    try {
-        const { wallet_address } = req.body
-
-        const user = await db.User.findOne({where: {wallet_address: wallet_address}})
-
-        if(user) {
-            res.json({exists: true})
-        } else {
-            res.json({exists: false})
-        }
-    } catch (error) {
-        console.log(error)
-    }
-}
-
 module.exports = {
     register,
-    login,
-    checkUser
+    login
 }
