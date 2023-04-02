@@ -1,6 +1,4 @@
 const api = require('./app/index')
-const auth = require('./middleware/auth')
-
 
 module.exports = (app) => {
 
