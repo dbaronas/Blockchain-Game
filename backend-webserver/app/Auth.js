@@ -11,7 +11,7 @@ const register = async(req, res) => {
             const oldUser = await db.User.findOne({where: {username: username}})
 
             if (oldUser) {
-                return res.status(409).send('User Already Exist. Please Login')
+                res.status(409).send('User Already Exist. Please Login')
             } else {
                 const user = await db.User.create({
                     wallet_address: wallet_address,
