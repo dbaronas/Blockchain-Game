@@ -5,6 +5,7 @@ const Contract = require('web3-eth-contract')
 Contract.setProvider(new Web3.providers.HttpProvider(process.env.BLOCKCHAIN_RPC))
 const abi = require('../ABI/PoseidonMarket.json').abi
 const contract = new Contract(abi, process.env.MARKETPLACE)
+contract.defaultAccount = process.env.OWNER
 
 const createNFTListing = async(req, res) => {
     const address = req.body.address
@@ -12,21 +13,21 @@ const createNFTListing = async(req, res) => {
     const price = req.body.price
 
     var block = await web3.eth.getBlock("latest")
-    await contract.methods.createListing(process.env.ERC721, tokenId, 1, price).send({from: address, gasLimit: block.gasLimit}).then((results) => {
+    await contract.methods.createListing(address, process.env.ERC721, tokenId, 1, price).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((results) => {
         res.json(results)
     }).catch((error) => {
         res.json(error)
     })
 }
 
-const createGameItemListing = async(req, res) => {
+const createItemListing = async(req, res) => {
     const address = req.body.address
     const tokenId = req.body.tokenId
     const quantity = req.body.quantity
     const price = req.body.price
 
     var block = await web3.eth.getBlock("latest")
-    await contract.methods.createListing(process.env.ERC1155, tokenId, quantity, price).send({from: address, gasLimit: block.gasLimit}).then((results) => {
+    await contract.methods.createListing(address, process.env.ERC1155, tokenId, quantity, price).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((results) => {
         res.json(results)
     }).catch((error) => {
         res.json(error)
@@ -39,7 +40,7 @@ const updateListing = async(req, res) => {
     const price = req.body.price
     const quantity = req.body.quantity
 
-    await contract.methods.updateListing(listingId, quantity, price).call({from: address}).then((results) => {
+    await contract.methods.updateListing(address, listingId, quantity, price).call({from: contract.defaultAccount}).then((results) => {
         res.json(results)
     }).catch((error) => {
         res.json(error)
@@ -50,7 +51,7 @@ const cancelListing = async(req, res) => {
     const address = req.body.address
     const listingId = req.body.listingId
 
-    await contract.methods.cancelListing(listingId).call({from: address}).then((results) => {
+    await contract.methods.cancelListing(address, listingId).call({from: contract.defaultAccount}).then((results) => {
         res.json(results)
     }).catch((error) => {
         res.json(error)
@@ -62,20 +63,20 @@ const buyNFT = async(req, res) => {
     const listingId = req.body.listingId
 
     var block = await web3.eth.getBlock("latest")
-    await contract.methods.buy(listingId).send({from: address, gasLimit: block.gasLimit}).then((results) => {
+    await contract.methods.buy(address, listingId, 1).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((results) => {
         res.json(results)
     }).catch((error) => {
         res.json(error)
     })
 }
 
-const buyGameItem = async(req, res) => {
+const buyItem = async(req, res) => {
     const address = req.body.address
     const listingId = req.body.listingId
     const quantity = req.body.quantity
 
     var block = await web3.eth.getBlock("latest")
-    await contract.methods.buy(listingId, quantity).send({from: address, gasLimit: block.gasLimit}).then((results) => {
+    await contract.methods.buy(address, listingId, quantity).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((results) => {
         res.json(results)
     }).catch((error) => {
         res.json(error)
@@ -83,19 +84,15 @@ const buyGameItem = async(req, res) => {
 }
 
 const getNFTListings = async(req, res) => {
-    const address = req.body.address
-
-    await contract.methods.get721Listings().call({from: address}).then((results) => {
+    await contract.methods.get721Listings().call({from: contract.defaultAccount}).then((results) => {
         res.json(results)
     }).catch((error) => {
         res.json(error)
     })
 }
 
-const getGameItemListings = async(req, res) => {
-    const address = req.body.address
-
-    await contract.methods.get1155Listings().call({from: address}).then((results) => {
+const getItemListings = async(req, res) => {
+    await contract.methods.get1155Listings().call({from: contract.defaultAccount}).then((results) => {
         res.json(results)
     }).catch((error) => {
         res.json(error)
@@ -105,7 +102,7 @@ const getGameItemListings = async(req, res) => {
 const getEarnings = async(req, res) => {
     const address = req.body.address
 
-    await contract.methods.getEarnings().call({from: address}).then((results) => {
+    await contract.methods.getEarnings(address).call({from: contract.defaultAccount}).then((results) => {
         res.json(results)
     }).catch((error) => {
         res.json(error)
@@ -115,7 +112,7 @@ const getEarnings = async(req, res) => {
 const withdraw = async(req, res) => {
     const address = req.body.address
 
-    await contract.methods.withdraw().call({from: address}).then((results) => {
+    await contract.methods.withdraw(address).send({from: contract.defaultAccount}).then((results) => {
         res.json(results)
     }).catch((error) => {
         res.json(error)
@@ -124,13 +121,13 @@ const withdraw = async(req, res) => {
 
 module.exports = {
     createNFTListing,
-    createGameItemListing,
+    createItemListing,
     updateListing,
     cancelListing,
     buyNFT,
-    buyGameItem,
+    buyItem,
     getNFTListings,
-    getGameItemListings,
+    getItemListings,
     getEarnings,
     withdraw
 }

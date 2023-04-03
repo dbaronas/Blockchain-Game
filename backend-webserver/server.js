@@ -3,13 +3,7 @@ const app = express()
 const cors = require('cors')
 require('dotenv').config()
 
-/*app.use(function (req, res, next) {
-    if (req.ip !== '1') {
-    res.status(202)
-    return res.json({ERROR: 'Permission denied'})
-    }
-    next()
-})*/
+//require('./middleware/permissions')
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

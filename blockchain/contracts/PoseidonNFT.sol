@@ -28,25 +28,26 @@ contract PoseidonNFT is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
     }
 
     function mint(
-        string memory uri,
+        address _to,
+        string memory _uri,
         string calldata _tokenName,
         uint256 _durability
-    ) public {
+    ) public onlyOwner {
         require(!tokenExists[_tokenName], "Token already exists!");
         _tokenIdCounter.increment();
         uint256 tokenId = _tokenIdCounter.current();
 
-        _safeMint(msg.sender, tokenId);
-        _setTokenURI(tokenId, uri);
-        setApprovalForAll(marketContract, true);
+        _safeMint(_to, tokenId);
+        _setTokenURI(tokenId, _uri);
+        _approve(marketContract, tokenId);
 
-        tokenAddress[msg.sender].push(NFT(tokenId, _tokenName, msg.sender, _durability));
+        tokenAddress[_to].push(NFT(tokenId, _tokenName, _to, _durability));
         tokenExists[_tokenName] = true;
         emit NFTMinted(tokenId);
     }
 
-    function getMyTokens() public view returns (NFT[] memory) {
-        return tokenAddress[msg.sender];
+    function getMyTokens(address _wallet) public view returns (NFT[] memory) {
+        return tokenAddress[_wallet];
     }
 
     function getDurability(uint256 tokenId) public view returns (uint256) {
