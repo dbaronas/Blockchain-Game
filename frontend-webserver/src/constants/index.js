@@ -64,7 +64,7 @@ export const feedback = [
   },
   {
     id: "feedback-2",
-    content: "2 TIME ELDEN LORD. ABSOLUTE GIGACHAD. NEVER HAD AN ERROR WHILE CODING. EXPERT AT EVERYTHING. CANT LOSE, WONT LOSE.",    
+    content: `2 TIME ELDEN LORD. ABSOLUTE GIGACHAD. NEVER HAD AN ERROR WHILE CODING. EXPERT AT EVERYTHING. CANT LOSE, WONT LOSE. "THE UNSEEN BLADE IS THE DEADLIEST" - ZED`,    
     name: "Martynas Muižys",
     title: "Founder & Leader",
     img: people02,
