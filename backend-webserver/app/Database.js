@@ -7,7 +7,7 @@ const getNews = async(req, res) => {
 
 const checkUser = async(req, res) => {
     const address = req.body.address
-    const user = await db.User.findOne({where: {wallet_adress: address}})
+    const user = await db.User.findOne({where: {wallet_address: address}})
     if(user) {
         res.json({exists: true})
     } else {
