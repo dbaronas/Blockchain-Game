@@ -2,22 +2,22 @@ import CatchModal from "./CatchModal.js"
 import NPC from "./NPC.js"
 import Player from "./Player.js"
 
-export default class BeginningScene extends Phaser.Scene {
+export default class BeginningScene2 extends Phaser.Scene {
     constructor() {
-        super('BeginningScene')
-        this.roomName = 'beginning'
+        super('BeginningScene2')
+        this.roomName = 'beginning2'
     }
-
+    
     init(data) {
         this.playerInventory = data.inventory
     }
-    
+
     preload() {
         Player.preload(this)
         CatchModal.preload(this)
-        NPC.preload(this)
+        this.canMove = true
         this.load.atlas('fisherman', 'assets/fisherman/fisherman.png', 'assets/fisherman/fisherman_atlas.json')
-        this.load.image('tiles', 'assets/tileset.png')
+        this.load.image('tiles3', 'assets/tileset2.png')
         this.load.tilemapTiledJSON('map', 'assets/map3.json')
         this.inputKeys = this.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -30,16 +30,16 @@ export default class BeginningScene extends Phaser.Scene {
     }
 
     create() {
-        this.canMove = true
         this.fishTypes = ['salmon', 'bass', 'pike', 'pufferfish']
         this.fishRod = ['fr_1', 'fr_2', 'fr_3', 'fr_4']
         let map = this.make.tilemap({ key: 'map' });
-        var tileset = map.addTilesetImage('tileset', 'tiles', 32, 32, 2, 3);
+        var tileset = map.addTilesetImage('tileset', 'tiles3', 32, 32, 2, 3);
         var water = map.createLayer('water', tileset, 0, 0);
         this.fishing_zone = map.createLayer('fishingZone', tileset, 0, 0);
         var ground = map.createLayer('ground', tileset, 0, 0);
         water.setCollisionBetween(3, 4)
-        this.npc = new NPC({scene:this, x:250, y:250, texture:'fisherman', frame:'fisherman_13'})
+        let testPlayer = new NPC({scene:this, x:250, y:250, texture:'fisherman', frame:'fisherman_13'})
+        testPlayer.update()
 
         var self = this
         this.socket = io()
@@ -50,13 +50,13 @@ export default class BeginningScene extends Phaser.Scene {
                 if (players[id].playerId === self.socket.id) {
                     self.addPlayer(self, players[id])
                     self.physics.add.collider(self.player, water)
-                    self.physics.add.collider(self.player, self.npc)
+                    self.physics.add.collider(self.player, testPlayer)
                     self.physics.add.collider(self.player, self.fishing_zone)
                     self.physics.add.collider(self.player.selectedItem, water)
-                    self.physics.add.collider(self.player.selectedItem, self.npc)
+                    self.physics.add.collider(self.player.selectedItem, testPlayer)
                     self.physics.add.collider(self.player.selectedItem, self.fishing_zone)
                     self.physics.add.collider(self.player.username, water)
-                    self.physics.add.collider(self.player.username, self.npc)
+                    self.physics.add.collider(self.player.username, testPlayer)
                     self.physics.add.collider(self.player.username, self.fishing_zone)
                 } else {
                     self.addOtherPlayers(self, players[id])
@@ -99,7 +99,7 @@ export default class BeginningScene extends Phaser.Scene {
             })
         })
 
-        this.scene.get('BeginningScene').events.on('select-item', (data) => {
+        this.scene.get('BeginningScene2').events.on('select-item', (data) => {
             if (data.frame === -1) {
                 this.player.selectedItem.visible = false
                 this.socket.emit('select-item-img', { frame: data.frame }) //geriau butu turet tuscia frame, nereiktu if'u tiek (ji det image pradzioj kad butu galima paskui papildyt items.png)
@@ -115,9 +115,7 @@ export default class BeginningScene extends Phaser.Scene {
 
     addPlayer(self, playerInfo) {
         self.player = new Player({scene:this, x: playerInfo.x, y: playerInfo.y, texture: 'fisherman', frame: 'fisherman_13', isLocal: true})
-        if(this.playerInventory) {
-            this.player.inventory = this.playerInventory
-        }
+        self.player.inventory = this.playerInventory
         self.player.setUsername("Arthur")
         self.inventoryScene = self.scene.launch('InventoryScene', {scene: this})
     }
@@ -134,16 +132,11 @@ export default class BeginningScene extends Phaser.Scene {
         if(this.player && this.canMove) {
             this.player.update()
 
-            if(this.npc) {
-                this.npc.update()
-                this.npc.handleCollision(this.player)
-            }
-
             if(this.player.x > 612 && this.player.y > 612){
                 this.player.x = 500
                 this.player.y = 500
-                this.scene.start('BeginningScene2', { inventory: this.player.inventory })
-                this.scene.stop('BeginningScene')
+                this.scene.start('BeginningScene', { inventory: this.player.inventory })
+                this.scene.stop('BeginningScene2')
                 this.socket.emit('leave-room')
             }
     
@@ -165,11 +158,13 @@ export default class BeginningScene extends Phaser.Scene {
                             this.scene.launch('modal', { randomFishRod: randomFishRod })
                             this.player.inventory.addItem({name: randomFishRod, quantity: 1, type: 'fishing-rod'})
                             this.scene.get('InventoryScene').refresh()
+                            this.player.inventory.addCoins(50)
                             this.scene.get('InventoryScene').refreshCoins()
                         } else {
                             const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes)
                             this.player.inventory.addItem({name: randomFishType, quantity: 1, type: 'fish'})
                             this.scene.get('InventoryScene').refresh()
+                            this.player.inventory.addCoins(50)
                             this.scene.get('InventoryScene').refreshCoins()
                         }
                     },

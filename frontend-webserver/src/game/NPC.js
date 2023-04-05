@@ -7,14 +7,35 @@ export default class NPC extends Phaser.Physics.Arcade.Sprite {
         this.scene.add.existing(this)
         this.body.setCircle(12, 5, 5)
         this.setImmovable(true)
+        this.circle = null
     }
-
+  
     static preload(scene) {
-        scene.load.atlas('boy', 'assets/boy.png', 'assets/boy_atlas.json')
-        scene.load.animation('boy_animation', 'assets/boy_anim.json')
+        scene.load.atlas('fisherman', 'assets/fisherman/fisherman.png', 'assets/fisherman/fisherman_atlas.json')
+        scene.load.animation('fisherman_anim', 'assets/fisherman/fisherman_anim.json')
     }
-
+  
+    createCircle() {
+        const radius = 50;
+        this.circle = this.scene.add.circle(this.x, this.y, radius, 0xffffff, 0);
+        this.scene.physics.add.existing(this.circle);
+        this.circle.body.setCircle(radius);
+        this.circle.body.setOffset(1, 1);
+    }
+  
     update() {
-        this.anims.play('idle', true)
+      this.anims.play('idle', true)
+    }
+  
+    handleCollision(player) {
+        if (!this.circle) {
+            this.createCircle()
+        }
+        this.scene.physics.add.overlap(player, this.circle, () => {
+            if (Phaser.Input.Keyboard.JustDown(this.scene.input.keyboard.addKey('E'))) {
+                this.scene.scene.pause('BeginningScene')
+                this.scene.scene.launch('ShopScene', { inventory: player.inventory })
+            }
+        })
     }
 }

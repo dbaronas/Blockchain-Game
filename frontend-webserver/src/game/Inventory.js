@@ -4,6 +4,7 @@ export default class Inventory {
         this.maxRows = 3
         this.items = {
         }
+        this.coins = 0
     }
 
     addItem(item){
@@ -19,6 +20,27 @@ export default class Inventory {
                 }
             }
         }
+    }
+
+    incrementFishAmount(index, amount) {
+        if(this.items[index].type !== 'fish') return
+        this.items[index].quantity += amount
+    }
+
+    decreaseItem(index) {
+        if (this.items[index].quantity > 1) {
+            this.items[index].quantity--
+        } else {
+            delete this.items[index]
+        }
+    }
+
+    addCoins(amount) {
+        this.coins += amount
+    }
+
+    getCoins() {
+        return this.coins
     }
 
     getItem(index) {

@@ -1,8 +1,10 @@
 import Phaser from "phaser"
 import BeginningScene from "./BeginningScene.js"
+import BeginningScene2 from "./BeginningScene2.js"
 import CatchModal from "./CatchModal.js"
 import InventoryScene from "./InventoryScene.js"
 import TutorialScene from "./TutorialScene.js"
+import ShopScene from "./ShopScene.js"
 
 
 let game = null
@@ -18,8 +20,10 @@ export const getGameInstance = () => {
       scene: [
         TutorialScene,
         BeginningScene,
+        BeginningScene2,
         CatchModal,
-        InventoryScene
+        InventoryScene,
+        ShopScene
       ],
       physics: {
         default: 'arcade',

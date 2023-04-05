@@ -31,6 +31,10 @@ export default class InventoryScene extends Phaser.Scene {
         inventorySlot.destroy()
     }
 
+    destroyCoinText(coinText) {
+        if(coinText) coinText.destroy()
+    }
+
     refresh() {
         this.inventorySlots.forEach(slot => this.destroyInventorySlot(slot))
         this.inventorySlots = []
@@ -63,7 +67,6 @@ export default class InventoryScene extends Phaser.Scene {
                     textureKey = 'rods'
                     frame = rods[item.name].frame
                 }
-
                 inventorySlot.item = this.add.sprite(inventorySlot.x, inventorySlot.y - this.tileSize / 12, textureKey, frame).setScale(1.5)
                 inventorySlot.quantityText = this.add.text(inventorySlot.x, inventorySlot.y +  this.tileSize / 6, item.quantity, {
                     font: '16px Arial',
@@ -72,18 +75,30 @@ export default class InventoryScene extends Phaser.Scene {
                 inventorySlot.item.setInteractive()
                 this.input.setDraggable(inventorySlot.item)
                 if(index === this.selectedItemIndex) {
-                    this.events.emit('select-item', { frame, textureKey })
+                    this.scene.events.emit('select-item', { frame, textureKey })
                 }
             } else {
                 if(index === this.selectedItemIndex) {
-                  this.events.emit('select-item', { frame, textureKey })
+                    this.scene.events.emit('select-item', { frame, textureKey })
                 }
             }
             this.inventorySlots.push(inventorySlot)
         }
     }
 
+    refreshCoins() {
+        this.destroyCoinText(this.coinText)
+        this.coinText = this.add.text(1240, this.margin + this.tileSize / 2 + 20, this.inventory.getCoins(), {
+            font: '16px Arial',
+            fill: '#111'
+        }).setOrigin(0.5, 0.5)
+    }
+
     create(){
+        this.coinSlot = this.add.sprite(1240, this.margin + this.tileSize / 2, 'items', 4).setScale(this.uiScale)
+        this.coinSlot.depth = -1
+        this.coinIcon = this.add.sprite(1240, this.margin + this.tileSize / 2, 'items', 1).setScale(this.uiScale)
+
         this.input.keyboard.on('keydown-I',()=>{
             this.rows = this.rows === 1 ? this.maxRows : 1
             this.refresh()
@@ -92,10 +107,10 @@ export default class InventoryScene extends Phaser.Scene {
         this.input.setTopOnly(false)
 
         this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
-            if (deltaY < 0) {
-                this.selectedItemIndex = Phaser.Math.Wrap(this.selectedItemIndex - 1, 0, this.maxColumns * this.rows)
-            } else {
+            if (deltaY > 0) {
                 this.selectedItemIndex = Phaser.Math.Wrap(this.selectedItemIndex + 1, 0, this.maxColumns * this.rows)
+            } else {
+                this.selectedItemIndex = Phaser.Math.Wrap(this.selectedItemIndex - 1, 0, this.maxColumns * this.rows)
             }
             this.refresh()
         })
@@ -113,5 +128,6 @@ export default class InventoryScene extends Phaser.Scene {
             this.refresh()
         })
         this.refresh()
+        this.refreshCoins()
     }
 }
