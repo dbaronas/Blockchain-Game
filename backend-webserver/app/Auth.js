@@ -3,12 +3,12 @@ const db = require('../models/index')
 
 const register = async (req, res) => {
     try {
-        const { wallet_address, username, data } = req.body
+        const { address, username, data } = req.body
 
-        if (!(wallet_address && username)) {
+        if (!(address && username)) {
             res.status(400).send('All input is required')
         } else {
-            const oldUser = await db.User.findOne({ where: { wallet_address: wallet_address } })
+            const oldUser = await db.User.findOne({ where: { wallet_address: address } })
 
             if (oldUser) {
                 res.status(409).send('User Already Exist. Please Login')
@@ -18,14 +18,14 @@ const register = async (req, res) => {
                     res.status(409).send(username + ' is not available')
                 } else {
                     const user = await db.User.create({
-                        wallet_address: wallet_address,
+                        wallet_address: address,
                         username: username,
                         creation_date: Date.now(),
                         data: data
                     })
 
                     const token = jwt.sign(
-                        { user_id: wallet_address },
+                        { user_id: address },
                         process.env.JWT_SECRET,
                         { expiresIn: '6h' }
                     )
