@@ -40,16 +40,16 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const { wallet_address } = req.body
+        const { address } = req.body
 
-        if (!wallet_address) {
+        if (!address) {
             res.status(400).send('All input is required')
         } else {
-            const user = await db.User.findOne({ where: { wallet_address: wallet_address } })
+            const user = await db.User.findOne({ where: { wallet_address: address } })
 
             if (user) {
                 const token = jwt.sign(
-                    { user_id: wallet_address },
+                    { user_id: address },
                     process.env.JWT_SECRET,
                     { expiresIn: '6h' }
                 )
