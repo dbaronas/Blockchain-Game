@@ -1,4 +1,5 @@
 const api = require('./app/index')
+const auth = require('./middleware/auth')
 
 module.exports = (app) => {
 
@@ -31,4 +32,5 @@ module.exports = (app) => {
     //AUTH
     app.post('/api/v1/auth/login', api.auth.login)
     app.post('/api/v1/auth/register', api.auth.register)
+    app.post('/api/v1/auth/verifyToken', auth)
 }
