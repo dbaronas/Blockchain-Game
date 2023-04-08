@@ -5,6 +5,7 @@ import CatchModal from "./CatchModal.js"
 import InventoryScene from "./InventoryScene.js"
 import TutorialScene from "./TutorialScene.js"
 import ShopScene from "./ShopScene.js"
+import ChatScene from "./ChatScene.js"
 
 
 let game = null
@@ -23,8 +24,12 @@ export const getGameInstance = () => {
         BeginningScene2,
         CatchModal,
         InventoryScene,
-        ShopScene
+        ShopScene,
+        ChatScene
       ],
+      dom: {
+        createContainer: true
+      },
       physics: {
         default: 'arcade',
         arcade: {

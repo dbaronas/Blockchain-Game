@@ -103,5 +103,9 @@ io.on('connection', function (socket) {
                 socket.broadcast.to(roomName).emit('item-selected', room.players[socket.id])
             }
         })
+
+        socket.on('message', (data) => {
+            io.emit('messageResponse', data)
+          })
     })
 })
