@@ -122,6 +122,5 @@ export default class ChatScene extends Phaser.Scene {
                 this.isFocused = true
             }
         }
-        console.log(this.scene)
     }
 }
