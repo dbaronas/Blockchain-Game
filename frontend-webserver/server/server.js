@@ -3,6 +3,8 @@ const app = express()
 const server = require('http').Server(app)
 const path = require('path')
 const io = require('socket.io')(server)
+const Filter = require('bad-words')
+const filter = new Filter()
 require('dotenv').config()
 let maintenance = false
 
@@ -105,7 +107,7 @@ io.on('connection', function (socket) {
         })
 
         socket.on('message', (data) => {
-            data = socket.id + ': ' + data
+            data = socket.id + ': ' + filter.clean(data)
             io.emit('messageResponse', data)
           })
     })
