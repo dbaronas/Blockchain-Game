@@ -4,12 +4,17 @@ export default class ChatScene extends Phaser.Scene {
         this.chatMessages = []
     }
 
+    init(data) {
+        let { scene, io } = data
+        this.scene = scene
+        this.io = io
+    }
+
     preload(scene) {
         this.load.html('input', 'assets/chat_input.html')
     }
 
-    create(data) {
-        var { scene, io } = data
+    create() {
         this.isFocused = false
         this.chatBox = this.add.rectangle(3, 485, 370, 200, 0x964B00).setOrigin(0)
         this.chatBox.alpha = 0.2
@@ -53,8 +58,8 @@ export default class ChatScene extends Phaser.Scene {
         this.chatButton.on('down', () => {
             if (this.isFocused === false) {
                 chat.focus()
-                scene.input.keyboard.enabled = false
-                scene.input.keyboard.disableGlobalCapture()
+                this.scene.input.keyboard.enabled = false
+                this.scene.input.keyboard.disableGlobalCapture()
             }
         })
 
@@ -62,8 +67,8 @@ export default class ChatScene extends Phaser.Scene {
         this.input.keyboard.on('keydown-ESC', () => {
             if (this.isFocused === true) {
                 chat.blur()
-                scene.input.keyboard.enabled = true
-                scene.input.keyboard.enableGlobalCapture()
+                this.scene.input.keyboard.enabled = true
+                this.scene.input.keyboard.enableGlobalCapture()
                 this.isFocused = false
             }
         })
@@ -71,8 +76,8 @@ export default class ChatScene extends Phaser.Scene {
             if (chat.value !== '' && this.isFocused === true) {
                 send.click()
                 chat.blur()
-                scene.input.keyboard.enabled = true
-                scene.input.keyboard.enableGlobalCapture()
+                this.scene.input.keyboard.enabled = true
+                this.scene.input.keyboard.enableGlobalCapture()
                 this.isFocused = false
             }
         })
@@ -81,19 +86,19 @@ export default class ChatScene extends Phaser.Scene {
             if (event.target.name === 'send') {
                 if (chat.value !== '') {
                     this.isFocused = false
-                    io.emit('message', chat.value)
+                    this.io.emit('message', chat.value)
                     chat.value = ''
                 }
-                scene.input.keyboard.enabled = true
-                scene.input.keyboard.enableGlobalCapture()
+                this.scene.input.keyboard.enabled = true
+                this.scene.input.keyboard.enableGlobalCapture()
             } else if (event.target.name === 'input') {
                 this.isFocused = true
-                scene.input.keyboard.enabled = false
-                scene.input.keyboard.disableGlobalCapture()
+                this.scene.input.keyboard.enabled = false
+                this.scene.input.keyboard.disableGlobalCapture()
             }
         })
 
-        io.on('messageResponse', (message) => {
+        this.io.on('messageResponse', (message) => {
             this.chatMessages.push(message)
             if (this.chatMessages.length > 100) {
                 this.chatMessages.shift()
@@ -105,6 +110,10 @@ export default class ChatScene extends Phaser.Scene {
 
     }
 
+    setScene(scene) {
+        this.scene = scene
+    }
+
     update() {
 
         if (this.isFocused === false) {
@@ -113,5 +122,6 @@ export default class ChatScene extends Phaser.Scene {
                 this.isFocused = true
             }
         }
+        console.log(this.scene)
     }
 }

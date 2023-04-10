@@ -1,4 +1,3 @@
-import CatchModal from "./CatchModal.js"
 import NPC from "./NPC.js"
 import Player from "./Player.js"
 
@@ -14,7 +13,6 @@ export default class BeginningScene extends Phaser.Scene {
     
     preload() {
         Player.preload(this)
-        CatchModal.preload(this)
         NPC.preload(this)
         this.load.atlas('fisherman', 'assets/fisherman/fisherman.png', 'assets/fisherman/fisherman_atlas.json')
         this.load.image('tiles', 'assets/tileset.png')
@@ -43,7 +41,7 @@ export default class BeginningScene extends Phaser.Scene {
 
         var self = this
         this.socket = io()
-        this.scene.launch('chat', {scene: this, io: this.socket})
+        this.scene.get('chat').setScene(this)
         this.socket.emit('join-room', this.roomName)
         this.otherPlayers = this.physics.add.group()
         this.socket.on('currentPlayers', function (players) {
@@ -121,6 +119,9 @@ export default class BeginningScene extends Phaser.Scene {
         }
         self.player.setUsername("Arthur")
         self.inventoryScene = self.scene.launch('InventoryScene', {scene: this})
+        if(!this.scene.isActive('chat')) {
+            self.scene.launch('chat', {scene: this, io: this.socket})
+        }
     }
 
     addOtherPlayers(self, playerInfo) {
@@ -161,8 +162,7 @@ export default class BeginningScene extends Phaser.Scene {
                         const selectedOption = options[randomNum]
                         if (selectedOption === 'fishrod') {
                             const randomFishRod = Phaser.Utils.Array.GetRandom(this.fishRod)
-                            this.modal = new CatchModal()
-                            this.add.existing(this.modal)
+                            this.scene.pause()
                             this.scene.launch('modal', { randomFishRod: randomFishRod })
                             this.player.inventory.addItem({name: randomFishRod, quantity: 1, type: 'fishing-rod'})
                             this.scene.get('InventoryScene').refresh()
