@@ -72,7 +72,7 @@ export default class ChatScene extends Phaser.Scene {
         })
 
         io.on('messageResponse', (message) => {
-            this.chatMessages.push(io.id + ': ' + message)
+            this.chatMessages.push(message)
             if (this.chatMessages.length > 9) {
                 this.chatMessages.shift()
                 this.chat.setText(this.chatMessages)

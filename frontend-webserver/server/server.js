@@ -105,6 +105,7 @@ io.on('connection', function (socket) {
         })
 
         socket.on('message', (data) => {
+            data = socket.id + ': ' + data
             io.emit('messageResponse', data)
           })
     })
