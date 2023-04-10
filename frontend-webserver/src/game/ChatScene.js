@@ -11,22 +11,42 @@ export default class ChatScene extends Phaser.Scene {
     create(data) {
         var { scene, io } = data
         this.isFocused = false
-        this.chatBox = this.add.rectangle(0, 0, 370, 200, 0x964B00)
+        this.chatBox = this.add.rectangle(3, 485, 370, 200, 0x964B00).setOrigin(0)
         this.chatBox.alpha = 0.2
-        this.chatInput = this.add.dom(0, 715).createFromCache('input').setOrigin(0, 1)
-        this.chat = this.add.text(-185, 70, '', {
+        var graphics = this.make.graphics()
+        graphics.fillRect(3, 485, 370, 200)
+        var mask = new Phaser.Display.Masks.GeometryMask(this, graphics)
+        this.chatInput = this.add.dom(3, 690).createFromCache('input').setOrigin(0)
+        this.chatContent = this.add.text(3, 690, '', {
             lineSpacing: 5,
             color: '#FFFFFF',
             padding: 10,
-            fontStyle: 'bold'
-        })
-        this.container = this.add.container(185, 580, [this.chatBox, this.chat])
+            fontStyle: 'bold',
+            wordWrap: {width: 360} // padaryti kad pascrollintu i virsu jei teksto yra daugiau
+        }).setOrigin(0, 1).setMask(mask)
         let chat = this.chatInput.getChildByName('input')
         let send = this.chatInput.getChildByName('send')
         this.chatMessages.push('Welcome to MetaOcean!')
-        this.chat.setText(this.chatMessages)
+        this.chatContent.setText(this.chatMessages)
 
         this.chatInput.addListener('click')
+
+        this.zone = this.add.zone(3, 485, 370, 200).setOrigin(0).setInteractive()
+        this.zone.once('pointerover', () => {
+            this.zone.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
+                if(deltaX < 0) {
+                    this.chatContent.y = this.chatContent.y + 15
+                } else {
+                    this.chatContent.y = this.chatContent.y - 15
+                }
+                if(this.chatContent.height <= 215) {
+                    this.chatContent.y = Phaser.Math.Clamp(this.chatContent.y, 690, 690)
+                } else {
+                    this.chatContent.y = Phaser.Math.Clamp(this.chatContent.y, 690, 690 + this.chatContent.height - 210)
+                }
+            })
+        })
+
 
         this.chatButton = this.input.keyboard.addKey('T')
 
@@ -60,12 +80,14 @@ export default class ChatScene extends Phaser.Scene {
         this.chatInput.on('click', event => {
             if (event.target.name === 'send') {
                 if (chat.value !== '') {
+                    this.isFocused = false
                     io.emit('message', chat.value)
                     chat.value = ''
                 }
                 scene.input.keyboard.enabled = true
                 scene.input.keyboard.enableGlobalCapture()
             } else if (event.target.name === 'input') {
+                this.isFocused = true
                 scene.input.keyboard.enabled = false
                 scene.input.keyboard.disableGlobalCapture()
             }
@@ -73,12 +95,11 @@ export default class ChatScene extends Phaser.Scene {
 
         io.on('messageResponse', (message) => {
             this.chatMessages.push(message)
-            if (this.chatMessages.length > 9) {
+            if (this.chatMessages.length > 100) {
                 this.chatMessages.shift()
-                this.chat.setText(this.chatMessages)
+                this.chatContent.setText(this.chatMessages)
             } else {
-                this.chat.y = this.chat.y - 20
-                this.chat.setText(this.chatMessages)
+                this.chatContent.setText(this.chatMessages)
             }
         })
 
