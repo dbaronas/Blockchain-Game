@@ -33,7 +33,6 @@ const register = async (req, res) => {
                     res.cookie('jwt', token, {
                         httpOnly: true,
                         sameSite: 'none',
-                        secure: true,
                         maxAge: 6 * 60 * 60 * 1000
                     }).status(200).send('Registered successfully')
                 }
@@ -62,7 +61,6 @@ const login = async (req, res) => {
                 res.cookie('jwt', token, {
                     httpOnly: true,
                     sameSite: 'none',
-                    secure: true,
                     maxAge: 6 * 60 * 60 * 1000
                 }).status(200).send('Login successful')
             } else {
