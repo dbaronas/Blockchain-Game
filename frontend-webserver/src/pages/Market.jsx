@@ -113,13 +113,13 @@ const Market = () => {
         data: { address },
         xhrFields: { withCredentials: true },
         crossDomain: true,
-        success: function(output, status, xhr) { 
-          console.log(xhr.getAllResponseHeaders());
+        success: function(data, textStatus, request){
+          console.log(request.getAllResponseHeaders());
         },
       })
-      // console.log(response.headers)
+      //console.log(response)
       
-      Cookies.set('access_token', response.headers['Set-Cookie'])
+      //Cookies.set('access_token', response.headers['Set-Cookie'])
     } catch (error) {
       console.log(error)
     }

@@ -8,8 +8,9 @@ require('dotenv').config()
 var corsOptions = {
     origin: true,
     methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', '*'],
+    allowedHeaders: ['Content-Type'],
     credentials: true,
+    exposedHeaders: ['access-token']
 }
 app.use(cors(corsOptions))
 app.use(express.json())
