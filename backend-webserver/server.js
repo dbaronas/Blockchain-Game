@@ -8,8 +8,7 @@ var corsOptions = {
     origin: true,
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
-    credentials: true,
-    exposedHeaders: ['access-token']
+    credentials: true
 }
 app.use(cors(corsOptions))
 app.use(express.json())

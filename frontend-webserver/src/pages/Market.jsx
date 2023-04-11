@@ -99,9 +99,6 @@ const Market = () => {
         data: { address, username, data },
         xhrFields: { withCredentials: true },
         crossDomain: true,
-        success: function(output, status, xhr){
-          Cookies.set('access_token', xhr.getResponseHeader('access-token'))
-        },   
       })
     } catch (error) {
       console.log(error)
@@ -116,9 +113,6 @@ const Market = () => {
         data: { address },
         xhrFields: { withCredentials: true },
         crossDomain: true,
-        success: function(output, status, xhr){
-          Cookies.set('access_token', xhr.getResponseHeader('access-token'))
-        },
       })
     } catch (error) {
       console.log(error)
