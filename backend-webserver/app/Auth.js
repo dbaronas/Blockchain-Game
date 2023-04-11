@@ -30,13 +30,11 @@ const register = async (req, res) => {
                         { expiresIn: '6h' }
                     )
 
-                    res.cookie('token', token, {
+                    res.cookie('jwt', token, {
                         httpOnly: true,
                         sameSite: 'strict',
                         maxAge: 6 * 60 * 60 * 1000
-                    })
-
-                    res.status(200).json({ user, token })
+                    }).status(200).send('Registered successfully')
                 }
             }
         }
@@ -60,14 +58,11 @@ const login = async (req, res) => {
                     process.env.JWT_SECRET,
                     { expiresIn: '6h' }
                 )
-
-                res.cookie('token', token, {
+                res.cookie('jwt', token, {
                     httpOnly: true,
                     sameSite: 'strict',
                     maxAge: 6 * 60 * 60 * 1000
-                })
-                
-                res.status(200).json({ user, token })
+                }).status(200).send('Login successful')
             } else {
                 res.status(400).send('Invalid Credentials')
             }

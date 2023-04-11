@@ -1,4 +1,4 @@
-import { people01, people02, people03, facebook, instagram, linkedin, twitter, airbnb, binance, coinbase, dropbox, send, shield, star  } from "../assets";
+import { people01, people02, people03, people04, facebook, instagram, linkedin, twitter, airbnb, binance, coinbase, dropbox, send, shield, star  } from "../assets";
 
 export const navLinks = [
   {
@@ -78,6 +78,15 @@ export const feedback = [
     title: "Founder & Leader",
     img: people03,
     link: "https://www.linkedin.com/in/dominykas-baronas-44669626a"
+  },
+  {
+    id: "feedback-4",
+    content:
+      "Padedu kolegoms su testavimu",
+    name: "Arthur Vilkas",
+    title: "Founder & Leader",
+    img: people04,
+    link: "https://www.linkedin.com/"
   },
 ];
 
