@@ -46,6 +46,7 @@ export default class CatchModal extends Phaser.Scene {
                 }
             });
             this.scene.stop()
+            this.scene.resume('BeginningScene')
         })
     }
 }
