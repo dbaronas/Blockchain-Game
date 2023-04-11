@@ -97,9 +97,12 @@ const Market = () => {
         type: 'POST',
         url: 'http://193.219.91.103:6172/api/v1/auth/register',
         data: { address, username, data },
+        xhrFields: { withCredentials: true },
+        crossDomain: true,
+        success: function(output, status, xhr){
+          Cookies.set('access_token', xhr.getResponseHeader('access-token'))
+        },   
       })
-      console.log(response)
-      Cookies.set('access_token', response.headers['set-cookie'])
     } catch (error) {
       console.log(error)
     }
@@ -113,18 +116,15 @@ const Market = () => {
         data: { address },
         xhrFields: { withCredentials: true },
         crossDomain: true,
-        success: function(data, textStatus, request){
-          console.log(request.getAllResponseHeaders());
+        success: function(output, status, xhr){
+          Cookies.set('access_token', xhr.getResponseHeader('access-token'))
         },
       })
-      //console.log(response)
-      
-      //Cookies.set('access_token', response.headers['Set-Cookie'])
     } catch (error) {
       console.log(error)
     }
   }
-    
+  
   return (
     <>
     <WagmiConfig client={wagmiClient}>
