@@ -9,9 +9,9 @@ export default class CatchModal extends Phaser.Scene {
         this.height = 0
     }
 
-    static preload(scene) {
-        scene.load.image('modal', 'assets/modal.png')
-        scene.load.image('button', 'assets/button.png')
+    preload() {
+        this.load.image('modal', 'assets/modal.png')
+        this.load.image('button', 'assets/button.png')
     }
 
     create(data) {
