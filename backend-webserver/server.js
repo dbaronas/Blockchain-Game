@@ -6,7 +6,7 @@ require('dotenv').config()
 
 //require('./middleware/permissions')
 var corsOptions = {
-    allowedHeaders: 'set-cookie'
+    allowedHeaders: 'x-requested-with'
 }
 app.use(cors(corsOptions))
 app.use(express.json())
