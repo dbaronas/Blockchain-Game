@@ -5,7 +5,10 @@ const cookieParser = require('cookie-parser')
 require('dotenv').config()
 
 //require('./middleware/permissions')
-app.use(cors())
+var corsOptions = {
+    allowedHeaders: 'set-cookie'
+}
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('game'))

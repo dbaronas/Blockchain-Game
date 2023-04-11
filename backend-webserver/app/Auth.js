@@ -34,7 +34,7 @@ const register = async (req, res) => {
                         httpOnly: true,
                         sameSite: 'strict',
                         maxAge: 6 * 60 * 60 * 1000
-                    }).header('x-access-token', token).status(200).send('Registered successfully')
+                    }).status(200).send('Registered successfully')
                 }
             }
         }
@@ -62,7 +62,7 @@ const login = async (req, res) => {
                     httpOnly: true,
                     sameSite: 'strict',
                     maxAge: 6 * 60 * 60 * 1000
-                }).header('x-access-token', token).status(200).send('Login successful')
+                }).status(200).send('Login successful')
             } else {
                 res.status(400).send('Invalid Credentials')
             }
