@@ -48,9 +48,6 @@ const [toggle, setToggle] = useState(false)
                   </a>
                 </li>
               ))}
-              <li>
-                <Market />
-              </li>
             </ul>
           </div>
       </div>

@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState, useEffect } from 'react'
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Modal, useWeb3ModalTheme } from '@web3modal/react'
@@ -26,27 +25,22 @@ const Market = () => {
 
   const { setTheme } = useWeb3ModalTheme()
   const [loaded, setLoaded] = useState(false)
-  const [connectedAccount] = useGlobalState('connectedAccount')
   const [currentAddress, setCurrentAddress] = useState('')
   const [existsValue, setExistsValue] = useState(null)
   
-  
   useEffect(() => {
+    
     const account = ethereumClient.getAccount()
     if (account.address) {
-      setGlobalState('connectedAccount', account.address)
       setCurrentAddress(account.address)
-      console.log(account.address)
     }
 
     // make async when user connect wallet you can load his nfts for example
     // function will execute even if wallet hasn't been changed, it will consider initial wallet address
     ethereumClient.watchAccount((account) => {
       if (account.address) {
-        setGlobalState('connectedAccount', account.address)
         setCurrentAddress(account.address)
       } else {
-        setGlobalState('connectedAccount', '')
         setCurrentAddress('')
         setExistsValue(null)
       }
@@ -54,7 +48,7 @@ const Market = () => {
 
     setLoaded(true)
     // hook to execute only when the connectedAccount value changes
-  }, [connectedAccount]) 
+  }, [currentAddress]) 
 
   // call sendAddress when the address value changes
   useEffect(() => {
@@ -87,8 +81,7 @@ const Market = () => {
     } catch (error) {
       console.log(error)
     }
-    console.log(existsValue)
-    return existsValue
+      return existsValue
   }
 
   const register = async (address, username, data) => {
