@@ -1,4 +1,4 @@
-import { people01, people02, people03, people04, facebook, instagram, linkedin, twitter, airbnb, binance, coinbase, dropbox, send, shield, star  } from "../assets";
+import { people01, people02, people03, facebook, instagram, linkedin, twitter, airbnb, binance, coinbase, dropbox, send, shield, star  } from "../assets";
 
 export const navLinks = [
   {
@@ -21,11 +21,11 @@ export const navLinks = [
     title: "Mint NFT",
     link: '/mint'
   },
-  {
-    id: "connect_wallet",
-    title: "Connect Wallet",
-    link: '/connectwallet'
-  }
+  // {
+  //   id: "connect_wallet",
+  //   title: "Connect Wallet",
+  //   link: '/connectwallet'
+  // }
 ];
 
 export const features = [
@@ -64,7 +64,7 @@ export const feedback = [
   },
   {
     id: "feedback-2",
-    content: `2 TIME ELDEN LORD. ABSOLUTE GIGACHAD. NEVER HAD AN ERROR WHILE CODING. EXPERT AT EVERYTHING. CANT LOSE, WONT LOSE. "THE UNSEEN BLADE IS THE DEADLIEST" - ZED. "I BUY, THEY DIE. SIMPLE" - KAYN`,    
+    content: "2 TIME ELDEN LORD. ABSOLUTE GIGACHAD. NEVER HAD AN ERROR WHILE CODING. EXPERT AT EVERYTHING. CANT LOSE, WONT LOSE.",    
     name: "Martynas Muižys",
     title: "Founder & Leader",
     img: people02,
@@ -78,15 +78,6 @@ export const feedback = [
     title: "Founder & Leader",
     img: people03,
     link: "https://www.linkedin.com/in/dominykas-baronas-44669626a"
-  },
-  {
-    id: "feedback-4",
-    content:
-      "Padedu kolegoms su testavimu",
-    name: "Arthur Vilkas",
-    title: "Founder & Leader",
-    img: people04,
-    link: "https://www.linkedin.com/"
   },
 ];
 
