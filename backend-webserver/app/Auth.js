@@ -59,12 +59,12 @@ const login = async (req, res) => {
                     process.env.JWT_SECRET,
                     { expiresIn: '6h' }
                 )
-                res.cookie('jwt', token, {
+                res.cookie('access-token', token, {
                     httpOnly: true,
                     sameSite: 'none',
-                    secure: false,
+                    secure: true,
                     maxAge: 6 * 60 * 60 * 1000
-                }).status(200).send('Login successful')
+                }).json({msg: 'Login successful', token})
             } else {
                 res.status(400).send('Invalid Credentials')
             }

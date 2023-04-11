@@ -6,8 +6,10 @@ require('dotenv').config()
 
 //require('./middleware/permissions')
 var corsOptions = {
-    allowedHeaders: 'x-requested-with',
-    credentials: true
+    origin: true,
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', '*'],
+    credentials: true,
 }
 app.use(cors(corsOptions))
 app.use(express.json())
