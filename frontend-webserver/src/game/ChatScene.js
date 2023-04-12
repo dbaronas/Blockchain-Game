@@ -10,23 +10,23 @@ export default class ChatScene extends Phaser.Scene {
         this.io = io
     }
 
-    preload(scene) {
+    preload() {
         this.load.html('input', 'assets/chat_input.html')
     }
 
     create() {
         this.isFocused = false
-        this.chatBox = this.add.rectangle(3, 485, 370, 200, 0x964B00).setOrigin(0)
+        this.chatBox = this.add.rectangle(3, 480, 370, 200, 0x964B00).setOrigin(0)
         this.chatBox.alpha = 0.2
         var graphics = this.make.graphics()
-        graphics.fillRect(3, 485, 370, 200)
+        graphics.fillRect(3, 480, 370, 200)
         var mask = new Phaser.Display.Masks.GeometryMask(this, graphics)
-        this.chatInput = this.add.dom(3, 690).createFromCache('input').setOrigin(0)
-        this.chatContent = this.add.text(3, 690, '', {
-            lineSpacing: 5,
-            color: '#FFFFFF',
+        this.chatInput = this.add.dom(3, 685).createFromCache('input').setOrigin(0)
+        this.chatContent = this.add.text(3, 685, '', {
+            fontFamily: 'VT323',
+            color: '#000000',
             padding: 10,
-            fontStyle: 'bold',
+            fontStyle: 'normal',
             wordWrap: {width: 360} // padaryti kad pascrollintu i virsu jei teksto yra daugiau
         }).setOrigin(0, 1).setMask(mask)
         let chat = this.chatInput.getChildByName('input')
@@ -36,7 +36,7 @@ export default class ChatScene extends Phaser.Scene {
 
         this.chatInput.addListener('click')
 
-        this.zone = this.add.zone(3, 485, 370, 200).setOrigin(0).setInteractive()
+        this.zone = this.add.zone(3, 480, 370, 200).setOrigin(0).setInteractive()
         this.zone.once('pointerover', () => {
             this.zone.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
                 if(deltaX < 0) {
@@ -45,9 +45,9 @@ export default class ChatScene extends Phaser.Scene {
                     this.chatContent.y = this.chatContent.y - 15
                 }
                 if(this.chatContent.height <= 215) {
-                    this.chatContent.y = Phaser.Math.Clamp(this.chatContent.y, 690, 690)
+                    this.chatContent.y = Phaser.Math.Clamp(this.chatContent.y, 685, 685)
                 } else {
-                    this.chatContent.y = Phaser.Math.Clamp(this.chatContent.y, 690, 690 + this.chatContent.height - 210)
+                    this.chatContent.y = Phaser.Math.Clamp(this.chatContent.y, 685, 685 + this.chatContent.height - 215)
                 }
             })
         })
