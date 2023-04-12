@@ -100,7 +100,7 @@ io.on('connection', function (socket) {
             socket.leave(roomName)
             delete room.players[socket.id]
             io.to(roomName).emit('player-left', socket.id)
-            socket.disconnect()
+            //socket.disconnect()
         })
 
         socket.on('playerMovement', function (movementData) {
