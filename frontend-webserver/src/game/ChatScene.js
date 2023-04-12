@@ -60,6 +60,7 @@ export default class ChatScene extends Phaser.Scene {
                 chat.focus()
                 this.scene.input.keyboard.enabled = false
                 this.scene.input.keyboard.disableGlobalCapture()
+                this.scene.scene.pause('InventoryScene')
             }
         })
 
@@ -70,6 +71,7 @@ export default class ChatScene extends Phaser.Scene {
                 this.scene.input.keyboard.enabled = true
                 this.scene.input.keyboard.enableGlobalCapture()
                 this.isFocused = false
+                this.scene.scene.resume('InventoryScene')
             }
         })
         this.input.keyboard.on('keydown-ENTER', () => {
@@ -79,6 +81,7 @@ export default class ChatScene extends Phaser.Scene {
                 this.scene.input.keyboard.enabled = true
                 this.scene.input.keyboard.enableGlobalCapture()
                 this.isFocused = false
+                this.scene.scene.resume('InventoryScene')
             }
         })
 
@@ -88,13 +91,22 @@ export default class ChatScene extends Phaser.Scene {
                     this.isFocused = false
                     this.io.emit('message', chat.value)
                     chat.value = ''
+                    chat.blur()
+                    this.scene.input.keyboard.enabled = true
+                    this.scene.input.keyboard.enableGlobalCapture()
+                    this.isFocused = false
+                    this.scene.scene.resume('InventoryScene')
                 }
+                chat.blur()
                 this.scene.input.keyboard.enabled = true
                 this.scene.input.keyboard.enableGlobalCapture()
+                this.isFocused = false
+                this.scene.scene.resume('InventoryScene')
             } else if (event.target.name === 'input') {
                 this.isFocused = true
                 this.scene.input.keyboard.enabled = false
                 this.scene.input.keyboard.disableGlobalCapture()
+                this.scene.scene.pause('InventoryScene')
             }
         })
 
