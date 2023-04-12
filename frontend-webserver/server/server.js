@@ -44,7 +44,7 @@ io.on('connection', function (socket) {
     
     $.ajax({
         type: 'POST',
-        url: 'http://193.219.91.103:6172/api/v1/auth/username',
+        url: `http://${process.env.BACKEND}/api/v1/auth/username`,
         data: { token },
         xhrFields: { withCredentials: true },
         crossDomain: true,
