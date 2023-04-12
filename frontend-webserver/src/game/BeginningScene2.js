@@ -41,6 +41,7 @@ export default class BeginningScene2 extends Phaser.Scene {
 
         var self = this
         this.socket = io()
+        this.scene.get('chat').setScene(this)
         this.socket.on('usernameGot', () => {
             this.socket.emit('join-room', this.roomName)
             this.otherPlayers = this.physics.add.group()
