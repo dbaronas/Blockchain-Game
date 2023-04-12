@@ -33,4 +33,5 @@ module.exports = (app) => {
     app.post('/api/v1/auth/login', api.auth.login)
     app.post('/api/v1/auth/register', api.auth.register)
     app.post('/api/v1/auth/verifyToken', auth)
+    app.post('/api/v1/auth/username', api.auth.getUsername)
 }
