@@ -16,18 +16,18 @@ export default class ChatScene extends Phaser.Scene {
 
     create() {
         this.isFocused = false
-        this.chatBox = this.add.rectangle(3, 480, 370, 200, 0x964B00).setOrigin(0)
+        this.chatBox = this.add.rectangle(3, 485, 370, 200, 0x964B00).setOrigin(0)
         this.chatBox.alpha = 0.2
         var graphics = this.make.graphics()
-        graphics.fillRect(3, 480, 370, 200)
+        graphics.fillRect(3, 485, 370, 200)
         var mask = new Phaser.Display.Masks.GeometryMask(this, graphics)
-        this.chatInput = this.add.dom(3, 685).createFromCache('input').setOrigin(0)
-        this.chatContent = this.add.text(3, 685, '', {
+        this.chatInput = this.add.dom(3, 690).createFromCache('input').setOrigin(0)
+        this.chatContent = this.add.text(3, 690, '', {
             fontFamily: 'VT323',
             color: '#000000',
             padding: 10,
             fontStyle: 'normal',
-            wordWrap: {width: 360} // padaryti kad pascrollintu i virsu jei teksto yra daugiau
+            wordWrap: {width: 360}
         }).setOrigin(0, 1).setMask(mask)
         let chat = this.chatInput.getChildByName('input')
         let send = this.chatInput.getChildByName('send')
@@ -45,9 +45,9 @@ export default class ChatScene extends Phaser.Scene {
                     this.chatContent.y = this.chatContent.y - 15
                 }
                 if(this.chatContent.height <= 215) {
-                    this.chatContent.y = Phaser.Math.Clamp(this.chatContent.y, 685, 685)
+                    this.chatContent.y = Phaser.Math.Clamp(this.chatContent.y, 690, 690)
                 } else {
-                    this.chatContent.y = Phaser.Math.Clamp(this.chatContent.y, 685, 685 + this.chatContent.height - 215)
+                    this.chatContent.y = Phaser.Math.Clamp(this.chatContent.y, 690, 690 + this.chatContent.height - 215)
                 }
             })
         })
