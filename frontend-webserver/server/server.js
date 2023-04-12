@@ -1,8 +1,12 @@
 const express = require('express')
 const app = express()
 const server = require('http').Server(app)
-const path = require('path')
 const io = require('socket.io')(server)
+const { JSDOM } = require( "jsdom" )
+const { window } = new JSDOM( "" )
+const $ = require( 'jquery' )( window )
+const cookie = require('cookie')
+const path = require('path')
 const Filter = require('bad-words')
 const filter = new Filter()
 require('dotenv').config()
@@ -13,17 +17,17 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.static('../build'))
 
 if(maintenance === true) {
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../build','maintenance.html'))
-  })
-} else {
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../build', 'index.html'), function(err) {
-      if(err) {
-        res.sendFile(path.resolve(__dirname, '../build', 'maintenance.html'))
-      }
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '../build','maintenance.html'))
     })
-})
+} else {
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '../build', 'index.html'), function(err) {
+            if(err) {
+                res.sendFile(path.resolve(__dirname, '../build', 'maintenance.html'))
+            }
+        })
+    })
 }
 
 server.listen(process.env.PORT, () => {
@@ -34,6 +38,26 @@ const rooms = {}
 let currentRoomName = null
 
 io.on('connection', function (socket) {
+
+    var cookies = cookie.parse(socket.handshake.headers.cookie)
+    var token = cookies['access-token']
+    
+    $.ajax({
+        type: 'POST',
+        url: 'http://193.219.91.103:6172/api/v1/auth/username',
+        data: { token },
+        xhrFields: { withCredentials: true },
+        crossDomain: true,
+        async: true,
+        complete: function (result) {
+            socket.username = result.responseText
+            socket.emit('usernameGot')
+        },
+        error: function (result, status) {
+            console.log(result)
+        }
+    })
+
     socket.on('join-room', (roomName) => {
         console.log('a user connected to room ' + roomName + ': ', socket.id)
 
@@ -57,20 +81,13 @@ io.on('connection', function (socket) {
             x: 500,
             y: 500,
             playerId: socket.id,
+            playerUsername: socket.username,
             animation: 'idle'
         }
         socket.join(roomName)
 
         socket.emit('currentPlayers', room.players)
         socket.broadcast.to(roomName).emit('newPlayer', room.players[socket.id])
-
-        // socket.on('switch-scene', (sceneName, roomName) => {
-        //     socket.leave(roomName)
-        //     console.log(`user left room: ${roomName}`)
-        //     io.to(roomName).emit('player-left', socket.id)
-        //     socket.join(sceneName)
-        //     console.log(`user joined room: ${sceneName}`)
-        // })
 
         socket.on('disconnect', function () {
             console.log('user disconnected: ', socket.id)
@@ -83,6 +100,7 @@ io.on('connection', function (socket) {
             socket.leave(roomName)
             delete room.players[socket.id]
             io.to(roomName).emit('player-left', socket.id)
+            socket.disconnect()
         })
 
         socket.on('playerMovement', function (movementData) {
@@ -107,8 +125,8 @@ io.on('connection', function (socket) {
         })
 
         socket.on('message', (data) => {
-            data = socket.id + ': ' + filter.clean(data)
+            data = socket.username + ': ' + filter.clean(data)
             io.emit('messageResponse', data)
-          })
+        })
     })
 })
