@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react"
 
 const RegisterPopup = ({ onSubmit, currentAddress }) => {
+  
   const [modal, setModal] = useState(true)
+  const [error, setError] = useState(null)
 
   const toggleModal = () => {
     setModal(!modal)
@@ -15,22 +17,27 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
     }
   }, [modal])
 
-  const handleForm = (event) => {
+  const handleForm = async (event) => {
     event.preventDefault()
     const username = document.getElementById("username").value
     const data = { map: 1 }
-    console.log(username)
-    console.log(data)
-    onSubmit(currentAddress, username, data)
+    try {
+      const res = await onSubmit(currentAddress, username, data)
+      console.log(res)
+      toggleModal()
+    } catch (error) {
+      if (error.status === 409) {
+        let errorMessage = `${username} is not available`
+        setError(errorMessage)
+      }
+    }
   }
 
   return (
     <>
       {modal && (
         <div className="modal w-screen h-screen inset-0 fixed z-[6]">
-          <div
-            onClick={toggleModal}
-            className="overlay w-screen h-screen inset-0 absolute bg-gray-700 bg-opacity-80"
+          <div className="overlay w-screen h-screen inset-0 absolute bg-gray-700 bg-opacity-80"
           ></div>
           <div className="modal-content absolute left-2/4 top-[40%] transform -translate-x-1/2 -translate-y-1/2 bg-gray-100 p-8 rounded max-w-600 min-w-300">
             <div className="flex justify-center flex-col items-center gap-2 mt-3">
@@ -41,18 +48,17 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
                   type="text"
                   id="username"
                   className="text-black block border-black border-2"
+                  placeholder="arthur"
+                  required
                 />
                 <button className="border-solid border-black border-2">
                   Submit
                 </button>
+                {error !== null && (
+                  <div className="text-black text-sm">{error}</div>
+                )}
               </form>
             </div>
-            <button
-              className="close-modal absolute top-1 right-1 p-1 hover:bg-gray-300"
-              onClick={toggleModal}
-            >
-              Close
-            </button>
           </div>
         </div>
       )}

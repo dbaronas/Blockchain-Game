@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
-import { Web3Modal, useWeb3ModalTheme } from '@web3modal/react'
+import { Web3Modal } from '@web3modal/react'
 import { configureChains, createClient, WagmiConfig } from 'wagmi'
 import { mainnet, localhost } from 'wagmi/chains'
 import ConnectButton from '../components/ConnectButton'
-import { setGlobalState, useGlobalState } from '.'
 import RegisterPopup from '../components/RegisterPopup'
 import $ from "jquery"
 
@@ -15,28 +14,27 @@ const projectId = 'f20b37964af1371a005ca09bd341fb76'
 const { provider } = configureChains(chains, [w3mProvider({ projectId })])
 const wagmiClient = createClient({
   autoConnect: true,
-  connectors: w3mConnectors({ projectId, version: 1, chains }),
+  connectors: w3mConnectors({ projectId, version: 2, chains }),
   provider
 })
 const ethereumClient = new EthereumClient(wagmiClient, chains)
 
 
-const Market = () => {
+const Authentication = () => {
 
-  const { setTheme } = useWeb3ModalTheme()
-  const [loaded, setLoaded] = useState(false)
   const [currentAddress, setCurrentAddress] = useState('')
   const [existsValue, setExistsValue] = useState(null)
-  
+    
   useEffect(() => {
     
+    // This function will be triggered primarily when when component mounts
     const account = ethereumClient.getAccount()
     if (account.address) {
       setCurrentAddress(account.address)
+      console.log(account.address)
     }
 
-    // make async when user connect wallet you can load his nfts for example
-    // function will execute even if wallet hasn't been changed, it will consider initial wallet address
+    // This function only observes changes to the account
     ethereumClient.watchAccount((account) => {
       if (account.address) {
         setCurrentAddress(account.address)
@@ -46,42 +44,32 @@ const Market = () => {
       }
     })
 
-    setLoaded(true)
-    // hook to execute only when the connectedAccount value changes
+    // a hook to execute only when the currentAddress value changes
   }, [currentAddress]) 
 
-  // call sendAddress when the address value changes
+
+  // call a function sendAddress every time when the address value changes
   useEffect(() => {
     if (currentAddress) {
       sendAddress(currentAddress)
     }
   }, [currentAddress])
 
-  // useEffect(() => {
-  //   setTheme({
-  //     themeColor: '#f5c31f',
-  //     themeMode: 'light',
-  //     themeBackgroundColor: 'themeColor',
-  //   })
-  // }, [])
-
   const sendAddress = async (address) => {
-    let existsValue = ''
     try {
       const response = await $.ajax({
         type: 'POST',
         url: 'http://193.219.91.103:6172/api/v1/db/checkUser',
         data: { address },
       })
-      existsValue = response.exists
-      setExistsValue(existsValue)
-      if (existsValue === true) {
+      setExistsValue(response.exists)
+      console.log(response.exists);
+      if (response.exists === true) {
         login(address)
       }
     } catch (error) {
       console.log(error)
     }
-      return existsValue
   }
 
   const register = async (address, username, data) => {
@@ -94,7 +82,7 @@ const Market = () => {
         crossDomain: true,
       })
     } catch (error) {
-      console.log(error)
+      return error
     }
   }
 
@@ -116,10 +104,9 @@ const Market = () => {
     <>
     <WagmiConfig client={wagmiClient}>
       <div className="flex justify-center">
-          <ConnectButton/>
+          <ConnectButton currentAddress={currentAddress}/>
       </div>
-      {existsValue === false && <RegisterPopup onSubmit={register} currentAddress={currentAddress} />}
-      {/* {existsValue === true && <LoginPopup onClick={login} currentAddress={currentAddress}/> } */}
+      {existsValue === false && <RegisterPopup onSubmit={register} currentAddress={currentAddress}/>}
     </WagmiConfig>
 
     <Web3Modal
@@ -129,11 +116,10 @@ const Market = () => {
         "--w3m-font-family": "Roboto, sans-serif",
         "--w3m-accent-color": "#f5c31f",
         "--w3m-background-color": "#f5c31f",
-        // '--w3m-logo-image-url': ''
       }}
     />
   </>
   )
 }
 
-export default Market
+export default Authentication

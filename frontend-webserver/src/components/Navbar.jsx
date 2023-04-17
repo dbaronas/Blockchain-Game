@@ -2,7 +2,7 @@ import { useState } from 'react'
 import ReactPlayer from 'react-player'
 import { close, logo2, menu } from '../assets'
 import { navLinks } from '../constants'
-import Market from '../pages/Market'
+import Authentication from '../pages/Authentication'
 
 const Navbar = () => {
 const [toggle, setToggle] = useState(false)
@@ -24,7 +24,7 @@ const [toggle, setToggle] = useState(false)
           </li>
         ))}
         <li className="ml-10">
-          <Market />
+          <Authentication />
         </li>
       </ul>
 
