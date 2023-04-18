@@ -6,6 +6,7 @@ import InventoryScene from "./InventoryScene.js"
 import TutorialScene from "./TutorialScene.js"
 import ShopScene from "./ShopScene.js"
 import ChatScene from "./ChatScene.js"
+import MainMenu from "./MainMenu.js"
 
 
 let game = null
@@ -19,7 +20,8 @@ export const getGameInstance = () => {
       height: 720,
       disableContextMenu: true,
       scene: [
-        TutorialScene,
+        MainMenu,
+        //TutorialScene,
         BeginningScene,
         BeginningScene2,
         CatchModal,
