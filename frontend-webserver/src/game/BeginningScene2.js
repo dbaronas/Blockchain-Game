@@ -40,6 +40,7 @@ export default class BeginningScene2 extends Phaser.Scene {
         let testPlayer = new NPC({scene:this, x:250, y:250, texture:'fisherman', frame:'fisherman_13'})
         testPlayer.update()
 
+        this.scene.get('chat').setScene(this)
         var self = this
         this.socket = this.registry.get('socket')
         this.socket.emit('join-room', this.roomName)
