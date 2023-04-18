@@ -1,12 +1,13 @@
+import { lazy } from "react";
 import Navbar from "./Navbar";
-import Billing from "./Billing";
-import CardDeal from "./CardDeal";
-import Business from "./Business";
-import Clients from "./Clients";
-import CTA from "./CTA";
-import Stats from "./Stats";
+const Billing = lazy(() => import("./Billing"))
+const CardDeal = lazy(() => import("./CardDeal"))
+const Business = lazy(() => import("./Business"))
+const Clients = lazy(() => import("./Clients"))
+const CTA = lazy(() => import("./CTA"))
+const Stats = lazy(() => import("./Stats"))
+const Testimonials = lazy(() => import("./Testimonials"))
 import Footer from "./Footer";
-import Testimonials from "./Testimonials";
 import Hero from "./Hero";
 
 export {
