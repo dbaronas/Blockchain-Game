@@ -57,10 +57,12 @@ const Authentication = () => {
 
   const sendAddress = async (address) => {
     try {
+      const type = 'wallet_address'
+      const data = address
       const response = await $.ajax({
         type: 'POST',
         url: 'http://193.219.91.103:6172/api/v1/db/checkUser',
-        data: { address },
+        data: { type, data },
       })
       setExistsValue(response.exists)
       console.log(response.exists);
