@@ -9,6 +9,7 @@ export default class BeginningScene2 extends Phaser.Scene {
     
     init(data) {
         this.playerInventory = data.inventory
+        this.socket = data.socket
     }
 
     preload() {
@@ -30,38 +31,35 @@ export default class BeginningScene2 extends Phaser.Scene {
     create() {
         this.fishTypes = ['salmon', 'bass', 'pike', 'pufferfish']
         this.fishRod = ['fr_1', 'fr_2', 'fr_3', 'fr_4']
-        let map = this.make.tilemap({ key: 'map' });
-        var tileset = map.addTilesetImage('tileset', 'tiles3', 32, 32, 2, 3);
-        var water = map.createLayer('water', tileset, 0, 0);
-        this.fishing_zone = map.createLayer('fishingZone', tileset, 0, 0);
-        var ground = map.createLayer('ground', tileset, 0, 0);
+        let map = this.make.tilemap({ key: 'map' })
+        var tileset = map.addTilesetImage('tileset', 'tiles3', 32, 32, 2, 3)
+        var water = map.createLayer('water', tileset, 0, 0)
+        this.fishing_zone = map.createLayer('fishingZone', tileset, 0, 0)
+        var ground = map.createLayer('ground', tileset, 0, 0)
         water.setCollisionBetween(3, 4)
         let testPlayer = new NPC({scene:this, x:250, y:250, texture:'fisherman', frame:'fisherman_13'})
         testPlayer.update()
 
         var self = this
-        this.socket = io()
-        this.scene.get('chat').setScene(this)
-        this.socket.on('usernameGot', () => {
-            this.socket.emit('join-room', this.roomName)
-            this.otherPlayers = this.physics.add.group()
-            this.socket.on('currentPlayers', function (players) {
-                Object.keys(players).forEach(function (id) {
-                    if (players[id].playerId === self.socket.id) {
-                        self.addPlayer(self, players[id])
-                        self.physics.add.collider(self.player, water)
-                        self.physics.add.collider(self.player, testPlayer)
-                        self.physics.add.collider(self.player, self.fishing_zone)
-                        self.physics.add.collider(self.player.selectedItem, water)
-                        self.physics.add.collider(self.player.selectedItem, testPlayer)
-                        self.physics.add.collider(self.player.selectedItem, self.fishing_zone)
-                        self.physics.add.collider(self.player.username, water)
-                        self.physics.add.collider(self.player.username, testPlayer)
-                        self.physics.add.collider(self.player.username, self.fishing_zone)
-                    } else {
-                        self.addOtherPlayers(self, players[id])
-                    }
-                })
+        this.socket = this.registry.get('socket')
+        this.socket.emit('join-room', this.roomName)
+        this.otherPlayers = this.physics.add.group()
+        this.socket.on('currentPlayers', function (players) {
+            Object.keys(players).forEach(function (id) {
+                if (players[id].playerId === self.socket.id) {
+                    self.addPlayer(self, players[id])
+                    self.physics.add.collider(self.player, water)
+                    self.physics.add.collider(self.player, self.npc)
+                    self.physics.add.collider(self.player, self.fishing_zone)
+                    self.physics.add.collider(self.player.selectedItem, water)
+                    self.physics.add.collider(self.player.selectedItem, self.npc)
+                    self.physics.add.collider(self.player.selectedItem, self.fishing_zone)
+                    self.physics.add.collider(self.player.username, water)
+                    self.physics.add.collider(self.player.username, self.npc)
+                    self.physics.add.collider(self.player.username, self.fishing_zone)
+                } else {
+                    self.addOtherPlayers(self, players[id])
+                }
             })
         })
         this.socket.on('newPlayer', function (playerInfo) {
@@ -121,6 +119,8 @@ export default class BeginningScene2 extends Phaser.Scene {
         self.inventoryScene = self.scene.launch('InventoryScene', {scene: this})
         if(!this.scene.isActive('chat')) {
             self.scene.launch('chat', {scene: this, io: this.socket})
+        } else {
+            self.scene.get('chat').setEmit()
         }
     }
 
@@ -139,9 +139,10 @@ export default class BeginningScene2 extends Phaser.Scene {
             if(this.player.x > 612 && this.player.y > 612){
                 this.player.x = 500
                 this.player.y = 500
-                this.scene.start('BeginningScene', { inventory: this.player.inventory })
-                this.scene.stop('BeginningScene2')
                 this.socket.emit('leave-room')
+                this.scene.start('BeginningScene', { inventory: this.player.inventory, socket: this.socket })
+                this.socket.off()
+                this.scene.stop('BeginningScene2')
             }
     
             if (this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0) && Phaser.Input.Keyboard.JustDown(this.inputKeys.e)) {

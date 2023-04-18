@@ -9,6 +9,7 @@ export default class MainMenu extends Phaser.Scene {
     }
 
     create() {
+        this.registry.set('socket', io())
         this.add.image(0, 0, 'menu').setOrigin(0)
         this.add.sprite(640, 350, 'button1').setInteractive({ pixelPerfect: true }).on('pointerdown', () => {
             this.scene.stop()

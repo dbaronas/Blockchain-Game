@@ -34,8 +34,8 @@ server.listen(process.env.PORT, () => {
     console.log('Running...')
 })
 
-const rooms = {}
 let currentRoomName = null
+const rooms = {}
 
 io.on('connection', function (socket) {
 
@@ -44,7 +44,7 @@ io.on('connection', function (socket) {
     
     $.ajax({
         type: 'POST',
-        url: `http://${process.env.BACKEND}/api/v1/auth/username`,
+        url: 'http://${process.env.BACKEND}/api/v1/auth/username',
         data: { token },
         xhrFields: { withCredentials: true },
         crossDomain: true,
@@ -87,22 +87,25 @@ io.on('connection', function (socket) {
         socket.join(roomName)
 
         socket.emit('currentPlayers', room.players)
-        socket.broadcast.to(roomName).emit('newPlayer', room.players[socket.id])
+        socket.to(roomName).emit('newPlayer', room.players[socket.id])
 
+        socket.removeAllListeners('disconnect')
         socket.on('disconnect', function () {
             console.log('user disconnected: ', socket.id)
             delete room.players[socket.id]
             io.to(roomName).emit('player-left', socket.id)
+            socket.disconnect()
         })
     
-        socket.on('leave-room', function () {
+        socket.removeAllListeners('leave-room')
+        socket.on('leave-room', function() {
             console.log('user left room: ', socket.id)
             socket.leave(roomName)
             delete room.players[socket.id]
             io.to(roomName).emit('player-left', socket.id)
-            //socket.disconnect()
         })
 
+        socket.removeAllListeners('playerMovement')
         socket.on('playerMovement', function (movementData) {
             if (room.players[socket.id]) {
                 room.players[socket.id].x = movementData.x
@@ -116,6 +119,7 @@ io.on('connection', function (socket) {
             }
         })
     
+        socket.removeAllListeners('select-item-img')
         socket.on('select-item-img', function(data) {
             if (room.players[socket.id]) {
                 room.players[socket.id].frame = data.frame
@@ -124,9 +128,11 @@ io.on('connection', function (socket) {
             }
         })
 
+        socket.removeAllListeners('message')
         socket.on('message', (data) => {
             data = socket.username + ': ' + filter.clean(data)
-            io.emit('messageResponse', data)
+            console.log(data)
+            io.emit('messageResponse', data);
         })
     })
 })

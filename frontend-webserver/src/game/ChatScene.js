@@ -110,7 +110,17 @@ export default class ChatScene extends Phaser.Scene {
             }
         })
 
+        this.setEmit()
+
+    }
+
+    setScene(scene) {
+        this.scene = scene
+    }
+
+    setEmit() {
         this.io.on('messageResponse', (message) => {
+            console.log('test')
             this.chatMessages.push(message)
             if (this.chatMessages.length > 100) {
                 this.chatMessages.shift()
@@ -119,11 +129,6 @@ export default class ChatScene extends Phaser.Scene {
                 this.chatContent.setText(this.chatMessages)
             }
         })
-
-    }
-
-    setScene(scene) {
-        this.scene = scene
     }
 
     update() {
