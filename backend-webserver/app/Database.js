@@ -6,12 +6,24 @@ const getNews = async(req, res) => {
 }
 
 const checkUser = async(req, res) => {
-    const address = req.body.address
-    const user = await db.User.findOne({where: {wallet_address: address}})
-    if(user) {
-        res.json({exists: true})
+    const { type, data } = req.body
+
+    if(type == 'address') {
+        const user = await db.User.findOne({where: {wallet_address: data}})
+        if(user) {
+            res.json({exists: true})
+        } else {
+            res.json({exists: false})
+        }
+    } else if(type == 'username') {
+        const user = await db.User.findOne({where: {username: data}})
+        if(user) {
+            res.json({exists: true})
+        } else {
+            res.json({exists: false})
+        }
     } else {
-        res.json({exists: false})
+        res.send('Invalid request')
     }
 }
 

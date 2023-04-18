@@ -17,8 +17,8 @@ export default class CatchModal extends Phaser.Scene {
     create(data) {
         this.randomFishRod = data.randomFishRod
         console.log(this.randomFishRod)
-        var modal = this.add.image(0, 0, 'modal')
-        var button = this.add.image(0, 0, 'button').setInteractive().setScale(0.5).setOrigin(0.5, 0)
+        var modal = this.add.sprite(0, 0, 'modal')
+        var button = this.add.sprite(0, 0, 'button').setInteractive({ pixelPerfect: true }).setScale(0.5).setOrigin(0.5, 0)
         var buttonText = this.add.text(0, 0, 'MINT').setOrigin(0.5, -1).setFontSize(40)
         var text = this.add.text(0, 0, 'YOU GOT A FISH GG!').setOrigin(0.5, 2).setFontSize(20)
         var fishing_rod = this.add.sprite(0, 0, 'rods', rods[this.randomFishRod].frame).setOrigin(0.5, 2).setScale(2)
