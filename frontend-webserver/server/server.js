@@ -41,24 +41,20 @@ io.on('connection', function (socket) {
 
     var cookies = cookie.parse(socket.handshake.headers.cookie)
     var token = cookies['access-token']
-    
-    $.ajax({
-        type: 'POST',
-        url: 'http://${process.env.BACKEND}/api/v1/auth/username',
-        data: { token },
-        xhrFields: { withCredentials: true },
-        crossDomain: true,
-        async: true,
-        complete: function (result) {
-            socket.username = result.responseText
-            socket.emit('usernameGot')
-        },
-        error: function (result, status) {
-            console.log(result)
-        }
-    })
 
-    socket.on('join-room', (roomName) => {
+    socket.on('join-room', async (roomName) => {
+        const response = await $.ajax({
+            type: 'POST',
+            url: `${process.env.BACKEND}/api/v1/auth/username`,
+            data: { token },
+            xhrFields: { withCredentials: true },
+            crossDomain: true,
+            async: true,
+            error: function (result, status) {
+                console.log(result)
+            }
+        })
+        socket.username = response
         console.log('a user connected to room ' + roomName + ': ', socket.id)
 
         if (currentRoomName !== null && currentRoomName !== roomName) {
