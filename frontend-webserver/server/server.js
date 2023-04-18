@@ -45,7 +45,7 @@ io.on('connection', function (socket) {
     socket.on('join-room', async (roomName) => {
         const response = await $.ajax({
             type: 'POST',
-            url: `${process.env.BACKEND}/api/v1/auth/username`,
+            url: `http://${process.env.BACKEND}/api/v1/auth/username`,
             data: { token },
             xhrFields: { withCredentials: true },
             crossDomain: true,
