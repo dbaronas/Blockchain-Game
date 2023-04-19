@@ -18,13 +18,13 @@ app.use(express.static('../build'))
 
 if(maintenance === true) {
     app.get('*', (req, res) => {
-        res.sendFile(__dirname +  './maintenance.html')
+        res.sendFile(__dirname +  '/maintenance.html')
     })
 } else {
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, '../build', 'index.html'), function(err) {
             if(err) {
-                res.sendFile(__dirname +  './maintenance.html')
+                res.sendFile(__dirname +  '/maintenance.html')
             }
         })
     })
