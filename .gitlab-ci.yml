@@ -33,7 +33,7 @@ buildweb:
     - cd frontend-webserver
   script:
     - "node --version"
-    - npm ci
+    - npm ci --cache frontend-webserver/node_modules
     - npm run build
   artifacts:
     paths:
@@ -54,7 +54,7 @@ buildserver:
     - cd frontend-webserver/server
   script:
     - "node --version"
-    - npm ci
+    - npm ci --cache frontend-webserver/server/node_modules
   cache:
     paths:
       - frontend-webserver/server/node_modules/
@@ -87,7 +87,7 @@ buildback:
     - cd backend-webserver
   script:
     - "node --version"
-    - npm i
+    - npm ci --cache backend-webserver/node_modules
   cache:
     paths:
       - backend-webserver/node_modules/
