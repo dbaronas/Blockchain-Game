@@ -35,6 +35,10 @@ buildweb:
     - "node --version"
     - npm ci --cache .npm
     - npm run build
+  artifacts:
+    paths:
+      - frontend-webserver/build
+
   cache:
     paths:
       - .npm
