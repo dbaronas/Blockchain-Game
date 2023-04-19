@@ -25,9 +25,10 @@ export default class ChatScene extends Phaser.Scene {
         this.chatContent = this.add.text(3, 690, '', {
             fontFamily: 'VT323',
             color: '#000000',
+            align: 'left',
             padding: 10,
             fontStyle: 'normal',
-            wordWrap: {width: 360}
+            //wordWrap: {width: 355, useAdvancedWrap: true}
         }).setOrigin(0, 1).setMask(mask)
         let chat = this.chatInput.getChildByName('input')
         let send = this.chatInput.getChildByName('send')
@@ -120,8 +121,9 @@ export default class ChatScene extends Phaser.Scene {
 
     setEmit() {
         this.io.on('messageResponse', (message) => {
-            console.log('test')
-            this.chatMessages.push(message)
+            let parsed = this.wordWrap(message, 55)
+            console.log(parsed)
+            this.chatMessages.push(parsed)
             if (this.chatMessages.length > 100) {
                 this.chatMessages.shift()
                 this.chatContent.setText(this.chatMessages)
@@ -129,6 +131,37 @@ export default class ChatScene extends Phaser.Scene {
                 this.chatContent.setText(this.chatMessages)
             }
         })
+    }
+
+    wordWrap(str, maxWidth) {
+        var newLineStr = "\n"; 
+        let done = false; 
+        let res = '';
+        while (str.length > maxWidth) {                 
+            let found = false;
+            // Inserts new line at first whitespace of the line
+            for (let i = maxWidth - 1; i >= 0; i--) {
+                if (this.testWhite(str.charAt(i))) {
+                    res = res + [str.slice(0, i), newLineStr].join('');
+                    str = str.slice(i + 1);
+                    found = true;
+                    break;
+                }
+            }
+            // Inserts new line at maxWidth position, the word is too long to wrap
+            if (!found) {
+                res += [str.slice(0, maxWidth), newLineStr].join('');
+                str = str.slice(maxWidth);
+            }
+    
+        }
+    
+        return res + str;
+    }
+
+    testWhite(x) {
+        var white = new RegExp(/^\s$/);
+        return white.test(x.charAt(0));
     }
 
     update() {
