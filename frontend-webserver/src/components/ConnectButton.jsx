@@ -1,12 +1,10 @@
 import React from 'react'
 import { useEffect } from 'react'
-import { useGlobalState } from '../pages'
 import { Web3Button } from '@web3modal/react'
 
-const ConnectButton = () => {
+const ConnectButton = ({ currentAddress }) => {
 
-  const [connectedAccount] = useGlobalState('connectedAccount')
-  useEffect(() => {}, [connectedAccount])
+  useEffect(() => {}, [currentAddress])
 
   return (
     <Web3Button label="Connect Wallet" />
