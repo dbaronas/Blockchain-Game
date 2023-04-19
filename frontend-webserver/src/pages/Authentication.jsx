@@ -23,7 +23,7 @@ const ethereumClient = new EthereumClient(wagmiClient, chains)
 const Authentication = () => {
 
   const [currentAddress, setCurrentAddress] = useState('')
-  const [existsValue, setExistsValue] = useState(null)
+  const [walletExists, setWalletExists] = useState(null)
     
   useEffect(() => {
     
@@ -31,7 +31,6 @@ const Authentication = () => {
     const account = ethereumClient.getAccount()
     if (account.address) {
       setCurrentAddress(account.address)
-      console.log(account.address)
     }
 
     // This function only observes changes to the account
@@ -40,7 +39,7 @@ const Authentication = () => {
         setCurrentAddress(account.address)
       } else {
         setCurrentAddress('')
-        setExistsValue(null)
+        setWalletExists(null)
       }
     })
 
@@ -51,21 +50,22 @@ const Authentication = () => {
   // call a function sendAddress every time when the address value changes
   useEffect(() => {
     if (currentAddress) {
-      sendAddress(currentAddress)
+      checkIfAddressExists(currentAddress)
     }
   }, [currentAddress])
 
-  const sendAddress = async (address) => {
+  const checkIfAddressExists = async (address) => {
+    const type = "wallet_address"
+    const data = {type: type, data: address}
     try {
-      const type = 'wallet_address'
-      const data = address
       const response = await $.ajax({
         type: 'POST',
         url: 'http://193.219.91.103:6172/api/v1/db/checkUser',
-        data: { type, data },
+        data: JSON.stringify(data),
+        contentType: 'application/json',
       })
-      setExistsValue(response.exists)
-      console.log(response.exists);
+      setWalletExists(response.exists)
+      console.log(response.exists)
       if (response.exists === true) {
         login(address)
       }
@@ -84,7 +84,7 @@ const Authentication = () => {
         crossDomain: true,
       })
     } catch (error) {
-      return error
+      console.log(error)
     }
   }
 
@@ -108,7 +108,7 @@ const Authentication = () => {
       <div className="flex justify-center">
           <ConnectButton currentAddress={currentAddress}/>
       </div>
-      {existsValue === false && <RegisterPopup onSubmit={register} currentAddress={currentAddress}/>}
+      {walletExists === false && <RegisterPopup onSubmit={register} currentAddress={currentAddress}/>}
     </WagmiConfig>
 
     <Web3Modal

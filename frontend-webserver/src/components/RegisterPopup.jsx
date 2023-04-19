@@ -17,19 +17,35 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
     }
   }, [modal])
 
+  const checkIfUsernameExists = async (username) => {
+    const type = "username"
+    const data = {type: type, data: username}
+    try {
+      const response = await $.ajax({
+        type: 'POST',
+        url: 'http://193.219.91.103:6172/api/v1/db/checkUser',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+      })
+      console.log(response.exists)
+      return response.exists
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const handleForm = async (event) => {
     event.preventDefault()
     const username = document.getElementById("username").value
     const data = { map: 1 }
-    try {
-      const res = await onSubmit(currentAddress, username, data)
-      console.log(res)
+    const doesUsernameExists = await checkIfUsernameExists(username)
+    if (doesUsernameExists === true) {
+      let errorMessage = `Username '${username}' is not available`
+      setError(errorMessage)
+    }
+    else {
+      onSubmit(currentAddress, username, data)
       toggleModal()
-    } catch (error) {
-      if (error.status === 409) {
-        let errorMessage = `${username} is not available`
-        setError(errorMessage)
-      }
     }
   }
 
@@ -55,7 +71,7 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
                   Submit
                 </button>
                 {error !== null && (
-                  <div className="text-black text-sm">{error}</div>
+                  <div className="text-black text-sm flex justify-center">{error}</div>
                 )}
               </form>
             </div>
