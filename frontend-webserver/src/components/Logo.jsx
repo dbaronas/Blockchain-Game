@@ -6,12 +6,10 @@ const Logo = () => {
 
     useEffect(() => {
         function handleContextMenu(e) {
-          e.preventDefault(); // prevents the default right-click menu from appearing
+          e.preventDefault();
         }
-        // add the event listener to the component's root element
         const rootElement = document.getElementById('logo');
         rootElement.addEventListener('contextmenu', handleContextMenu);
-        // remove the event listener when the component is unmounted
     
         return () => {
           rootElement.removeEventListener('contextmenu', handleContextMenu);
