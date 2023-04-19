@@ -1,8 +1,8 @@
-import { useState } from 'react'
-import ReactPlayer from 'react-player'
+import { useState, lazy } from 'react'
 import { close, logo2, menu } from '../assets'
 import { navLinks } from '../constants'
 import Authentication from '../pages/Authentication'
+const Logo = lazy(() => import('./Logo'))
 
 const Navbar = () => {
 const [toggle, setToggle] = useState(false)
@@ -10,7 +10,7 @@ const [toggle, setToggle] = useState(false)
   return (
     <nav className='w-full flex py-6 justify-between items-center navbar pb-0'>
 
-        <ReactPlayer url={logo2} playing={true} controls={false} playsinline={true} loop={true} muted={true} width={266} height={73} />
+        <Logo />
 
       <ul className='list-none sm:flex hidden justify-end items-center flex-1'>
         {navLinks.map((nav, index) => (

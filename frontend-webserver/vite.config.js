@@ -7,5 +7,9 @@ export default defineConfig({
     port: 3000
   },
   plugins: [react()],
-  envDir: 'server'
+  envDir: 'server',
+  build: {
+    cssTarget: './src/styles.css',
+    cssMinify: true,
+  }
 })
