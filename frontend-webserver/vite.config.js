@@ -9,7 +9,6 @@ export default defineConfig({
   plugins: [react()],
   envDir: 'server',
   build: {
-    cssTarget: './src/styles.css',
-    cssMinify: true,
+    chunkSizeWarningLimit: 15000
   }
 })
