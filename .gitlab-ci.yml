@@ -42,7 +42,7 @@ buildweb:
     paths:
       - frontend-webserver/node_modules/
       - frontend-webserver/package-lock.json
-    policy: push-pull
+    policy: pull-push
   tags:
     - local_runner
 
@@ -59,7 +59,7 @@ buildserver:
     paths:
       - frontend-webserver/server/node_modules/
       - frontend-webserver/server/package-lock.json
-    policy: push-pull
+    policy: pull-push
   tags:
     - local_runner
 
@@ -75,7 +75,7 @@ deployfront:
     paths:
       - frontend-webserver/server/node_modules/
       - frontend-webserver/server/package-lock.json
-    policy: push-pull
+    policy: pull-push
   tags:
     - local_runner
 
@@ -92,7 +92,7 @@ buildback:
     paths:
       - backend-webserver/node_modules/
       - backend-webserver/package-lock.json
-    policy: push-pull
+    policy: pull-push
   tags:
     - local-runner2
 
@@ -107,6 +107,6 @@ deployback:
     paths:
       - backend-webserver/node_modules/
       - backend-webserver/package-lock.json
-    policy: push-pull
+    policy: pull-push
   tags:
     - local-runner2
