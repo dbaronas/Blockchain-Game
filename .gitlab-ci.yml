@@ -41,7 +41,7 @@ buildweb:
   cache:
     paths:
       - .npm
-    policy: push
+    policy: pull-push
   tags:
     - local_runner
 
@@ -56,7 +56,7 @@ buildserver:
   cache:
     paths:
       - .npm
-    policy: push
+    policy: pull-push
   tags:
     - local_runner
 
@@ -81,7 +81,7 @@ buildback:
   cache:
     paths:
       - .npm
-    policy: push
+    policy: pull-push
   tags:
     - local-runner2
 
