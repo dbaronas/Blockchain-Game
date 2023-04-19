@@ -38,10 +38,6 @@ buildweb:
   artifacts:
     paths:
       - frontend-webserver/build
-<<<<<<< HEAD
-=======
-
->>>>>>> dae6406a078c3a6bac9cba65f733374323f802e0
   cache:
     paths:
       - frontend-webserver/node_modules/
