@@ -33,18 +33,23 @@ buildweb:
     - cd frontend-webserver
   script:
     - "node --version"
-    - npm ci --cache .npm
+    - npm ci
     - npm run build
   artifacts:
     paths:
       - frontend-webserver/build
+<<<<<<< HEAD
+=======
 
+>>>>>>> dae6406a078c3a6bac9cba65f733374323f802e0
   cache:
     paths:
-      - .npm
-    policy: pull-push
+      - frontend-webserver/node_modules/
+      - frontend-webserver/package-lock.json
+    policy: push
   tags:
     - local_runner
+
 
 buildserver:
   stage: build_server_stage
@@ -53,13 +58,15 @@ buildserver:
     - cd frontend-webserver/server
   script:
     - "node --version"
-    - npm ci --cache .npm
+    - npm ci
   cache:
     paths:
-      - .npm
-    policy: pull-push
+      - frontend-webserver/server/node_modules/
+      - frontend-webserver/server/package-lock.json
+    policy: push
   tags:
     - local_runner
+
 
 deployfront:
   stage: deploy_frontend_stage
@@ -68,8 +75,14 @@ deployfront:
     - cd frontend-webserver/server
   script:
     - "pm2 start ecosystem.config.js"
+  cache:
+    paths:
+      - frontend-webserver/server/node_modules/
+      - frontend-webserver/server/package-lock.json
+    policy: pull
   tags:
     - local_runner
+
 
 buildback:
   stage: build_backend_stage
@@ -78,11 +91,12 @@ buildback:
     - cd backend-webserver
   script:
     - "node --version"
-    - npm ci --cache .npm
+    - npm i
   cache:
     paths:
-      - .npm
-    policy: pull-push
+      - backend-webserver/node_modules/
+      - backend-webserver/package-lock.json
+    policy: push
   tags:
     - local-runner2
 
@@ -90,8 +104,13 @@ deployback:
   stage: deploy_backend_stage
   extends: .base-rules2
   before_script:
-    - cd backend-webserver
+     - cd backend-webserver
   script:
     - "pm2 start ecosystem.config.js"
+  cache:
+    paths:
+      - backend-webserver/node_modules/
+      - backend-webserver/package-lock.json
+    policy: pull
   tags:
     - local-runner2
