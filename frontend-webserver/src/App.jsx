@@ -28,9 +28,9 @@ const App = () => (
       <Routes>
         <Route path="/" element={<Main />}/>
         <Route path="/game" element={
-          <RouteGuard>
+
             <Game />
-          </RouteGuard>
+
         } />
         <Route path="/news" element={<News />}/>
       </Routes>
