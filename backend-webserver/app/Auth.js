@@ -30,7 +30,7 @@ const register = async (req, res) => {
                         { expiresIn: '6h' }
                     )
 
-                    res.cookie('access-token', token, {httpOnly: true, maxAge: 21600 * 1000}).send('Registered successfully')
+                    res.cookie('access-token', token, {/*httpOnly: true,*/ maxAge: 21600 * 1000}).send('Registered successfully')
                 }
             }
         }
@@ -54,7 +54,7 @@ const login = async (req, res) => {
                     process.env.JWT_SECRET,
                     { expiresIn: '6h' }
                 )
-                res.cookie('access-token', token, {httpOnly: true, maxAge: 21600 * 1000}).send('Login successful')
+                res.cookie('access-token', token, {/*httpOnly: true,*/ maxAge: 21600 * 1000}).send('Login successful')
             } else {
                 res.status(400).send('Invalid Credentials')
             }
