@@ -7,6 +7,7 @@ const Clients = lazy(() => import("./Clients"))
 const CTA = lazy(() => import("./CTA"))
 const Stats = lazy(() => import("./Stats"))
 const Testimonials = lazy(() => import("./Testimonials"))
+import RouteGuard from './RouteGuard'
 import Footer from "./Footer";
 import Hero from "./Hero";
 
@@ -21,4 +22,5 @@ export {
   Footer,
   Testimonials,
   Hero,
+  RouteGuard
 };

@@ -5,7 +5,7 @@ require('dotenv').config()
 
 //require('./middleware/permissions')
 var corsOptions = {
-    origin: true,
+    origin: 'http://193.219.91.103:4362',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
     credentials: true

@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import styles from "./style";
-import { Navbar, Footer } from "./components";
+import { Navbar, Footer, RouteGuard } from "./components";
 import { Main, Game, News } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactLoading from 'react-loading';
@@ -27,7 +27,11 @@ const App = () => (
       </div>
       <Routes>
         <Route path="/" element={<Main />}/>
-        <Route path="/game" element={<Game />} />
+        <Route path="/game" element={
+          <RouteGuard>
+            <Game />
+          </RouteGuard>
+        } />
         <Route path="/news" element={<News />}/>
       </Routes>
       <div className={`bg-black ${styles.paddingX} ${styles.flexStart}`}>
