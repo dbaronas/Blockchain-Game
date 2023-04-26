@@ -37,7 +37,7 @@ export default class BeginningScene2 extends Phaser.Scene {
         this.fishing_zone = map.createLayer('fishingZone', tileset, 0, 0)
         var ground = map.createLayer('ground', tileset, 0, 0)
         water.setCollisionBetween(3, 4)
-        let testPlayer = new NPC({scene:this, x:250, y:250, texture:'fisherman', frame:'fisherman_13'})
+        //let testPlayer = new NPC({scene:this, x:250, y:250, texture:'fisherman', frame:'fisherman_13'})
         testPlayer.update()
 
         this.scene.get('chat').setScene(this)
@@ -50,13 +50,13 @@ export default class BeginningScene2 extends Phaser.Scene {
                 if (players[id].playerId === self.socket.id) {
                     self.addPlayer(self, players[id])
                     self.physics.add.collider(self.player, water)
-                    self.physics.add.collider(self.player, self.npc)
+                    //self.physics.add.collider(self.player, self.npc)
                     self.physics.add.collider(self.player, self.fishing_zone)
                     self.physics.add.collider(self.player.selectedItem, water)
-                    self.physics.add.collider(self.player.selectedItem, self.npc)
+                    //self.physics.add.collider(self.player.selectedItem, self.npc)
                     self.physics.add.collider(self.player.selectedItem, self.fishing_zone)
                     self.physics.add.collider(self.player.username, water)
-                    self.physics.add.collider(self.player.username, self.npc)
+                    //self.physics.add.collider(self.player.username, self.npc)
                     self.physics.add.collider(self.player.username, self.fishing_zone)
                 } else {
                     self.addOtherPlayers(self, players[id])
