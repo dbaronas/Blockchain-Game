@@ -13,7 +13,7 @@ export default class MainMenu extends Phaser.Scene {
         this.add.image(0, 0, 'menu').setOrigin(0)
         this.add.sprite(640, 350, 'button1').setInteractive({ pixelPerfect: true }).on('pointerdown', () => {
             this.scene.stop()
-            this.scene.start('BeginningScene')
+            this.scene.start('TutorialScene')
         })
         this.add.text(612, 400, 'Play', {
             fontFamily: 'VT323',
