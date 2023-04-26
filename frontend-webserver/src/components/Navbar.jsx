@@ -43,7 +43,7 @@ const [toggle, setToggle] = useState(false)
                   key={nav.id}
                   className={`font-vt323 font-normal cursor-pointer text-[24px] ${index === navLinks.length - 1 ? 'mr-0' : 'mb-4'} text-gold tracking-wider hover:text-secondary`}
                 >
-                  <a href={`#${nav.id}`}>
+                  <a href={`${nav.link}`}>
                     {nav.title}
                   </a>
                 </li>
