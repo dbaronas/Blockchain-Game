@@ -11,7 +11,9 @@ const CardDeal = () => (
       <p className={`${styles.paragraph} max-w-[29.4rem] mt-5`}>
         Read latest news about MetaOcean
       </p>
-      <Button styles="mt-10" />
+      <a href="/news">
+        <Button styles="mt-10" />
+      </a>
     </div>
     <div className={layout.sectionImg}>
       <img src={card} alt="card" className="w-[100%] h-[100%]" />
