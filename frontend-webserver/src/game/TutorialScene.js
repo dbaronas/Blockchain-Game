@@ -19,6 +19,7 @@ export default class TutorialScene extends Phaser.Scene {
             i: Phaser.Input.Keyboard.KeyCodes.I
         })
         this.load.image('modal', 'assets/modal.png')
+        this.load.image('button', 'assets/btn.png')
         this.load.image('tilesbegin', 'assets/tileset.png')
         this.load.tilemapTiledJSON('map2', 'assets/tutorial_map.json')
     }
@@ -50,6 +51,7 @@ export default class TutorialScene extends Phaser.Scene {
         this.iCounter = 0
         this.isShopClosed = false
         this.isQuest6Closed = false
+        this.isQuest7Closed = false
 
         this.scene.get('ShopScene').events.on('shutdown', () => {
             this.isShopClosed = true
@@ -59,6 +61,19 @@ export default class TutorialScene extends Phaser.Scene {
             if (this.quest === 6) {
                 this.isQuest6Closed = true
             }
+        })
+
+        this.scene.get('quest-modal').events.on('shutdown', () => {
+            if (this.quest === 7) {
+                this.isQuest7Closed = true
+            }
+        })
+
+        var missionButton = this.add.image(900, 348, 'button').setInteractive({ pixelPerfect: true }).setScale(0.4).setOrigin(0.5, 0).setScrollFactor(0, 0)
+        var missionButtonText = this.add.text(900, 500, 'Check mission').setOrigin(0.5, -1).setFontSize(12).setScrollFactor(0, 0)
+
+        missionButton.on('pointerdown', () => {
+            this.started = false
         })
 
         this.inventoryScene = this.scene.launch('InventoryScene', {scene: this})
@@ -77,7 +92,6 @@ export default class TutorialScene extends Phaser.Scene {
     }
 
     update() {
-        //1. wasd viaksciot 2. move on fishing zone 3. fish with e (have to equip fishing rod) 4. sell fish to npc 5. chat
         if(this.player && this.canMove) {
             this.player.update()
 
@@ -181,7 +195,6 @@ export default class TutorialScene extends Phaser.Scene {
                         console.log("Mission complete 5")
                     }
                     break
-
                 case 6:
                     console.log("thats mission6")
                     if(this.started == false) {
@@ -192,8 +205,21 @@ export default class TutorialScene extends Phaser.Scene {
                     if(this.isQuest6Closed) {
                         this.quest++
                         this.started = false
+                        console.log("Mission complete 6")
+                    }
+                    break
+                case 7:
+                    console.log("thats mission7")
+                    if(this.started == false) {
+                        this.scene.pause()
+                        this.scene.launch('quest-modal', { scene: this, quest: this.quest })
+                        this.started = true
+                    }
+                    if(this.isQuest7Closed) {
+                        this.quest++
+                        this.started = false
                         this.scene.stop('InventoryScene')
-                        this.scene.start('menu')
+                        this.scene.start('BeginningScene')
                         this.scene.stop()
                         console.log("Mission complete 6")
                     }
