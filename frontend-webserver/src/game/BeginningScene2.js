@@ -38,7 +38,7 @@ export default class BeginningScene2 extends Phaser.Scene {
         var ground = map.createLayer('ground', tileset, 0, 0)
         water.setCollisionBetween(3, 4)
         //let testPlayer = new NPC({scene:this, x:250, y:250, texture:'fisherman', frame:'fisherman_13'})
-        testPlayer.update()
+        //testPlayer.update()
 
         this.scene.get('chat').setScene(this)
         var self = this
