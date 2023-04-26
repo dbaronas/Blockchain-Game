@@ -16,6 +16,7 @@ export default class CatchModal extends Phaser.Scene {
 
     create(data) {
         this.randomFishRod = data.randomFishRod
+        var scene = data.scene
         console.log(this.randomFishRod)
         var modal = this.add.sprite(0, 0, 'modal')
         var button = this.add.sprite(0, 0, 'button').setInteractive({ pixelPerfect: true }).setScale(0.5).setOrigin(0.5, 0)
@@ -46,7 +47,7 @@ export default class CatchModal extends Phaser.Scene {
                 }
             });
             this.scene.stop()
-            this.scene.resume('BeginningScene')
+            this.scene.resume(scene.scene.key)
         })
     }
 }

@@ -168,7 +168,7 @@ export default class BeginningScene extends Phaser.Scene {
                         if (selectedOption === 'fishrod') {
                             const randomFishRod = Phaser.Utils.Array.GetRandom(this.fishRod)
                             this.scene.pause()
-                            this.scene.launch('modal', { randomFishRod: randomFishRod })
+                            this.scene.launch('modal', { randomFishRod: randomFishRod, scene: this })
                             this.player.inventory.addItem({name: randomFishRod, quantity: 1, type: 'fishing-rod'})
                             this.scene.get('InventoryScene').refresh()
                             this.scene.get('InventoryScene').refreshCoins()
