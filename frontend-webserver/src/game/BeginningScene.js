@@ -142,7 +142,7 @@ export default class BeginningScene extends Phaser.Scene {
 
             if(this.npc) {
                 this.npc.update()
-                this.npc.handleCollision(this.player)
+                this.npc.handleCollision(this.player, this)
             }
 
             if(this.player.x > 612 && this.player.y > 612){
@@ -154,7 +154,7 @@ export default class BeginningScene extends Phaser.Scene {
                 this.scene.stop('BeginningScene')
             }
     
-            if(this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0) && Phaser.Input.Keyboard.JustDown(this.inputKeys.e)) {
+            if(this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0) && Phaser.Input.Keyboard.JustDown(this.inputKeys.e) && this.scene.get('InventoryScene').isItemFishingRod()) {
                 const randomDelay = Phaser.Math.Between(1000, 2000)
                 this.canMove = false
                 console.log("fishing")

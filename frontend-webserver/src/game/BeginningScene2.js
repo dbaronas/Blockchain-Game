@@ -16,7 +16,7 @@ export default class BeginningScene2 extends Phaser.Scene {
         Player.preload(this)
         this.canMove = true
         this.load.atlas('fisherman', 'assets/fisherman/fisherman.png', 'assets/fisherman/fisherman_atlas.json')
-        this.load.image('tiles3', 'assets/tileset2.png')
+        this.load.image('tiles2', 'assets/tileset2.png')
         this.load.tilemapTiledJSON('map', 'assets/map3.json')
         this.inputKeys = this.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
@@ -32,7 +32,7 @@ export default class BeginningScene2 extends Phaser.Scene {
         this.fishTypes = ['salmon', 'bass', 'pike', 'pufferfish']
         this.fishRod = ['fr_1', 'fr_2', 'fr_3', 'fr_4']
         let map = this.make.tilemap({ key: 'map' })
-        var tileset = map.addTilesetImage('tileset', 'tiles3', 32, 32, 2, 3)
+        var tileset = map.addTilesetImage('tileset', 'tiles2', 32, 32, 2, 3)
         var water = map.createLayer('water', tileset, 0, 0)
         this.fishing_zone = map.createLayer('fishingZone', tileset, 0, 0)
         var ground = map.createLayer('ground', tileset, 0, 0)
@@ -146,7 +146,7 @@ export default class BeginningScene2 extends Phaser.Scene {
                 this.scene.stop('BeginningScene2')
             }
     
-            if (this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0) && Phaser.Input.Keyboard.JustDown(this.inputKeys.e)) {
+            if (this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0) && Phaser.Input.Keyboard.JustDown(this.inputKeys.e) && this.scene.get('InventoryScene').isItemFishingRod()) {
                 const randomDelay = Phaser.Math.Between(1000, 2000)
                 this.canMove = false
                 console.log("fishing")

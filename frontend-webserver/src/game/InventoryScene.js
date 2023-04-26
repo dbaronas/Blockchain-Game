@@ -63,7 +63,7 @@ export default class InventoryScene extends Phaser.Scene {
                 if (item.type === 'fish') {
                     textureKey = 'items'
                     frame = items[item.name].frame
-                } else {
+                } else if (item.type === 'fishing-rod'){
                     textureKey = 'rods'
                     frame = rods[item.name].frame
                 }
@@ -92,6 +92,11 @@ export default class InventoryScene extends Phaser.Scene {
             font: '16px Arial',
             fill: '#111'
         }).setOrigin(0.5, 0.5)
+    }
+
+    isItemFishingRod() {
+        let selectedItem = this.inventory.getItem(this.selectedItemIndex);
+        return selectedItem && selectedItem.type === 'fishing-rod';
     }
 
     create(){

@@ -11,6 +11,7 @@ export default class ShopScene extends Phaser.Scene {
 
     init(data) {
         this.playerInventory = data.inventory
+        this.parentScene = data.scene
     }
 
     create() {
@@ -18,12 +19,12 @@ export default class ShopScene extends Phaser.Scene {
 
         const closeButton = this.add.text(1000, 150, 'X', { fill: '#000' }).setScale(2).setInteractive().on('pointerdown', () => {
             this.scene.stop('ShopScene')
-            this.scene.resume('BeginningScene')
+            this.scene.resume(this.parentScene)
         })
 
         this.input.keyboard.on('keydown-E', () => {
             this.scene.stop('ShopScene')
-            this.scene.resume('BeginningScene')
+            this.scene.resume(this.parentScene)
         })
         
         let x = 330

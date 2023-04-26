@@ -7,7 +7,7 @@ import TutorialScene from "./TutorialScene.js"
 import ShopScene from "./ShopScene.js"
 import ChatScene from "./ChatScene.js"
 import MainMenu from "./MainMenu.js"
-
+import QuestModal from "./QuestModal.js"
 
 let game = null
 
@@ -21,10 +21,11 @@ export const getGameInstance = () => {
       disableContextMenu: true,
       scene: [
         MainMenu,
-        //TutorialScene,
+        TutorialScene,
         BeginningScene,
         BeginningScene2,
         CatchModal,
+        QuestModal,
         InventoryScene,
         ShopScene,
         ChatScene
@@ -35,7 +36,7 @@ export const getGameInstance = () => {
       physics: {
         default: 'arcade',
         arcade: {
-          debug: true,
+          debug: false,
           gravity: {y: 0},
         }
       }

@@ -8,6 +8,7 @@ export default class NPC extends Phaser.Physics.Arcade.Sprite {
         this.body.setCircle(12, 5, 5)
         this.setImmovable(true)
         this.circle = null
+        this.isInteractive = true
     }
   
     static preload(scene) {
@@ -27,15 +28,17 @@ export default class NPC extends Phaser.Physics.Arcade.Sprite {
       this.anims.play('idle', true)
     }
   
-    handleCollision(player) {
+    handleCollision(player, scene) {
         if (!this.circle) {
             this.createCircle()
         }
-        this.scene.physics.add.overlap(player, this.circle, () => {
-            if (Phaser.Input.Keyboard.JustDown(this.scene.input.keyboard.addKey('E'))) {
-                this.scene.scene.pause('BeginningScene')
-                this.scene.scene.launch('ShopScene', { inventory: player.inventory })
-            }
-        })
+        if (this.isInteractive === true) {
+            this.scene.physics.add.overlap(player, this.circle, () => {
+                if (Phaser.Input.Keyboard.JustDown(this.scene.input.keyboard.addKey('E'))) {
+                    this.scene.scene.pause(scene)
+                    this.scene.scene.launch('ShopScene', { inventory: player.inventory, scene: scene })
+                }
+            })
+        }
     }
 }
