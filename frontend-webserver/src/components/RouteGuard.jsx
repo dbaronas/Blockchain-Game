@@ -2,17 +2,11 @@ import { Route, Navigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { Children } from 'react'
 
-const RouteGuard = ({children}) => {
+const RouteGuard = ({walletConnected, children}) => {
 
-    function hasJWT() {
-        let flag = false
+    console.log('lol' + walletConnected)
 
-        Cookies.get('access-token') ? flag = true : flag = false
-
-        return flag
-    }
-
-    if(!hasJWT()){
+    if(!walletConnected){
         return <Navigate to='/login' replace />
     }
     return children

@@ -24,7 +24,7 @@ const Authentication = () => {
 
   const [currentAddress, setCurrentAddress] = useState('')
   const [walletExists, setWalletExists] = useState(null)
-    
+  
   useEffect(() => {
     
     // This function will be triggered primarily when when component mounts
