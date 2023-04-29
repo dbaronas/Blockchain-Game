@@ -1,16 +1,17 @@
-import { Route, Navigate } from 'react-router-dom'
-import Cookies from 'js-cookie'
-import { Children } from 'react'
+import { Navigate, useLocation } from "react-router-dom"
 
-const RouteGuard = ({walletConnected, children}) => {
+const RouteGuard = ({ walletConnected, children }) => {
 
-    console.log('lol' + walletConnected)
+    const location = useLocation();
 
-    if(!walletConnected){
-        return <Navigate to='/login' replace />
+    if (!walletConnected) {
+        return (
+            <Navigate to='/login' replace state={{ from: location }} />
+        )
+    } else {
+        return children
     }
-    return children
-    
+
 }
 
 export default RouteGuard

@@ -1,20 +1,13 @@
 import { Suspense } from "react";
 import styles from "./style";
 import { Navbar, Footer, RouteGuard } from "./components";
-import { Main, Game, News } from "./pages";
+import { Main, Game, News, Login } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactLoading from 'react-loading';
 import Authentication from "./pages/Authentication";
 
 
 const App = () => {
-
-  /*const [walletConnected, setWalletConnected] = useState(null)
-
-  const setWalletExistsValue = (value) => {
-    setWalletConnected(value)
-    console.log(walletConnected + 'lol')
-  }*/
 
   let wallet = Authentication()
   let walletConnected = wallet.props.children[0].props.children[0].props.children.props.currentAddress
@@ -46,6 +39,7 @@ const App = () => {
             </RouteGuard>
         } />
         <Route path="/news" element={<News />}/>
+        <Route path="/login" element={<Login />}/>
         <Route path="/marketplace" element={
           <RouteGuard walletConnected={walletConnected}>
             <div className={`${styles.flexCenter} h-[50vh]`}>
