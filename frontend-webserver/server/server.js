@@ -16,6 +16,8 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('../build'))
 
+
+
 if(maintenance === true) {
     app.get('*', (req, res) => {
         res.sendFile(__dirname +  '/maintenance.html')
@@ -34,10 +36,13 @@ server.listen(process.env.PORT, () => {
     console.log('Running...')
 })
 
+let users = 0
 let currentRoomName = null
 const rooms = {}
 
 io.on('connection', function (socket) {
+
+    users++
 
     var cookies = cookie.parse(socket.handshake.headers.cookie)
     var token = cookies['access-token']
@@ -130,5 +135,10 @@ io.on('connection', function (socket) {
             console.log(data)
             io.emit('messageResponse', data);
         })
+    })
+
+    socket.on('disconnect', function () {
+        users--
+        socket.disconnect()
     })
 })
