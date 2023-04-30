@@ -60,7 +60,6 @@ io.on('connection', function (socket) {
         })
 
         socket.username = response
-        console.log(socket.username)
     })
 
     socket.on('join-room', async (roomName) => {
