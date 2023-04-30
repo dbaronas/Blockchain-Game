@@ -11,11 +11,12 @@ export default class MainMenu extends Phaser.Scene {
     }
 
     create() {
-        io().on('player-connected', () => {
+        this.socket = io()
+        this.socket.on('player-connected', () => {
             const { address } = getAccount()
-            io().emit('player-address', address)
+            this.socket.emit('player-address', address)
         })
-        this.registry.set('socket', io())
+        this.registry.set('socket', this.socket)
         this.add.image(0, 0, 'menu').setOrigin(0)
         this.add.sprite(640, 350, 'button1').setInteractive({ pixelPerfect: true }).on('pointerdown', () => {
             this.scene.stop()

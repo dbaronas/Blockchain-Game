@@ -45,6 +45,7 @@ io.on('connection', function (socket) {
     users++
 
     socket.emit('player-connected')
+    console.log('player connected: ' + socket.id)
 
     socket.on('player-address', async (address) => {
         const response = await $.ajax({
@@ -142,6 +143,7 @@ io.on('connection', function (socket) {
     })
 
     socket.on('disconnect', function () {
+        console.log('player disconnected: ' + socket.id)
         users--
         socket.disconnect()
     })
