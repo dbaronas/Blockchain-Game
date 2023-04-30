@@ -44,14 +44,13 @@ io.on('connection', function (socket) {
 
     users++
 
-    var cookies = cookie.parse(socket.handshake.headers.cookie)
-    var token = cookies['access-token']
+    socket.emit('player-connected')
 
-    socket.on('join-room', async (roomName) => {
+    socket.on('player-address', async (address) => {
         const response = await $.ajax({
             type: 'POST',
-            url: `http://${process.env.BACKEND}/api/v1/auth/username`,
-            data: { token },
+            url: `${process.env.BACKEND}/api/v1/db/username`,
+            data: { address },
             xhrFields: { withCredentials: true },
             crossDomain: true,
             async: true,
@@ -59,7 +58,13 @@ io.on('connection', function (socket) {
                 console.log(result)
             }
         })
+
         socket.username = response
+        console.log(socket.username)
+    })
+
+    socket.on('join-room', async (roomName) => {
+
         console.log('a user connected to room ' + roomName + ': ', socket.id)
 
         if (currentRoomName !== null && currentRoomName !== roomName) {
