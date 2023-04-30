@@ -4,13 +4,13 @@ import { Navbar, Footer, RouteGuard } from "./components";
 import { Main, Game, News, Login } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactLoading from 'react-loading';
-import Authentication from "./pages/Authentication";
+import Authentication from "./components/Authentication";
+import { useAccount } from "wagmi";
 
 
 const App = () => {
 
-  let wallet = Authentication()
-  let walletConnected = wallet.props.children[0].props.children[0].props.children.props.currentAddress
+  const { isConnected } = useAccount()
 
   return(
   <Suspense fallback={
@@ -34,14 +34,14 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Main />}/>
         <Route path="/game" element={
-            <RouteGuard walletConnected={walletConnected}>
+            <RouteGuard walletConnected={isConnected}>
             <Game />
             </RouteGuard>
         } />
         <Route path="/news" element={<News />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/marketplace" element={
-          <RouteGuard walletConnected={walletConnected}>
+          <RouteGuard walletConnected={isConnected}>
             <div className={`${styles.flexCenter} h-[50vh]`}>
               <p className={`${styles.flex} max-w-[300px] text-white text-center`}>
                 Market coming soon!
@@ -50,7 +50,7 @@ const App = () => {
           </RouteGuard>
         }/>
         <Route path="/mint" element={
-          <RouteGuard walletConnected={walletConnected}>
+          <RouteGuard walletConnected={isConnected}>
             <div className={`${styles.flexCenter} h-[50vh]`}>
               <p className={`${styles.flex} max-w-[300px] text-white text-center`}>
                 NFT minting coming soon!

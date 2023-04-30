@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/react'
-import { configureChains, createClient, WagmiConfig } from 'wagmi'
+import { configureChains, createClient, WagmiConfig, useAccount } from 'wagmi'
 import { mainnet, localhost } from 'wagmi/chains'
-import ConnectButton from '../components/ConnectButton'
-import RegisterPopup from '../components/RegisterPopup'
+import ConnectButton from './ConnectButton'
+import RegisterPopup from './RegisterPopup'
 import $ from "jquery"
 
 
@@ -21,6 +21,8 @@ const ethereumClient = new EthereumClient(wagmiClient, chains)
 
 
 const Authentication = () => {
+
+  const { isConnected } = useAccount()
 
   const [currentAddress, setCurrentAddress] = useState('')
   const [walletExists, setWalletExists] = useState(null)
@@ -66,7 +68,7 @@ const Authentication = () => {
       })
       setWalletExists(response.exists)
       console.log(response.exists)
-      if (response.exists === true) {
+      if (response.exists === true && isConnected === false) {
         login(address)
       }
     } catch (error) {

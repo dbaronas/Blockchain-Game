@@ -1,7 +1,7 @@
 import { useState, lazy } from 'react'
 import { close, logo2, menu } from '../assets'
 import { navLinks } from '../constants'
-import Authentication from '../pages/Authentication'
+import Authentication from './Authentication'
 const Logo = lazy(() => import('./Logo'))
 
 const Navbar = () => {

@@ -1,5 +1,5 @@
 import { login } from '../assets'
-import Authentication from '../pages/Authentication'
+import Authentication from '../components/Authentication'
 import { useLocation } from 'react-router-dom'
 
 const Login = () => {
