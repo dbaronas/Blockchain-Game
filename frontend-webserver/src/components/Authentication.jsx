@@ -22,13 +22,12 @@ const ethereumClient = new EthereumClient(wagmiClient, chains)
 
 const Authentication = () => {
 
-  const { isConnected } = useAccount()
-
+  const { isConnected, isDisconnected } = useAccount()
+  const [connected, setConnected] = useState(isConnected)
   const [currentAddress, setCurrentAddress] = useState('')
   const [walletExists, setWalletExists] = useState(null)
   
   useEffect(() => {
-    
     // This function will be triggered primarily when when component mounts
     const account = ethereumClient.getAccount()
     if (account.address) {
@@ -51,10 +50,17 @@ const Authentication = () => {
 
   // call a function sendAddress every time when the address value changes
   useEffect(() => {
-    if (currentAddress) {
-      checkIfAddressExists(currentAddress)
+    console.log(connected)
+      if (currentAddress) {
+        checkIfAddressExists(currentAddress)
     }
   }, [currentAddress])
+
+  useEffect(() => {
+    if(isDisconnected){
+      setConnected(isConnected)
+    }
+  }, [isDisconnected])
 
   const checkIfAddressExists = async (address) => {
     const type = "wallet_address"
@@ -67,8 +73,8 @@ const Authentication = () => {
         contentType: 'application/json',
       })
       setWalletExists(response.exists)
-      console.log(response.exists)
-      if (response.exists === true && isConnected === false) {
+      if (response.exists === true && !connected) {
+        setConnected(isConnected)
         login(address)
       }
     } catch (error) {
@@ -91,6 +97,7 @@ const Authentication = () => {
   }
 
   const login = async (address) => {
+    console.log('test')
     try {
       const response = await $.ajax({
         type: 'POST',
