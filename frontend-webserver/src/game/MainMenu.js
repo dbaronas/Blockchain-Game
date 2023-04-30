@@ -1,3 +1,5 @@
+import { getAccount, signMessage } from '@wagmi/core'
+
 export default class MainMenu extends Phaser.Scene {
     constructor() {
         super('menu')

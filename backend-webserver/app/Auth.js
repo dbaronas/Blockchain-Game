@@ -65,24 +65,7 @@ const login = async (req, res) => {
     }
 }
 
-const getUsername = async (req, res) => {
-    const { token } = req.body
-
-    if (!token) {
-        res.status(403).send("No token provided")
-    } else {
-        try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET)
-            console.log(decoded)
-            res.status(200).send(decoded.user)
-        } catch (err) {
-            res.status(401).send("Invalid Token")
-        }
-    }
-}
-
 module.exports = {
     register,
-    login,
-    getUsername
+    login
 }
