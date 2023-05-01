@@ -1,7 +1,11 @@
 import { bill } from "../assets";
 import styles, { layout } from "../style";
+import { useTranslation } from "react-i18next"
 
 const Billing = () => {
+
+  const { t } = useTranslation('Billing')
+
   return (
     <section id="product" className={layout.sectionReverse}>
       <div className={layout.sectionImgReverse}>
@@ -16,11 +20,10 @@ const Billing = () => {
 
       <div className={layout.sectionInfo}>
         <h2 className={styles.heading2}>
-          Enjoy the game while <br className="sm:block hidden" /> earning
-          exclusive rewards
+          {t("Title1")} <br className="sm:block hidden" /> {t("Title2")}
         </h2>
         <p className={`${styles.paragraph} max-w[470px] mt-5`}>
-          Something to be discovered through game-play experience.
+          {t("Paragraph")}
         </p>
       </div>
     </section>

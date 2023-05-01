@@ -5,7 +5,7 @@ import { Main, Game, News, Login } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactLoading from 'react-loading';
 import { useAccount } from "wagmi";
-
+import i18n from "./i18n"
 
 const App = () => {
 

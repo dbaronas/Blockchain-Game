@@ -1,0 +1,72 @@
+{
+    "NavBar": {
+        "Home": "Accueil",
+        "News": "Actualités",
+        "Marketplace": "Place de marché",
+        "Mint NFT": "Mint NFT",
+        "Wallet": "Connecter un portefeuille",
+        "Connecting": "Connexion en cours..."
+    },
+    "Hero": {
+        "Tag": "#1 Jeu NFT en Lituanie",
+        "Title1": "La Prochaine",
+        "Title2": "Génération",
+        "Title3": "Jeu NFT",
+        "Paragraph": "Notre équipe d'experts a utilisé une technologie de blockchain avancée pour créer ce jeu NFT incroyablement amusant, addictif et sécurisé. Cette expérience en 2D vous rappellera non seulement de bons souvenirs mais vous permettra également de gagner de l'argent!",
+        "Play": "Jouer",
+        "Now": "Maintenant"
+    },
+    "Stats": {
+        "stats-1": "Utilisateurs actifs",
+        "stats-2": "Mondes à explorer",
+        "stats-3": "Objets à acquérir"
+    },
+    "Business": {
+        "feature-1-title": "Récompenses",
+        "feature-1-content": "Pêchez pour gagner des NFT exclusifs et de nombreux autres articles",
+        "feature-2-title": "100% Sécurisé",
+        "feature-2-content": "Toutes les transactions sont effectuées à l'aide de la technologie de la blockchain",
+        "feature-3-title": "Place de marché",
+        "feature-3-content": "Commercez et vendez les NFT et autres articles gagnés sur la Place de marché MetaOcean",
+        "Paragraph1": "Laissez libre cours à votre créativité dans les eaux numériques - avec les NFT de pêche, les possibilités sont aussi infinies que l'océan !",
+        "Paragraph2": "Plongez dans un jeu de pêche alimenté par blockchain qui offre un écosystème complet, récompensant les joueurs pour l'effort de capture d'espèces marines exotiques.",
+        "Explore": "Explorer"
+    },
+    "Billing": {
+        "Title1": "Profitez du jeu tout en",
+        "Title2": "gagnant des récompenses exclusives",
+        "Paragraph": "Quelque chose à découvrir grâce à l'expérience de jeu."
+    },
+    "CTA": {
+        "Title": "Achetez des NFT maintenant!",
+        "Paragraph": "Les meilleurs NFT jamais créés. Parfaits, beaux, étonnants! Améliorez vos statistiques et impressionnez les autres.",
+        "ShopNow": "Achetez maintenant!"
+    },
+    "CardDeal": {
+        "Title": "Mises à jour mensuelles",
+        "Paragraph": "Lire les dernières nouvelles sur MetaOcean",
+        "PatchNotes": "Notes de patch"
+    },
+    "Testimonials": {
+        "Title1": "Notre équipe de",
+        "Title2": "développement de MetaOcean",
+        "Paragraph": "GG WP MEILLEURE ÉQUIPE GAGNE! BONNE CHANCE LA PROCHAINE FOIS, SOLDAT!"
+    },
+    "Footer": {
+        "Paragraph": "MetaOcean est le meilleur jeu que vous trouverez jamais! S'il vous plaît, achetez des NFT",
+        "Useful Links": "Liens utiles",
+        "Community": "Communauté",
+        "Partner": "Partenaires",
+        "How it Works": "Comment ça marche",
+        "Create": "Créer",
+        "Explore": "Explorer",
+        "Terms & Services": "Termes et services",
+        "Help Center": "Centre d'aide",
+        "Partners": "Partenaires",
+        "Suggestions": "Suggestions",
+        "Blog": "Blog",
+        "Our Partner": "Notre partenaire",
+        "Become a Partner": "Devenir un partenaire",
+        "Rights": "2023 MetaOcean. Tous droits réservés."
+    }
+}
