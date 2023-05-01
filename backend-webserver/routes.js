@@ -1,4 +1,5 @@
 const api = require('./app/index')
+const auth = require('./middleware/auth')
 
 module.exports = (app) => {
 
@@ -28,4 +29,9 @@ module.exports = (app) => {
     app.get('/api/v1/db/news', api.db.getNews)
     app.post('/api/v1/db/checkUser', api.db.checkUser)
     app.post('/api/v1/db/username', api.db.getUsername)
+
+    //AUTH
+    app.post('/api/v1/auth/login', api.auth.login)
+    app.post('/api/v1/auth/register', api.auth.register)
+    app.post('/api/v1/auth/verifyToken', auth)
 }
