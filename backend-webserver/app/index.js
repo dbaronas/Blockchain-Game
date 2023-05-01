@@ -3,13 +3,11 @@ const erc721 = require('./ERC721')
 const db = require('./Database')
 //const erc1155 = require('./ERC1155')
 const marketplace = require('./Marketplace')
-const auth = require('./Auth')
 
 module.exports = {
     //erc20,
     erc721,
     db,
     //erc1155,
-    marketplace,
-    auth
+    marketplace
 }
