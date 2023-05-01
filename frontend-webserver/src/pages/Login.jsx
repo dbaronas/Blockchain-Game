@@ -1,17 +1,16 @@
 import { login } from '../assets'
 import Authentication from '../components/Authentication'
 import { useLocation } from 'react-router-dom'
+import { useAccount } from "wagmi"
 
 const Login = () => {
     const { state } = useLocation();
     const { from = "/" } = state || {};
-    let wallet = Authentication()
-    let walletConnected = wallet.props.children[0].props.children[0].props.children.props.currentAddress
-    console.log(walletConnected)
+    const { isConnected } = useAccount()
 
     return (
         <div className=' text-white h-[50vh] flex justify-center items-center'>
-            {!walletConnected
+            {!isConnected
                 ?
                 <div className=' h-[400px] w-[400px] bg-neutral-700 grid place-items-center'>
                     <p className='text-white'>

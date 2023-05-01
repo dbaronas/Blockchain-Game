@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/react'
-import { configureChains, createClient, WagmiConfig, useAccount } from 'wagmi'
+import { configureChains, createClient, WagmiConfig } from 'wagmi'
 import { mainnet, localhost } from 'wagmi/chains'
 import ConnectButton from './ConnectButton'
 import RegisterPopup from './RegisterPopup'
@@ -22,8 +22,6 @@ const ethereumClient = new EthereumClient(wagmiClient, chains)
 
 const Authentication = () => {
 
-  const { isConnected, isDisconnected } = useAccount()
-  const [connected, setConnected] = useState(isConnected)
   const [currentAddress, setCurrentAddress] = useState('')
   const [walletExists, setWalletExists] = useState(null)
   
@@ -50,17 +48,10 @@ const Authentication = () => {
 
   // call a function sendAddress every time when the address value changes
   useEffect(() => {
-    console.log(connected)
       if (currentAddress) {
         checkIfAddressExists(currentAddress)
     }
   }, [currentAddress])
-
-  useEffect(() => {
-    if(isDisconnected){
-      setConnected(isConnected)
-    }
-  }, [isDisconnected])
 
   const checkIfAddressExists = async (address) => {
     const type = "wallet_address"
@@ -68,15 +59,11 @@ const Authentication = () => {
     try {
       const response = await $.ajax({
         type: 'POST',
-        url: 'http://193.219.91.103:6172/api/v1/db/checkUser',
+        url: `${import.meta.env.VITE_BACKEND}/api/v1/db/checkUser`,
         data: JSON.stringify(data),
         contentType: 'application/json',
       })
       setWalletExists(response.exists)
-      if (response.exists === true && !connected) {
-        setConnected(isConnected)
-        login(address)
-      }
     } catch (error) {
       console.log(error)
     }
@@ -84,25 +71,10 @@ const Authentication = () => {
 
   const register = async (address, username, data) => {
     try {
-      const response = await $.ajax({
+      await $.ajax({
         type: 'POST',
-        url: 'http://193.219.91.103:6172/api/v1/auth/register',
+        url: `${import.meta.env.VITE_BACKEND}/api/v1/db/register`,
         data: { address, username, data },
-        xhrFields: { withCredentials: true },
-        crossDomain: true,
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const login = async (address) => {
-    console.log('test')
-    try {
-      const response = await $.ajax({
-        type: 'POST',
-        url: 'http://193.219.91.103:6172/api/v1/auth/login',
-        data: { address },
         xhrFields: { withCredentials: true },
         crossDomain: true,
       })

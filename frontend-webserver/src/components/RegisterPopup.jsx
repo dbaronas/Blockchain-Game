@@ -27,7 +27,6 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
         data: JSON.stringify(data),
         contentType: 'application/json',
       })
-      console.log(response.exists)
       return response.exists
     } catch (error) {
       console.log(error)

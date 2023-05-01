@@ -4,7 +4,6 @@ import { Navbar, Footer, RouteGuard } from "./components";
 import { Main, Game, News, Login } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactLoading from 'react-loading';
-import Authentication from "./components/Authentication";
 import { useAccount } from "wagmi";
 
 
