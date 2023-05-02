@@ -77,6 +77,7 @@ const Authentication = () => {
         data: { address, username, data },
         xhrFields: { withCredentials: true },
         crossDomain: true,
+        contentType: 'application/json',
       })
     } catch (error) {
       console.log(error)
