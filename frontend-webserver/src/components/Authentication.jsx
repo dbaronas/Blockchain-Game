@@ -74,10 +74,10 @@ const Authentication = () => {
       await $.ajax({
         type: 'POST',
         url: `${import.meta.env.VITE_BACKEND}/api/v1/db/register`,
+        dataType: json,
         data: { address, username, data },
         xhrFields: { withCredentials: true },
         crossDomain: true,
-        contentType: 'application/json',
       })
     } catch (error) {
       console.log(error)
