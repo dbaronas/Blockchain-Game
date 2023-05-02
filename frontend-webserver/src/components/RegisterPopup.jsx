@@ -36,7 +36,10 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
   const handleForm = async (event) => {
     event.preventDefault()
     const username = document.getElementById("username").value
-    const data = { map: 1 }
+    const data = { 
+      island: 'TutorialScene',
+      inventory: [],
+    }
     const doesUsernameExists = await checkIfUsernameExists(username)
     if (doesUsernameExists === true) {
       let errorMessage = `Username '${username}' is not available`
