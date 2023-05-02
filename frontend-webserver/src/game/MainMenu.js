@@ -19,8 +19,11 @@ export default class MainMenu extends Phaser.Scene {
         this.registry.set('socket', this.socket)
         this.add.image(0, 0, 'menu').setOrigin(0)
         this.add.sprite(640, 350, 'button1').setInteractive({ pixelPerfect: true }).on('pointerdown', () => {
-            this.scene.stop()
-            this.scene.start('TutorialScene')
+            this.socket.emit('player-play')
+            this.socket.on('player-join', (data) => {
+                    this.scene.stop()
+                    this.scene.start(data)
+            })
         })
         this.add.text(612, 400, 'Play', {
             fontFamily: 'VT323',

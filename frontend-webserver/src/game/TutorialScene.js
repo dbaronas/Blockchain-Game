@@ -72,6 +72,12 @@ export default class TutorialScene extends Phaser.Scene {
         var missionButton = this.add.image(900, 348, 'button').setInteractive({ pixelPerfect: true }).setScale(0.4).setOrigin(0.5, 0).setScrollFactor(0, 0)
         var missionButtonText = this.add.text(900, 500, 'Check mission').setOrigin(0.5, -1).setFontSize(12).setScrollFactor(0, 0)
 
+        var skipMission = this.add.image(900, 313, 'button').setInteractive({ pixelPerfect: true }).setScale(0.4).setOrigin(0.5, 0).setScrollFactor(0, 0).on('pointerdown', () => {
+            this.scene.stop()
+            this.scene.start('BeginningScene')
+        })
+        var skipText = this.add.text(900, 465, 'Skip tutorial').setOrigin(0.5, -1).setFontSize(12).setScrollFactor(0, 0)
+
         missionButton.on('pointerdown', () => {
             this.started = false
         })

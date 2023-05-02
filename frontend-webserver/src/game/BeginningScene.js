@@ -4,7 +4,7 @@ import Player from "./Player.js"
 export default class BeginningScene extends Phaser.Scene {
     constructor() {
         super('BeginningScene')
-        this.roomName = 'beginning'
+        this.roomName = 'BeginningScene'
     }
 
     init(data) {

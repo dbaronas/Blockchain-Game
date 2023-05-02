@@ -4,7 +4,7 @@ import Player from "./Player.js"
 export default class BeginningScene2 extends Phaser.Scene {
     constructor() {
         super('BeginningScene2')
-        this.roomName = 'beginning2'
+        this.roomName = 'BeginningScene2'
     }
     
     init(data) {
@@ -115,7 +115,9 @@ export default class BeginningScene2 extends Phaser.Scene {
 
     addPlayer(self, playerInfo) {
         self.player = new Player({scene:this, x: playerInfo.x, y: playerInfo.y, texture: 'fisherman', frame: 'fisherman_13', isLocal: true})
-        self.player.inventory = this.playerInventory
+        if(this.playerInventory) {
+            this.player.inventory = this.playerInventory
+        }
         self.player.setUsername(playerInfo.playerUsername)
         self.inventoryScene = self.scene.launch('InventoryScene', {scene: this})
         if(!this.scene.isActive('chat')) {

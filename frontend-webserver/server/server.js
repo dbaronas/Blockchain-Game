@@ -50,7 +50,7 @@ io.on('connection', function (socket) {
     socket.on('player-address', async (address) => {
         const response = await $.ajax({
             type: 'POST',
-            url: `${process.env.BACKEND}/api/v1/db/username`,
+            url: `${process.env.BACKEND}/api/v1/db/playerData`,
             data: { address },
             xhrFields: { withCredentials: true },
             crossDomain: true,
@@ -59,8 +59,14 @@ io.on('connection', function (socket) {
                 console.log(result)
             }
         })
+        socket.address = address
+        socket.username = response.username
+        socket.island = response.data.island
+        socket.inventory = response.data.inventory
+    })
 
-        socket.username = response
+    socket.on('player-play', () => {
+        socket.emit('player-join', socket.island)
     })
 
     socket.on('join-room', async (roomName) => {
@@ -82,7 +88,7 @@ io.on('connection', function (socket) {
             room = { players: {} }
             rooms[roomName] = room
         }
-
+        socket.island = roomName
         room.players[socket.id] = {
             x: 500,
             y: 500,
@@ -96,7 +102,24 @@ io.on('connection', function (socket) {
         socket.to(roomName).emit('newPlayer', room.players[socket.id])
 
         socket.removeAllListeners('disconnect')
-        socket.on('disconnect', function () {
+        socket.on('disconnect', async function () {
+            let address = socket.address
+            let data = {
+                island: socket.island,
+                inventory: socket.inventory
+            }
+            await $.ajax({
+                type: 'POST',
+                url: `${process.env.BACKEND}/api/v1/db/sendPlayerData`,
+                data: { address, data },
+                xhrFields: { withCredentials: true },
+                crossDomain: true,
+                async: true,
+                error: function (result, status) {
+                    console.log(result)
+                }
+            })
+            users--
             console.log('user disconnected: ', socket.id)
             delete room.players[socket.id]
             io.to(roomName).emit('player-left', socket.id)
