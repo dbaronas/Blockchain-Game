@@ -53,19 +53,33 @@ const checkUser = async (req, res) => {
     }
 }
 
-const getUsername = async (req, res) => {
+const getData = async (req, res) => {
     const { address } = req.body
 
     const user = await db.User.findOne({ where: { wallet_address: address } })
 
-    console.log(user.username)
+    console.log(user.username, user.data)
 
-    res.send(user.username)
+    res.send({ username: user.username, data: user.data })
+}
+
+const sendData = async (req, res) => {
+    const { address, data } = req.body
+
+    const user = await db.User.findOne({ where: { wallet_address: address } })
+
+    if (user) {
+        await user.update({ data: data })
+        res.send("Data changed successfully")
+    } else {
+        res.send("Error")
+    }
 }
 
 module.exports = {
     getNews,
     checkUser,
-    getUsername,
-    register
+    getData,
+    register,
+    sendData
 }

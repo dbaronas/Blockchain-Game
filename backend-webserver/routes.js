@@ -27,6 +27,7 @@ module.exports = (app) => {
     //DATABASE
     app.get('/api/v1/db/news', api.db.getNews)
     app.post('/api/v1/db/checkUser', api.db.checkUser)
-    app.post('/api/v1/db/username', api.db.getUsername)
+    app.post('/api/v1/db/playerData', api.db.getData)
     app.post('/api/v1/db/register', api.db.register)
+    app.post('/api/v1/db/sendPlayerData', api.db.sendData)
 }
