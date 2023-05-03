@@ -40,7 +40,7 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
       island: 'TutorialScene',
       inventory: {
         coins: 0,
-        items: {0: ""}
+        items: {0: {name: 'fr_1', quantity: 1, type: 'fishing-rod'}}
       },
     }
     const doesUsernameExists = await checkIfUsernameExists(username)
@@ -69,11 +69,11 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
                   type="text"
                   id="username"
                   className="text-black block border-black border-2 bg-white min-h-[2.5rem] mb-[1.5rem] w-[19.5rem]"
-                  placeholder="Enter username"
+                  placeholder="Enter your username"
                   required
                 />
                 <button className="rounded-sm border-solid border-black border-2 bg-white min-h-[2rem] text-[1.2rem] mb-[1rem] w-[19.5rem]">
-                  Submit
+                  Register
                 </button>
                 {error !== null && (
                   <div className="text-black flex justify-center text-[1.1rem] font-normal flex-wrap min-h-[3.5rem] w-[19.5rem]">{error}</div>
