@@ -58,8 +58,6 @@ const getData = async (req, res) => {
 
     const user = await db.User.findOne({ where: { wallet_address: address } })
 
-    console.log(user.username, user.data)
-
     res.send({ username: user.username, data: user.data })
 }
 

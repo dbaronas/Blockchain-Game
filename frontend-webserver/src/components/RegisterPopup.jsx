@@ -40,7 +40,7 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
       island: 'TutorialScene',
       inventory: {
         coins: 0,
-        items: {}
+        items: {0: {name: 'fr_1', quantity: 1, type: 'fishing-rod'}}
       },
     }
     const doesUsernameExists = await checkIfUsernameExists(username)
