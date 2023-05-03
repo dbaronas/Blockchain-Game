@@ -64,8 +64,8 @@ export default class CatchModal extends Phaser.Scene {
         }
         const config7 = {
             key: "7",
-            frames: this.anims.generateFrameNumbers('7', { start: 0, end: 1, first: 1 }),
-            frameRate: 20,
+            frames: this.anims.generateFrameNumbers('7', { start: 0, end: 0, first: 0 }),
+            frameRate: 0,
             repeat: -1
         }
 

@@ -175,6 +175,15 @@ io.on('connection', function (socket) {
         })
     })
 
+    socket.on('player-inventory', (inventory) => {
+        socket.inventory.items = inventory
+    })
+
+    socket.on('get-inventory', () => {
+        socket.emit('send-inventory', socket.inventory)
+        console.log(socket.inventory)
+    })
+    
     socket.on('disconnect', function () {
         console.log('player disconnected: ' + socket.id)
         users--
