@@ -175,14 +175,14 @@ export default class BeginningScene2 extends Phaser.Scene {
                             this.scene.get('InventoryScene').refresh()
                             this.player.inventory.addCoins(50)
                             this.scene.get('InventoryScene').refreshCoins()
-                            self.socket.emit('player-inventory', this.player.inventory.items)
+                            this.socket.emit('player-inventory', this.player.inventory.items)
                         } else {
                             const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes)
                             this.player.inventory.addItem({name: randomFishType, quantity: 1, type: 'fish'})
                             this.scene.get('InventoryScene').refresh()
                             this.player.inventory.addCoins(50)
                             this.scene.get('InventoryScene').refreshCoins()
-                            self.socket.emit('player-inventory', this.player.inventory.items)
+                            this.socket.emit('player-inventory', this.player.inventory.items)
                         }
                     },
                     callbackScope: this,
