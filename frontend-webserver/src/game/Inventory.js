@@ -10,7 +10,7 @@ export default class Inventory {
     addItem(item){
         let existingKey = Object.keys(this.items).find(key => this.items[key].name === item.name)
         if(existingKey) {
-            this.items[existingKey].quantity += item.quantity
+            parseInt(this.items[existingKey].quantity) += parseInt(item.quantity)
         } else {
             for (let index = 0; index < this.maxColumns * this.maxRows; index++) {
                 let existingItem = this.items[index]
