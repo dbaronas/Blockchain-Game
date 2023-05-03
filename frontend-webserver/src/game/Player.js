@@ -20,7 +20,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.scene.cameras.main.zoom = 2
         }
         this.inventory = new Inventory()
-        this.inventory.addItem({name: 'fr_1', quantity: 1, type: 'fishing-rod'})
         this.selectedItem = this.scene.physics.add.sprite(this.x, this.y, 'items', 0)
         this.selectedItem.visible = false
         this.selectedItem.setCircle(24, -31.6, -15.6)

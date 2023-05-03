@@ -69,11 +69,11 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
                   type="text"
                   id="username"
                   className="text-black block border-black border-2"
-                  placeholder="arthur"
+                  placeholder="Enter your username"
                   required
                 />
                 <button className="border-solid border-black border-2">
-                  Submit
+                  Register
                 </button>
                 {error !== null && (
                   <div className="text-black text-sm flex justify-center">{error}</div>
