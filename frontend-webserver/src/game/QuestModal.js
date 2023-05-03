@@ -69,34 +69,33 @@ export default class CatchModal extends Phaser.Scene {
             repeat: -1
         }
 
-        this.anims.create(config1)
-        this.anims.create(config2)
-        this.anims.create(config3)
-        this.anims.create(config4)
-        this.anims.create(config5)
-        this.anims.create(config6)
-        this.anims.create(config7)
-
         switch(quest) {
             case 1:
+                this.anims.create(config1)
                 var questText = "Welcome adventurer to the MetaOcean world!\nLet's start with a simple task. Press W, A, S, D keys to walk around."
                 break
             case 2:
+                this.anims.create(config2)
                 var questText = "In our world we have fishing zones near the water.\nYou can fish out many various things!\nYour next goal is to find a fishing zone."
                 break
             case 3:
+                this.anims.create(config3)
                 var questText = "You can start fishing by pressing E key on your keyboard.\nRemember, you must be in a fishing zone and have a fishing rod equipped.\nTry fishing yourself."
                 break
             case 4:
+                this.anims.create(config4)
                 var questText = "Nice catch! As you can see your fish is in your inventory.\nYou can change equipped item by using scroll wheel on the mouse.\nTo open and close your inventory press I key on your keyboard!"
                 break
             case 5:
+                this.anims.create(config5)
                 var questText = "Great job! Now let's sell you fish to the NPC.\nFind the NPC, press E to interact with him and sell your fish.\nYou can earn in-game coins by selling various fishes.\nIn-game coins will be used to repair your fishing rods, buy bait."
                 break
             case 6:
+                this.anims.create(config6)
                 var questText = "Our game has chat feature!\nPress T to start typing, ENTER to send the message\nand ESC to cancel writing."
                 break
             case 7:
+                this.anims.create(config7)
                 var questText = "Now you know everything!\nGood luck with your future adventures!"
                 break
         }

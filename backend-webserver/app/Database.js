@@ -27,7 +27,6 @@ const register = async (req, res) => {
                         creation_date: Date.now(),
                         data: data
                     })
-
                     res.send('Registered successfully')
                 }
             }
