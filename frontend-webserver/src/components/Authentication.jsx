@@ -74,7 +74,8 @@ const Authentication = () => {
       await $.ajax({
         type: 'POST',
         url: `${import.meta.env.VITE_BACKEND}/api/v1/db/register`,
-        data: { address, username, data },
+        data: JSON.stringify({ address, username, data }),
+        contentType: 'application/json',
         xhrFields: { withCredentials: true },
         crossDomain: true,
       })
