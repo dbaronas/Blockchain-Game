@@ -38,7 +38,10 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
     const username = document.getElementById("username").value
     const data = { 
       island: 'TutorialScene',
-      inventory: [""],
+      inventory: {
+        coins: 0,
+        items: {}
+      },
     }
     const doesUsernameExists = await checkIfUsernameExists(username)
     if (doesUsernameExists === true) {
