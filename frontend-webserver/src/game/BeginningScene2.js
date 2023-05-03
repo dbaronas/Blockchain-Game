@@ -117,6 +117,14 @@ export default class BeginningScene2 extends Phaser.Scene {
         self.player = new Player({scene:this, x: playerInfo.x, y: playerInfo.y, texture: 'fisherman', frame: 'fisherman_13', isLocal: true})
         if(this.playerInventory) {
             this.player.inventory = this.playerInventory
+            self.socket.emit('player-inventory', this.player.inventory.items)
+        } else {
+            self.socket.emit('get-inventory')
+            self.socket.on('send-inventory', (inventory) => {
+                this.player.inventory.items = inventory.items
+                this.scene.get('InventoryScene').refresh()
+                this.scene.get('InventoryScene').refreshCoins()
+            })
         }
         self.player.setUsername(playerInfo.playerUsername)
         self.inventoryScene = self.scene.launch('InventoryScene', {scene: this})
@@ -167,12 +175,14 @@ export default class BeginningScene2 extends Phaser.Scene {
                             this.scene.get('InventoryScene').refresh()
                             this.player.inventory.addCoins(50)
                             this.scene.get('InventoryScene').refreshCoins()
+                            self.socket.emit('player-inventory', this.player.inventory.items)
                         } else {
                             const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes)
                             this.player.inventory.addItem({name: randomFishType, quantity: 1, type: 'fish'})
                             this.scene.get('InventoryScene').refresh()
                             this.player.inventory.addCoins(50)
                             this.scene.get('InventoryScene').refreshCoins()
+                            self.socket.emit('player-inventory', this.player.inventory.items)
                         }
                     },
                     callbackScope: this,

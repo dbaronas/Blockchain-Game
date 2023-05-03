@@ -163,6 +163,16 @@ io.on('connection', function (socket) {
             console.log(data)
             io.emit('messageResponse', data);
         })
+
+        socket.removeAllListeners('player-inventory')
+        socket.on('player-inventory', (inventory) => {
+            socket.inventory.items = inventory
+        })
+
+        socket.removeAllListeners('get-inventory')
+        socket.on('get-inventory', () => {
+            socket.emit('send-inventory', socket.inventory)
+        })
     })
 
     socket.on('disconnect', function () {
