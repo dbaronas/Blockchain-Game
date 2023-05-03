@@ -40,7 +40,7 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
       island: 'TutorialScene',
       inventory: {
         coins: 0,
-        items: {0: {name: 'fr_1', quantity: 1, type: 'fishing-rod'}}
+        items: {}
       },
     }
     const doesUsernameExists = await checkIfUsernameExists(username)
@@ -60,23 +60,23 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
         <div className="modal w-screen h-screen inset-0 fixed z-[6]">
           <div className="overlay w-screen h-screen inset-0 absolute bg-gray-700 bg-opacity-80"
           ></div>
-          <div className="modal-content absolute left-2/4 top-[40%] transform -translate-x-1/2 -translate-y-1/2 bg-gray-100 p-8 rounded max-w-600 min-w-300">
-            <div className="flex justify-center flex-col items-center gap-2 mt-3">
-              <h2>Register</h2>
-              <form onSubmit={handleForm} className="gap-2 flex flex-col">
-                <label>Enter username:</label>
+          <div className="modal-content absolute left-2/4 top-[40%] transform -translate-x-1/2 -translate-y-1/2 bg-white p-5 rounded w-[24rem] h-[22rem]">
+            <div className="flex justify-center flex-col items-center gap-[2rem] mt-3">
+              <h2 className="font-semibold text-[2.3rem]">Register</h2>
+              <form onSubmit={handleForm} className="flex flex-col min-w-[19.5rem]">
+                <label className="text-[1.3rem] mb-2 font-medium">Username</label>
                 <input
                   type="text"
                   id="username"
-                  className="text-black block border-black border-2"
-                  placeholder="Enter your username"
+                  className="text-black block border-black border-2 bg-white min-h-[2.5rem] mb-[1.5rem] w-[19.5rem]"
+                  placeholder="Enter username"
                   required
                 />
-                <button className="border-solid border-black border-2">
-                  Register
+                <button className="rounded-sm border-solid border-black border-2 bg-white min-h-[2rem] text-[1.2rem] mb-[1rem] w-[19.5rem]">
+                  Submit
                 </button>
                 {error !== null && (
-                  <div className="text-black text-sm flex justify-center">{error}</div>
+                  <div className="text-black flex justify-center text-[1.1rem] font-normal flex-wrap min-h-[3.5rem] w-[19.5rem]">{error}</div>
                 )}
               </form>
             </div>
