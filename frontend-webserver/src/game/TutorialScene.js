@@ -25,6 +25,7 @@ export default class TutorialScene extends Phaser.Scene {
     }
 
     create() {
+        this.socket = this.registry.get('socket')
         this.canMove = true
         this.fishTypes = ['salmon', 'bass', 'pike', 'pufferfish']
         const map = this.make.tilemap({key: 'map2'})
@@ -83,7 +84,11 @@ export default class TutorialScene extends Phaser.Scene {
         })
 
         this.inventoryScene = this.scene.launch('InventoryScene', {scene: this})
-        this.scene.get('InventoryScene').refresh()
+        this.socket.emit('get-inventory')
+        this.socket.on('send-inventory', (inventory) => {
+            this.player.inventory.items = inventory.items
+            this.scene.get('InventoryScene').refresh()
+        })
 
         this.scene.get('TutorialScene').events.on('select-item', (data) => {
             if (data.frame === -1) {
