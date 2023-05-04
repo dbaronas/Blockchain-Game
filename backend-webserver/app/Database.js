@@ -9,7 +9,6 @@ const getNews = async(req, res) => {
 const register = async (req, res) => {
     try {
         const { address, username, data } = req.body
-        const nonce = crypto.randomBytes(64).toString("base64")
 
         if (!(address && username)) {
             res.status(400).send('All input is required')
@@ -28,7 +27,7 @@ const register = async (req, res) => {
                         username: username,
                         creation_date: Date.now(),
                         data: data,
-                        nonce: nonce
+                        nonce: crypto.randomBytes(64).toString("base64")
                     })
                     res.send('Registered successfully')
                 }
