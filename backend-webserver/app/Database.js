@@ -27,7 +27,7 @@ const register = async (req, res) => {
                         username: username,
                         creation_date: Date.now(),
                         data: data,
-                        nonce: crypto.randomBytes(16).toString("base64")
+                        nonce: crypto.randomBytes(64).toString("base64")
                     })
                     res.send('Registered successfully')
                 }
