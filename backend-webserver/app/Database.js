@@ -1,4 +1,5 @@
 const db = require('../models/index')
+const crypto = require('crypto')
 
 const getNews = async(req, res) => {
     const news = await db.News.findAll()
@@ -25,7 +26,8 @@ const register = async (req, res) => {
                         wallet_address: address,
                         username: username,
                         creation_date: Date.now(),
-                        data: data
+                        data: data,
+                        nonce: crypto.randomBytes(16).toString("base64")
                     })
                     res.send('Registered successfully')
                 }
@@ -73,10 +75,21 @@ const sendData = async (req, res) => {
     }
 }
 
+const getNonce = async (req, res) => {
+    const { address } = req.params
+
+    console.log(address)
+
+    await db.User.findOne({ where: { wallet_address: address } })
+
+    res.send(user.nonce)
+}
+
 module.exports = {
     getNews,
     checkUser,
     getData,
     register,
-    sendData
+    sendData,
+    getNonce
 }
