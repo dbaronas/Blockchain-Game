@@ -2,9 +2,9 @@ export default class Inventory {
     constructor() {
         this.maxColumns = 10
         this.maxRows = 3
-        this.items = {
-        }
+        this.items = {}
         this.coins = 0
+        this.events = new Phaser.Events.EventEmitter()
     }
 
     addItem(item){
@@ -20,11 +20,13 @@ export default class Inventory {
                 }
             }
         }
+        this.events.emit('inventoryUpdate')
     }
 
     incrementFishAmount(index, amount) {
         if(this.items[index].type !== 'fish') return
         this.items[index].quantity += amount
+        this.events.emit('inventoryUpdate')
     }
 
     decreaseItem(index) {
@@ -33,10 +35,12 @@ export default class Inventory {
         } else {
             delete this.items[index]
         }
+        this.events.emit('inventoryUpdate')
     }
 
     addCoins(amount) {
         this.coins += amount
+        this.events.emit('coinsUpdate')
     }
 
     getCoins() {

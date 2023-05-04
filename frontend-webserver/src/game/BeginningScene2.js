@@ -117,11 +117,12 @@ export default class BeginningScene2 extends Phaser.Scene {
         self.player = new Player({scene:this, x: playerInfo.x, y: playerInfo.y, texture: 'fisherman', frame: 'fisherman_13', isLocal: true})
         if(this.playerInventory) {
             this.player.inventory = this.playerInventory
-            self.socket.emit('player-inventory', this.player.inventory.items)
+            self.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
         } else {
             self.socket.emit('get-inventory')
             self.socket.on('send-inventory', (inventory) => {
                 this.player.inventory.items = inventory.items
+                this.player.inventory.coins = parseInt(inventory.coins)
                 this.scene.get('InventoryScene').refresh()
                 this.scene.get('InventoryScene').refreshCoins()
             })
@@ -172,17 +173,11 @@ export default class BeginningScene2 extends Phaser.Scene {
                             this.scene.pause()
                             this.scene.launch('modal', { randomFishRod: randomFishRod, scene: this })
                             this.player.inventory.addItem({name: randomFishRod, quantity: 1, type: 'fishing-rod'})
-                            this.scene.get('InventoryScene').refresh()
-                            this.player.inventory.addCoins(50)
-                            this.scene.get('InventoryScene').refreshCoins()
-                            this.socket.emit('player-inventory', this.player.inventory.items)
+                            this.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
                         } else {
                             const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes)
                             this.player.inventory.addItem({name: randomFishType, quantity: 1, type: 'fish'})
-                            this.scene.get('InventoryScene').refresh()
-                            this.player.inventory.addCoins(50)
-                            this.scene.get('InventoryScene').refreshCoins()
-                            this.socket.emit('player-inventory', this.player.inventory.items)
+                            this.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
                         }
                     },
                     callbackScope: this,

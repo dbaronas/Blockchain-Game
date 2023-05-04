@@ -86,6 +86,18 @@ export default class InventoryScene extends Phaser.Scene {
         }
     }
 
+    listenForInventoryUpdate() {
+        this.inventory.events.on('inventoryUpdate', () => {
+            this.refresh()
+        })
+    }
+
+    listenForCoinsUpdate() {
+        this.inventory.events.on('coinsUpdate', () => {
+            this.refreshCoins()
+        })
+    }
+
     refreshCoins() {
         this.destroyCoinText(this.coinText)
         this.coinText = this.add.text(1240, this.margin + this.tileSize / 2 + 20, this.inventory.getCoins(), {
@@ -100,6 +112,8 @@ export default class InventoryScene extends Phaser.Scene {
     }
 
     create(){
+        this.listenForInventoryUpdate()
+        this.listenForCoinsUpdate()
         this.coinSlot = this.add.sprite(1240, this.margin + this.tileSize / 2, 'items', 4).setScale(this.uiScale)
         this.coinSlot.depth = -1
         this.coinIcon = this.add.sprite(1240, this.margin + this.tileSize / 2, 'items', 1).setScale(this.uiScale)

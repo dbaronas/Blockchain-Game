@@ -15,14 +15,20 @@ export default class ShopScene extends Phaser.Scene {
     }
 
     create() {
+        this.socket = this.registry.get('socket')
         var modal = this.add.image(120, 0, 'modal').setScale(2).setOrigin(0, 0)
 
         const closeButton = this.add.text(1000, 150, 'X', { fill: '#000' }).setScale(2).setInteractive().on('pointerdown', () => {
+            const items = this.playerInventory.items.filter(item => item.name !== '')
+            this.socket.emit('player-inventory', { items: items, coins: this.playerInventory.coins })
+            console.log(this.playerInventory.items)
             this.scene.stop('ShopScene')
             this.scene.resume(this.parentScene)
         })
 
         this.input.keyboard.on('keydown-E', () => {
+            const items = this.playerInventory.items.filter(item => item.name !== '')
+            this.socket.emit('player-inventory', { items: items, coins: this.playerInventory.coins })
             this.scene.stop('ShopScene')
             this.scene.resume(this.parentScene)
         })
@@ -56,8 +62,6 @@ export default class ShopScene extends Phaser.Scene {
                         this.playerInventory.addCoins(items[itemName].price)
                         itemQuantity--
                         quantityText.setText(itemName + ":\n" + itemQuantity)
-                        this.scene.get('InventoryScene').refresh()
-                        this.scene.get('InventoryScene').refreshCoins()
 
                         if (itemQuantity === 0) {
                             remainingItems.forEach((remainingItem) => {
