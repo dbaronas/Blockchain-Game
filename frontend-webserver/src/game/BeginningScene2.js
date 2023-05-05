@@ -1,5 +1,6 @@
 import NPC from "./NPC.js"
 import Player from "./Player.js"
+import { BeginningScene2Fishes } from "./Items.js"
 
 export default class BeginningScene2 extends Phaser.Scene {
     constructor() {
@@ -14,7 +15,7 @@ export default class BeginningScene2 extends Phaser.Scene {
 
     preload() {
         Player.preload(this)
-        this.canMove = true
+        NPC.preload(this)
         this.load.atlas('fisherman', 'assets/fisherman/fisherman.png', 'assets/fisherman/fisherman_atlas.json')
         this.load.image('tiles2', 'assets/tileset2.png')
         this.load.tilemapTiledJSON('map', 'assets/map3.json')
@@ -29,16 +30,16 @@ export default class BeginningScene2 extends Phaser.Scene {
     }
 
     create() {
-        this.fishTypes = ['salmon', 'bass', 'pike', 'pufferfish']
-        this.fishRod = ['fr_1', 'fr_2', 'fr_3', 'fr_4']
+        this.canMove = true
+        this.fishTypes = BeginningScene2Fishes
+        this.fishRod = ['fr_3', 'fr_4']
         let map = this.make.tilemap({ key: 'map' })
         var tileset = map.addTilesetImage('tileset', 'tiles2', 32, 32, 2, 3)
         var water = map.createLayer('water', tileset, 0, 0)
         this.fishing_zone = map.createLayer('fishingZone', tileset, 0, 0)
         var ground = map.createLayer('ground', tileset, 0, 0)
         water.setCollisionBetween(3, 4)
-        //let testPlayer = new NPC({scene:this, x:250, y:250, texture:'fisherman', frame:'fisherman_13'})
-        //testPlayer.update()
+        this.npc = new NPC({scene:this, x:250, y:250, texture:'fisherman', frame:'fisherman_13'})
 
         this.scene.get('chat').setScene(this)
         var self = this
@@ -50,13 +51,13 @@ export default class BeginningScene2 extends Phaser.Scene {
                 if (players[id].playerId === self.socket.id) {
                     self.addPlayer(self, players[id])
                     self.physics.add.collider(self.player, water)
-                    //self.physics.add.collider(self.player, self.npc)
+                    self.physics.add.collider(self.player, self.npc)
                     self.physics.add.collider(self.player, self.fishing_zone)
                     self.physics.add.collider(self.player.selectedItem, water)
-                    //self.physics.add.collider(self.player.selectedItem, self.npc)
+                    self.physics.add.collider(self.player.selectedItem, self.npc)
                     self.physics.add.collider(self.player.selectedItem, self.fishing_zone)
                     self.physics.add.collider(self.player.username, water)
-                    //self.physics.add.collider(self.player.username, self.npc)
+                    self.physics.add.collider(self.player.username, self.npc)
                     self.physics.add.collider(self.player.username, self.fishing_zone)
                 } else {
                     self.addOtherPlayers(self, players[id])
@@ -147,6 +148,11 @@ export default class BeginningScene2 extends Phaser.Scene {
     update() {
         if(this.player && this.canMove) {
             this.player.update()
+
+            if(this.npc) {
+                this.npc.update()
+                this.npc.handleCollision(this.player, this)
+            }
 
             if(this.player.x > 612 && this.player.y > 612){
                 this.player.x = 500

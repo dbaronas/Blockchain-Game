@@ -1,5 +1,6 @@
 import NPC from "./NPC.js"
 import Player from "./Player.js"
+import { BeginningSceneFishes } from "./Items.js";
 
 export default class BeginningScene extends Phaser.Scene {
     constructor() {
@@ -30,8 +31,8 @@ export default class BeginningScene extends Phaser.Scene {
 
     create() {
         this.canMove = true
-        this.fishTypes = ['salmon', 'bass', 'pike', 'pufferfish']
-        this.fishRod = ['fr_1', 'fr_2', 'fr_3', 'fr_4']
+        this.fishTypes = BeginningSceneFishes
+        this.fishRod = ['fr_1', 'fr_2']
         let map = this.make.tilemap({ key: 'map' })
         var tileset = map.addTilesetImage('tileset', 'tiles', 32, 32, 2, 3)
         var water = map.createLayer('water', tileset, 0, 0)

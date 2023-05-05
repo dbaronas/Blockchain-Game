@@ -1,4 +1,4 @@
-import items from "./Items.js"
+import { items } from "./Items.js"
 import rods from "./FishingRods.js"
 
 export default class InventoryScene extends Phaser.Scene {
@@ -41,7 +41,7 @@ export default class InventoryScene extends Phaser.Scene {
         for (let index = 0; index < this.maxColumns * this.rows; index++) {
             let x = this.margin + this.tileSize / 2 + (index % this.maxColumns) * (this.tileSize + this.gridSpacing)
             let y = this.margin + this.tileSize / 2 + Math.floor(index / this.maxColumns) * (this.tileSize + this.gridSpacing)
-            let inventorySlot = this.add.sprite(x, y, 'items', 4) 
+            let inventorySlot = this.add.sprite(x, y, 'items', 0) 
             inventorySlot.setScale(this.uiScale)
             inventorySlot.depth = -1
 
@@ -51,7 +51,7 @@ export default class InventoryScene extends Phaser.Scene {
             })
 
             if(index === this.selectedItemIndex) {
-                inventorySlot.setTexture('items', 5)
+                inventorySlot.setTexture('items', 1)
             }
 
             let item = this.inventory.getItem(index)
@@ -114,9 +114,9 @@ export default class InventoryScene extends Phaser.Scene {
     create(){
         this.listenForInventoryUpdate()
         this.listenForCoinsUpdate()
-        this.coinSlot = this.add.sprite(1240, this.margin + this.tileSize / 2, 'items', 4).setScale(this.uiScale)
+        this.coinSlot = this.add.sprite(1240, this.margin + this.tileSize / 2, 'items', 0).setScale(this.uiScale)
         this.coinSlot.depth = -1
-        this.coinIcon = this.add.sprite(1240, this.margin + this.tileSize / 2, 'items', 1).setScale(this.uiScale)
+        this.coinIcon = this.add.sprite(1240, this.margin + this.tileSize / 2, 'items', 2).setScale(this.uiScale)
 
         this.input.keyboard.on('keydown-I',()=>{
             this.rows = this.rows === 1 ? this.maxRows : 1
