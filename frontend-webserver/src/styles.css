@@ -28,7 +28,10 @@
 .text-gold:hover {
   text-shadow: 0 0 20px #00f7ff;
 }
-
+input::placeholder {
+  opacity: 1;
+  padding: 0.4rem;
+}
 .text-gold2 {
   color: #e2c000;
 }

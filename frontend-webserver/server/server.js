@@ -166,7 +166,8 @@ io.on('connection', function (socket) {
 
         socket.removeAllListeners('player-inventory')
         socket.on('player-inventory', (inventory) => {
-            socket.inventory.items = inventory
+            socket.inventory.items = inventory.items
+            socket.inventory.coins = inventory.coins
         })
 
         socket.removeAllListeners('get-inventory')
@@ -176,7 +177,8 @@ io.on('connection', function (socket) {
     })
 
     socket.on('player-inventory', (inventory) => {
-        socket.inventory.items = inventory
+        socket.inventory.items = inventory.items
+        socket.inventory.coins = inventory.coins
     })
 
     socket.on('get-inventory', () => {

@@ -60,23 +60,23 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
         <div className="modal w-screen h-screen inset-0 fixed z-[6]">
           <div className="overlay w-screen h-screen inset-0 absolute bg-gray-700 bg-opacity-80"
           ></div>
-          <div className="modal-content absolute left-2/4 top-[40%] transform -translate-x-1/2 -translate-y-1/2 bg-white p-5 rounded w-[24rem] h-[22rem]">
-            <div className="flex justify-center flex-col items-center gap-[2rem] mt-3">
-              <h2 className="font-semibold text-[2.3rem]">Register</h2>
+          <div className="modal-content absolute left-2/4 top-[40%] transform -translate-x-1/2 -translate-y-1/2 text-gold2 font-vt323 p-5 rounded w-[24rem] h-[22rem] bg-[url('../src/assets/oceantheme.jpg')]">
+            <div className="flex justify-center flex-col items-center gap-[1.6rem] mt-2">
+              <h2 className="font-semibold text-[2.6rem]">Register</h2>
               <form onSubmit={handleForm} className="flex flex-col min-w-[19.5rem]">
-                <label className="text-[1.3rem] mb-2 font-medium">Username</label>
+                <label className="text-[1.6rem] font-medium">Username</label>
                 <input
                   type="text"
                   id="username"
-                  className="text-black block border-black border-2 bg-white min-h-[2.5rem] mb-[1.5rem] w-[19.5rem]"
+                  className="block border-2 bg-white min-h-[2.5rem] mb-[1.5rem] w-[19.5rem] text-[1.2rem]"
                   placeholder="Enter your username"
                   required
                 />
-                <button className="rounded-sm border-solid border-black border-2 bg-white min-h-[2rem] text-[1.2rem] mb-[1rem] w-[19.5rem]">
+                <button className="rounded-sm border-solid border-2 bg-white min-h-[2rem] text-[1.2rem] mb-[1rem] w-[19.5rem] hover:text-secondary">
                   Register
                 </button>
                 {error !== null && (
-                  <div className="text-black flex justify-center text-[1.1rem] font-normal flex-wrap min-h-[3.5rem] w-[19.5rem]">{error}</div>
+                  <div className="flex justify-center text-[1.1rem] font-normal flex-wrap min-h-[3.5rem] w-[19.5rem] text-yellow-200">{error}</div>
                 )}
               </form>
             </div>
