@@ -191,8 +191,4 @@ io.on('connection', function (socket) {
         users--
         socket.disconnect()
     })
-
-    socket.on('get-username', () => {
-        socket.emit('send-username', socket.username)
-    })
 })

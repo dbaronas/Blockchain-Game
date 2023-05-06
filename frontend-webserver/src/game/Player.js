@@ -34,21 +34,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     static preload(scene) {
-        let socket = scene.registry.get('socket')
-        socket.emit('get-username')
-        socket.on('send-username', (username) => {
-            this.username = username
-        })
-
-        if(this.username == 'zed was here') {
-            scene.load.atlas('fisherman', 'assets/sajan/sajan.png', 'assets/fisherman/fisherman_atlas.json')
-        } else if(this.username == 'beibleidas') {
-            scene.load.atlas('fisherman', 'assets/rembo/rembo.png', 'assets/fisherman/fisherman_atlas.json')
-        } else if(this.username == 'jonasjonas') {
-            scene.load.atlas('fisherman', 'assets/bateman/bateman.png', 'assets/fisherman/fisherman_atlas.json')
-        } else {
-            scene.load.atlas('fisherman', 'assets/sajan/sajan.png', 'assets/fisherman/fisherman_atlas.json')
-        }
+        scene.load.atlas('fisherman', 'assets/sajan/sajan.png', 'assets/fisherman/fisherman_atlas.json')
         scene.load.animation('fisherman_animation', 'assets/fisherman/fisherman_anim.json')
         scene.load.spritesheet('items', 'assets/items.png', {frameWidth: 32, frameHeight: 32})
         scene.load.spritesheet('rods', 'assets/fishing_rods.png', {frameWidth: 32, frameHeight: 32})
