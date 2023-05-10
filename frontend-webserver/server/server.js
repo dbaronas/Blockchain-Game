@@ -180,7 +180,7 @@ io.on('connection', function (socket) {
             console.log(id)
             $.ajax({
                 type: "POST",
-                url: "http://193.219.91.103:6172/api/v1/721/mint",
+                url: `${process.env.BACKEND}/api/v1/721/mint`,
                 data: JSON.stringify({ "address": socket.address, "id": id, "name": "name", "durability" : 100  }),
                 contentType: "application/json",
                 success: function (result) {
