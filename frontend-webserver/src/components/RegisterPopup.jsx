@@ -5,6 +5,12 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
   const [modal, setModal] = useState(true)
   const [error, setError] = useState(null)
 
+  // check if username contains only alphanumeric characters
+  const validateUsername = (username) => {
+    const regex = /^[a-zA-Z0-9]+$/
+    return regex.test(username)
+  }
+
   const toggleModal = () => {
     setModal(!modal)
   }
@@ -45,10 +51,12 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
     }
     const doesUsernameExists = await checkIfUsernameExists(username)
     if (doesUsernameExists === true) {
-      let errorMessage = `Username '${username}' is not available`
+      let errorMessage = `Username is already taken!`
       setError(errorMessage)
-    }
-    else {
+    } else if (!validateUsername(username)) {
+      let errorMessage = `Username cannot include special characters!`
+      setError(errorMessage)
+    } else {
       onSubmit(currentAddress, username, data)
       toggleModal()
     }
@@ -71,6 +79,8 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
                   className="block border-2 bg-white min-h-[2.5rem] mb-[1.5rem] w-[19.5rem] text-[1.2rem]"
                   placeholder="Enter your username"
                   required
+                  minLength="4"
+                  maxLength="20"
                 />
                 <button className="rounded-sm border-solid border-2 bg-white min-h-[2rem] text-[1.2rem] mb-[1rem] w-[19.5rem] hover:text-secondary">
                   Register
