@@ -33,7 +33,7 @@ contract PoseidonNFT is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
         string calldata _tokenName,
         uint256 _durability
     ) public onlyOwner {
-        require(!tokenExists[_tokenName], "Token already exists!");
+        //require(!tokenExists[_tokenName], "Token already exists!");
         _tokenIdCounter.increment();
         uint256 tokenId = _tokenIdCounter.current();
 
