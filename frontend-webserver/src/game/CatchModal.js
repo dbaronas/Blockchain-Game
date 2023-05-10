@@ -17,13 +17,13 @@ export default class CatchModal extends Phaser.Scene {
     create(data) {
         this.randomFishRod = data.randomFishRod
         var scene = data.scene
-        console.log(this.randomFishRod)
         var modal = this.add.sprite(0, 0, 'modal')
         var button = this.add.sprite(0, -290, 'mintbutton').setInteractive({ pixelPerfect: true }).setScale(0.8).setOrigin(0.5, 0)
         var buttonText = this.add.text(0, 0, 'MINT').setOrigin(0.5, -1).setFontSize(40)
         var text = this.add.text(0, 0, 'YOU GOT A FISH GG!').setOrigin(0.5, 2).setFontSize(20)
         var fishing_rod = this.add.sprite(0, 0, 'rods', rods[this.randomFishRod].frame).setOrigin(0.5, 2).setScale(2)
         this.container = this.add.container(650, 200, [modal, button, buttonText, text, fishing_rod])
+        this.socket = this.registry.get('socket')
 
         this.container.setScale(0)
         this.tween = this.tweens.add({
@@ -34,18 +34,7 @@ export default class CatchModal extends Phaser.Scene {
         })
 
         button.on('pointerdown', () => {
-            $.ajax({
-                type: "POST",
-                url: "http://193.219.91.103:6172/api/v1/mint",
-                data: JSON.stringify({ "address": "0x0746A08dB469275d7db9EAFDF6Bca5BA78403b4b", "id" : "fr_2" }),
-                contentType: "application/json",
-                success: function (result) {
-                    console.log(result);
-                },
-                error: function (result, status) {
-                    console.log(result);
-                }
-            });
+            this.socket.emit('mint', this.randomFishRod)
             this.scene.stop()
             this.scene.resume(scene.scene.key)
         })

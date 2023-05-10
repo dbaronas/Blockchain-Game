@@ -174,6 +174,23 @@ io.on('connection', function (socket) {
         socket.on('get-inventory', () => {
             socket.emit('send-inventory', socket.inventory)
         })
+
+        socket.removeAllListeners('mint')
+        socket.on('mint', (id) => {
+            console.log(id)
+            $.ajax({
+                type: "POST",
+                url: "http://193.219.91.103:6172/api/v1/721/mint",
+                data: JSON.stringify({ "address": socket.address, "id": id, "name": "name", "durability" : 100  }),
+                contentType: "application/json",
+                success: function (result) {
+                    console.log(result)
+                },
+                error: function (result, status) {
+                    console.log(result)
+                }
+            })
+        })
     })
 
     socket.on('player-inventory', (inventory) => {
