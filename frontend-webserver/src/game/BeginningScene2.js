@@ -166,7 +166,7 @@ export default class BeginningScene2 extends Phaser.Scene {
             if (this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0) && Phaser.Input.Keyboard.JustDown(this.inputKeys.e) && this.scene.get('InventoryScene').isItemFishingRod()) {
                 const randomDelay = Phaser.Math.Between(1000, 2000)
                 this.canMove = false
-                console.log("fishing")
+                //console.log("fishing")
                 this.fishingTimer = this.time.addEvent({
                     delay: randomDelay,
                     callback: () => {
@@ -190,7 +190,7 @@ export default class BeginningScene2 extends Phaser.Scene {
                     loop: false
                 })
             } else {
-                console.log("not fishing")
+                //console.log("not fishing")
             }
     
             var x = this.player.x
@@ -205,7 +205,7 @@ export default class BeginningScene2 extends Phaser.Scene {
             }
         } else if (!this.canMove && Phaser.Input.Keyboard.JustDown(this.inputKeys.e)) {
             this.canMove = true
-            console.log("stopped fishing")
+            //console.log("stopped fishing")
             if (this.fishingTimer) {
                 this.fishingTimer.remove()
                 this.fishingTimer = null
