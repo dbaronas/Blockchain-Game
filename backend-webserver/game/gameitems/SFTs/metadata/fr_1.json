@@ -1,7 +1,7 @@
 {
     "name": "Beginner's Fishing Rod",
     "description": "Fishing rod used by beginner fisherman.",
-    "image": "http://localhost:3000/gameitems/SFTs/item/fr_1.png",
+    "image": "http://193.219.91.103:6172/gameitems/SFTs/item/fr_1.png",
     "stats": {
         "rarity": "common",
         "fishing_speed": 5,
