@@ -12,10 +12,12 @@ contract GameItem is ERC1155, Ownable, ERC1155Burnable {
     address marketContract;
 
     uint256 public constant GOLD = 0;
-    uint256 public constant METAL_FISHING_ROD = 1;
+    uint256 public constant STARTER_FISHING_ROD = 1;
+    uint256 public constant METAL_FISHING_ROD = 2;
     
     constructor(address _marketContract) ERC1155("http://193.219.91.103:6172/api/v1/gameitems/SFTs/{id}.json") {
         _mint(msg.sender, GOLD, 10**18, "");
+        _mint(msg.sender, STARTER_FISHING_ROD, 10**9, "");
         _mint(msg.sender, METAL_FISHING_ROD, 10**9, "");
         marketContract = _marketContract;
     }
