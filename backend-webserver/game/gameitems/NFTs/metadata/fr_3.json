@@ -1,11 +1,10 @@
 {
-    "name": "Metal Fishing Rod",
-    "description": "Standard fishing rod used by ameteur fishermen.",
-    "image": "http://193.219.91.103:6172/gameitems/SFTs/item/fr_3.png",
-    
+    "name": "Golden Fishing Rod",
+    "description": "Golden fishing used by the richest fisherman in MetaOcean. It was forged by famous fisherman called Divan.",
+    "image": "http://193.219.91.103:6172/gameitems/NFTs/item/fr_2.png",
     "stats": {
-        "rarity": "uncommon",
-        "fishing_speed": 7,
-        "luck": 2
+        "rarity": "epic",
+        "fishing_speed": 15,
+        "luck": 5
     }
 }
