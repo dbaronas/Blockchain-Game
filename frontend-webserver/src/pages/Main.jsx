@@ -1,12 +1,12 @@
 import {
   Hero,
   Stats,
-  Business,
-  Billing,
-  CardDeal,
+  PatchNotes,
+  NFTs,
+  AboutGame,
   Testimonials,
   Clients,
-  CTA,
+  MarketplaceBar,
 } from "../components";
 import styles from "../style";
 
@@ -22,10 +22,10 @@ const Main = () => (
     <div className={`bg-black ${styles.paddingX} ${styles.flexStart}`}>
       <div className={`${styles.boxWidth}`}>
         <Stats />
-        <Business />
-        <Billing />
-        <CTA />
-        <CardDeal />
+        <AboutGame />
+        <NFTs />
+        <MarketplaceBar />
+        <PatchNotes />
         <Testimonials />
         <Clients />
       </div>

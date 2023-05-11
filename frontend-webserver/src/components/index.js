@@ -1,10 +1,10 @@
 import { lazy } from "react";
 import Navbar from "./Navbar";
-const Billing = lazy(() => import("./Billing"))
-const CardDeal = lazy(() => import("./CardDeal"))
-const Business = lazy(() => import("./Business"))
+const NFTs = lazy(() => import("./NFTs"))
+const PatchNotes = lazy(() => import("./PatchNotes"))
+const AboutGame = lazy(() => import("./AboutGame"))
 const Clients = lazy(() => import("./Clients"))
-const CTA = lazy(() => import("./CTA"))
+const MarketplaceBar = lazy(() => import("./MarketplaceBar"))
 const Stats = lazy(() => import("./Stats"))
 const Testimonials = lazy(() => import("./Testimonials"))
 import RouteGuard from './RouteGuard'
@@ -13,11 +13,11 @@ import Hero from "./Hero";
 
 export {
   Navbar,
-  Billing,
-  CardDeal,
-  Business,
+  NFTs,
+  PatchNotes,
+  AboutGame,
   Clients,
-  CTA,
+  MarketplaceBar,
   Stats,
   Footer,
   Testimonials,
