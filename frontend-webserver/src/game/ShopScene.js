@@ -48,6 +48,8 @@ export default class ShopScene extends Phaser.Scene {
             fishesToSell = BeginningSceneFishes
         } else if (this.parentScene.roomName === 'BeginningScene2') {
             fishesToSell = BeginningScene2Fishes
+        } else {
+            fishesToSell = BeginningSceneFishes
         }
 
         for (let index in this.playerInventory.items) {
