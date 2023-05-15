@@ -16,15 +16,19 @@ const mint = async(req, res) => {
     const signature = req.body.signature
     const uri = `${process.env.IP}/gameitems/NFTs/metadata/${item_id}.json`
 
-    if(verifyMessage(signature, address)) {
-        var block = await web3.eth.getBlock("latest")
-        await contract.methods.mint(address, uri, tokenName, durability).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((result) => {
-            res.json(result)
-        }).catch((error) => {
-            res.json({error: '' + error})
-        })
+    if(!address || !tokenName || !item_id || !durability || !signature) {
+        res.send('Error')
     } else {
-        res.json('Unauthorized!')
+        if(verifyMessage(signature, address)) {
+            var block = await web3.eth.getBlock("latest")
+            await contract.methods.mint(address, uri, tokenName, durability).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((result) => {
+                res.json(result)
+            }).catch((error) => {
+                res.json({error: '' + error})
+            })
+        } else {
+            res.json('Unauthorized!')
+        }
     }
 }
 
