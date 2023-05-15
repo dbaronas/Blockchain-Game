@@ -1,4 +1,5 @@
 import rods from "./FishingRods.js"
+import { signMessage, getAccount } from "@wagmi/core"
 
 export default class CatchModal extends Phaser.Scene {
     constructor() {
@@ -33,10 +34,25 @@ export default class CatchModal extends Phaser.Scene {
             duration: 200
         })
 
-        button.on('pointerdown', () => {
-            this.socket.emit('mint', this.randomFishRod)
-            this.scene.stop()
-            this.scene.resume(scene.scene.key)
+        button.once('pointerdown', async () => {
+            const { address } = getAccount()
+            buttonText.setText('Processing...').setFontSize(20).setOrigin(0.5, -2.3)
+            try {
+                const signature = await signMessage({
+                    message: `Mint NFT to connected account\n\nto: ${address}\nnonce: ${'wip'}`,
+                    
+                })
+                this.socket.emit('mint', { id: this.randomFishRod, signature: signature})
+                this.scene.stop()
+                this.scene.resume(scene.scene.key)
+            } catch (error) {
+                text.setText(`Transaction failed!`)
+                buttonText.setText('Close')
+                button.once('pointerdown', () => {
+                    this.scene.stop()
+                    this.scene.resume(scene.scene.key)
+                })
+            }
         })
     }
 }

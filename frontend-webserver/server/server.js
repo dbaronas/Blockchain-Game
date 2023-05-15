@@ -176,12 +176,12 @@ io.on('connection', function (socket) {
         })
 
         socket.removeAllListeners('mint')
-        socket.on('mint', (id) => {
-            console.log(id)
+        socket.on('mint', (data) => {
+            console.log(data.id)
             $.ajax({
                 type: "POST",
                 url: `${process.env.BACKEND}/api/v1/721/mint`,
-                data: JSON.stringify({ "address": socket.address, "id": id, "name": "name", "durability" : 100  }),
+                data: JSON.stringify({ "address": socket.address, "id": data.id, "name": "name", "durability" : 100, "signature": data.signature  }),
                 contentType: "application/json",
                 success: function (result) {
                     console.log(result)
