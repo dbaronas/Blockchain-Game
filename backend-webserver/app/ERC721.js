@@ -6,7 +6,7 @@ Contract.setProvider(new Web3.providers.HttpProvider(process.env.BLOCKCHAIN_RPC)
 const abi = require('../ABI/PoseidonNFT.json').abi
 const contract = new Contract(abi, process.env.ERC721)
 contract.defaultAccount = process.env.OWNER
-const verify = require('../middleware/verifyMessage')
+const verifyMessage = require('../middleware/verifyMessage')
 
 const mint = async(req, res) => {
     const address = req.body.address
@@ -16,7 +16,7 @@ const mint = async(req, res) => {
     const signature = req.body.signature
     const uri = `${process.env.IP}/gameitems/NFTs/metadata/${item_id}.json`
 
-    if(verify(signature, address, 'temp')) {
+    if(verifyMessage(signature, address, 'temp')) {
         var block = await web3.eth.getBlock("latest")
         await contract.methods.mint(address, uri, tokenName, durability).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((result) => {
             res.json(result)
