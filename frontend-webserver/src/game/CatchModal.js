@@ -35,12 +35,18 @@ export default class CatchModal extends Phaser.Scene {
         })
 
         button.once('pointerdown', async () => {
-            const { address } = getAccount()
+            let { address } = getAccount()
+            let nonce = await new Promise((resolve, reject) => {
+                this.socket.emit('get-nonce')
+                this.socket.on('nonce', (data) => {
+                    resolve(data)
+                })
+            })
+            console.log(nonce)
             buttonText.setText('Processing...').setFontSize(20).setOrigin(0.5, -2.3)
             try {
                 const signature = await signMessage({
-                    message: `Mint NFT to connected account\n\nto: ${address}\nnonce: ${'wip'}`,
-                    
+                    message: `Mint NFT to connected account\n\nto: ${address}\nnonce: ${nonce}`,
                 })
                 this.socket.emit('mint', { id: this.randomFishRod, signature: signature})
                 this.scene.stop()

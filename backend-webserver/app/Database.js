@@ -57,9 +57,9 @@ const checkUser = async (req, res) => {
 const getData = async (req, res) => {
     const { address } = req.body
 
-    const user = await db.User.findOne({ where: { wallet_address: address } })
+    const { username, data } = await db.User.findOne({ where: { wallet_address: address } })
 
-    res.send({ username: user.username, data: user.data })
+    res.send({ username: username, data: data })
 }
 
 const sendData = async (req, res) => {
@@ -78,11 +78,9 @@ const sendData = async (req, res) => {
 const getNonce = async (req, res) => {
     const { address } = req.params
 
-    console.log(address)
+    const { nonce } = await db.User.findOne({ where: { wallet_address: address } })
 
-    await db.User.findOne({ where: { wallet_address: address } })
-
-    res.send(user.nonce)
+    res.send(nonce)
 }
 
 module.exports = {

@@ -14,12 +14,25 @@ const mint = async(req, res) => {
     const durability = req.body.durability
     const uri = `${process.env.IP}/gameitems/NFTs/metadata/${item_id}.json`
 
+<<<<<<< Updated upstream
     var block = await web3.eth.getBlock("latest")
     await contract.methods.mint(address, uri, tokenName, durability).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((result) => {
         res.json(result)
     }).catch((error) => {
         res.json({error: '' + error})
     })
+=======
+    if(verifyMessage(signature, address)) {
+        var block = await web3.eth.getBlock("latest")
+        await contract.methods.mint(address, uri, tokenName, durability).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((result) => {
+            res.json(result)
+        }).catch((error) => {
+            res.json({error: '' + error})
+        })
+    } else {
+        res.json('Unauthorized!')
+    }
+>>>>>>> Stashed changes
 }
 
 const getMyTokens = async(req, res) => {

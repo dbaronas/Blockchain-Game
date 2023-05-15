@@ -191,6 +191,16 @@ io.on('connection', function (socket) {
                 }
             })
         })
+
+        socket.removeAllListeners('get-nonce')
+        socket.on('get-nonce', async () => {
+            const result = await $.ajax({
+                type: "POST",
+                url: `${process.env.BACKEND}/api/v1/db/${socket.address}/nonce`,
+                contentType: "application/json",
+            })
+            socket.emit('nonce', result)
+        })
     })
 
     socket.on('player-inventory', (inventory) => {
