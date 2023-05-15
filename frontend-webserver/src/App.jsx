@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import styles from "./style";
 import { Navbar, Footer, RouteGuard } from "./components";
-import { Main, Game, News, Login, Market } from "./pages";
+import { Main, Game, News, Login } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactLoading from 'react-loading';
 import { useAccount } from "wagmi";
@@ -41,7 +41,11 @@ const App = () => {
         <Route path="/login" element={<Login />}/>
         <Route path="/marketplace" element={
           <RouteGuard walletConnected={isConnected}>
-              <Market />
+            <div className={`${styles.flexCenter} h-[50vh]`}>
+              <p className={`${styles.flex} max-w-[300px] text-white text-center`}>
+                Market coming soon!
+              </p>
+            </div>
           </RouteGuard>
         }/>
         <Route path="/mint" element={
