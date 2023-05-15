@@ -6,7 +6,7 @@ const crypto = require('crypto')
 const verifyMessage = async (signature, address) => {
     let { nonce } = await User.findOne({ where: { wallet_address: address } })
     var message = `Mint NFT to connected account\n\nto: ${address}\nnonce: ${nonce}`
-    const recoveredAddress = web3.eth.accounts.recover(message, signature)
+    const recoveredAddress = await web3.eth.accounts.recover(message, signature)
 
     if(recoveredAddress == address) {
         await User.update({ nonce: crypto.randomBytes(64).toString("base64") })
