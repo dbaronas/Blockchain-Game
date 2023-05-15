@@ -23,10 +23,15 @@
 
 .text-gold {
   color: #e2c000;
-
 }
 .text-gold:hover {
   text-shadow: 0 0 20px #00f7ff;
+}
+.background-gold {
+  background-color: #e2c000;
+}
+.background-gold:hover {
+  background-color: #00f7ff;
 }
 input::placeholder {
   opacity: 1;
