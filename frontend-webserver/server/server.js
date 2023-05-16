@@ -63,6 +63,7 @@ io.on('connection', function (socket) {
         socket.username = response.username
         socket.island = response.data.island
         socket.inventory = response.data.inventory
+        socket.stats = response.data.stats
     })
 
     socket.on('player-play', () => {
@@ -106,7 +107,8 @@ io.on('connection', function (socket) {
             let address = socket.address
             let data = {
                 island: socket.island,
-                inventory: socket.inventory
+                inventory: socket.inventory,
+                stats: socket.stats
             }
             await $.ajax({
                 type: 'POST',
@@ -175,6 +177,17 @@ io.on('connection', function (socket) {
             socket.emit('send-inventory', socket.inventory)
         })
 
+        socket.removeAllListeners('player-stats')
+        socket.on('player-stats', (stats) => {
+            socket.stats = stats
+            socket.emit('statsLoaded')
+        })
+    
+        socket.removeAllListeners('get-stats')
+        socket.on('get-stats', () => {
+            socket.emit('send-stats', socket.stats)
+        })
+
         socket.removeAllListeners('mint')
         socket.on('mint', (data) => {
             console.log(data.id)
@@ -211,6 +224,15 @@ io.on('connection', function (socket) {
     socket.on('get-inventory', () => {
         socket.emit('send-inventory', socket.inventory)
         console.log(socket.inventory)
+    })
+
+    socket.on('player-stats', (stats) => {
+        socket.stats = stats
+        socket.emit('statsLoaded')
+    })
+
+    socket.on('get-stats', () => {
+        socket.emit('send-stats', socket.stats)
     })
     
     socket.on('disconnect', function () {

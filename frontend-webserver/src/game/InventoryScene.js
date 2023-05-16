@@ -1,4 +1,4 @@
-import { items } from "./Items.js"
+import items from "./Items.js"
 import rods from "./FishingRods.js"
 
 export default class InventoryScene extends Phaser.Scene {
@@ -116,7 +116,7 @@ export default class InventoryScene extends Phaser.Scene {
         this.listenForCoinsUpdate()
         this.coinSlot = this.add.sprite(1240, this.margin + this.tileSize / 2, 'items', 0).setScale(this.uiScale)
         this.coinSlot.depth = -1
-        this.coinIcon = this.add.sprite(1240, this.margin + this.tileSize / 2, 'items', 2).setScale(this.uiScale)
+        this.coinIcon = this.add.sprite(1240, this.margin + this.tileSize / 2 - 8, 'items', 2).setScale(this.uiScale / 1.5)
 
         this.input.keyboard.on('keydown-I',()=>{
             this.rows = this.rows === 1 ? this.maxRows : 1

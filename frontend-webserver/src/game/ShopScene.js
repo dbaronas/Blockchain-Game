@@ -1,4 +1,4 @@
-import { BeginningSceneFishes, BeginningScene2Fishes, items } from "./Items.js"
+import items from "./Items.js"
 
 export default class ShopScene extends Phaser.Scene {
     constructor() {
@@ -15,6 +15,9 @@ export default class ShopScene extends Phaser.Scene {
     }
 
     create() {
+
+        console.log(this.playerInventory)
+
         this.socket = this.registry.get('socket')
         var modal = this.add.image(120, 0, 'modal').setScale(2).setOrigin(0, 0)
 
@@ -45,11 +48,9 @@ export default class ShopScene extends Phaser.Scene {
         let indexOffset = 0
 
         if (this.parentScene.roomName === 'BeginningScene') {
-            fishesToSell = BeginningSceneFishes
+            fishesToSell = ['salmon', 'bass', 'pike', 'pufferfish']
         } else if (this.parentScene.roomName === 'BeginningScene2') {
-            fishesToSell = BeginningScene2Fishes
-        } else {
-            fishesToSell = BeginningSceneFishes
+            fishesToSell = ['toxic_pike', 'toxic_pufferfish', 'toxic_salmon', 'toxic_bass']
         }
 
         for (let index in this.playerInventory.items) {

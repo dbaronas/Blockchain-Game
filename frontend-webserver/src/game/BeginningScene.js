@@ -1,6 +1,6 @@
 import NPC from "./NPC.js"
 import Player from "./Player.js"
-import { BeginningSceneFishes } from "./Items.js";
+import items from "./Items.js"
 
 export default class BeginningScene extends Phaser.Scene {
     constructor() {
@@ -10,6 +10,7 @@ export default class BeginningScene extends Phaser.Scene {
 
     init(data) {
         this.playerInventory = data.inventory
+        this.playerStats = data.stats
         this.socket = data.socket
     }
 
@@ -31,7 +32,7 @@ export default class BeginningScene extends Phaser.Scene {
 
     create() {
         this.canMove = true
-        this.fishTypes = BeginningSceneFishes
+        this.fishTypes = ['salmon', 'bass', 'pike', 'pufferfish']
         this.fishRod = ['fr_1', 'fr_2']
         let map = this.make.tilemap({ key: 'map' })
         var tileset = map.addTilesetImage('tileset', 'tiles', 32, 32, 2, 3)
@@ -56,6 +57,9 @@ export default class BeginningScene extends Phaser.Scene {
                     self.physics.add.collider(self.player.selectedItem, water)
                     self.physics.add.collider(self.player.selectedItem, self.npc)
                     self.physics.add.collider(self.player.selectedItem, self.fishing_zone)
+                    self.physics.add.collider(self.player.levelingGui, water)
+                    self.physics.add.collider(self.player.levelingGui, self.npc)
+                    self.physics.add.collider(self.player.levelingGui, self.fishing_zone)
                     self.physics.add.collider(self.player.username, water)
                     self.physics.add.collider(self.player.username, self.npc)
                     self.physics.add.collider(self.player.username, self.fishing_zone)
@@ -129,6 +133,29 @@ export default class BeginningScene extends Phaser.Scene {
                 this.scene.get('InventoryScene').refreshCoins()
             })
         }
+        if(this.playerStats) {
+            console.log(this.playerStats)
+            this.player.stats = this.playerStats
+            self.socket.emit('player-stats', this.player.stats)
+        } else {
+            self.socket.emit('get-stats')
+            self.socket.on('send-stats', (stats) => {
+                if (stats) {
+                    stats.exp = parseInt(stats.exp)
+                    stats.level = parseInt(stats.level)
+                    this.player.stats = stats
+                    self.socket.emit('player-stats', this.player.stats)
+                } else {
+                    this.player.stats = {
+                        fishingSpeed: 0,
+                        catchLuck: 0,
+                        level: 1,
+                        exp: 0
+                    }
+                    self.socket.emit('player-stats', this.player.stats)
+                }
+            })
+        }
         self.player.setUsername(playerInfo.playerUsername)
         self.inventoryScene = self.scene.launch('InventoryScene', {scene: this})
         if(!this.scene.isActive('chat')) {
@@ -159,7 +186,7 @@ export default class BeginningScene extends Phaser.Scene {
                 this.player.x = 500
                 this.player.y = 500
                 this.socket.emit('leave-room')
-                this.scene.start('BeginningScene2', { inventory: this.player.inventory, socket: this.socket })
+                this.scene.start('BeginningScene2', { inventory: this.player.inventory, stats: this.player.stats, socket: this.socket })
                 this.socket.off()
                 this.scene.stop('BeginningScene')
             }
@@ -167,10 +194,24 @@ export default class BeginningScene extends Phaser.Scene {
             if(this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0) && Phaser.Input.Keyboard.JustDown(this.inputKeys.e) && this.scene.get('InventoryScene').isItemFishingRod()) {
                 const randomDelay = Phaser.Math.Between(1000, 2000)
                 this.canMove = false
+                this.fishingText = this.add.text(this.player.x - 30, this.player.y - 48, 'Fishing...', {
+                    fontSize: '10px',
+                    fill: '#000000'
+                }).setDepth(100).setResolution(5)
+                this.tweens.add({
+                    targets: this.fishingText,
+                    alpha: 0,
+                    duration: 1000,
+                    ease: 'Power1',
+                    yoyo: true,
+                    repeat: -1
+                })
+                this.fishingText.setVisible(true)
                 //console.log("fishing")
                 this.fishingTimer = this.time.addEvent({
                     delay: randomDelay,
                     callback: () => {
+                        this.fishingText.setVisible(false)
                         this.canMove = true
                         const options = ['fish', 'fishrod']
                         const randomNum = Math.floor(Math.random() * 2)
@@ -183,6 +224,8 @@ export default class BeginningScene extends Phaser.Scene {
                             this.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
                         } else {
                             const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes)
+                            this.player.addExp(items[randomFishType].exp)
+                            this.socket.emit('player-stats', this.player.stats)
                             this.player.inventory.addItem({name: randomFishType, quantity: 1, type: 'fish'})
                             this.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
                         }
@@ -210,6 +253,7 @@ export default class BeginningScene extends Phaser.Scene {
             if (this.fishingTimer) {
                 this.fishingTimer.remove()
                 this.fishingTimer = null
+                this.fishingText.setVisible(false)
             } // cancel timer so if the player cancels fishing, he wouldnt get fish after the timer ends
         }
     }
