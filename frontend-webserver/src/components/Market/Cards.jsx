@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { LoadingCards } from './LoadingCards'
 import clsx from 'clsx'
-import useLazyLoad from './UseLazyLoad'
+import useLazyLoad from './useLazyLoad'
 import Card from './Card'
 import posts from './data.json'
 import useWindowSize from './useWindowSize'
