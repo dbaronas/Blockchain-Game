@@ -64,7 +64,7 @@ const getData = async (req, res) => {
 
     /*const { island_id } = await db.PlayerIsland.findOne( { where: { wallet_address: address }})
     const { name } = await db.Island.findOne( { where: { id: island_id }})*/
-    const { name } = await db.PlayerIsland.findOne( { where: { wallet_address: address }, include: { model: db.Island }})
+    const { name } = await db.PlayerIsland.findOne( { where: { wallet_address: address }, include: db.Island })
     console.log(name)
     const { username, data } = await db.User.findOne({ where: { wallet_address: address } })
 
