@@ -13,7 +13,7 @@ const register = async (req, res) => {
         if (!(address && username)) {
             res.status(400).send('All input is required')
         } else {
-            const oldUser = await db.User.findOne({ where: { wallet_address: address } })
+            const oldUser = await db.User.findByPk(address)
 
             if (oldUser) {
                 res.status(409).send('User Already Exist. Please Login')
@@ -64,8 +64,21 @@ const getData = async (req, res) => {
 
     /*const { island_id } = await db.PlayerIsland.findOne( { where: { wallet_address: address }})
     const { name } = await db.Island.findOne( { where: { id: island_id }})*/
-    const name = await db.User.findOne( { where: { wallet_address: address }, include: { model: db.Island, through: ['wallet_address', 'island_id'] } })
-    console.log(name)
+    const user = await db.User.findByPk(address, {
+        include: {
+            model: db.Island,
+            attributes: ['name']
+        },
+        attributes: ['username'],
+        raw: true
+    })
+    let playerData = {
+        username: user.username,
+        data: {
+            island: user['islands.name']
+        }
+    }
+    console.log(playerData)
     const { username, data } = await db.User.findOne({ where: { wallet_address: address } })
 
     res.send({ username: username, data: data })
@@ -74,7 +87,7 @@ const getData = async (req, res) => {
 const sendData = async (req, res) => {
     const { address, data } = req.body
 
-    const user = await db.User.findOne({ where: { wallet_address: address } })
+    const user = await db.User.findByPk(address)
 
     if (user) {
         await user.update({ data: data })
@@ -87,7 +100,7 @@ const sendData = async (req, res) => {
 const getNonce = async (req, res) => {
     const { address } = req.params
 
-    const { nonce } = await db.User.findOne({ where: { wallet_address: address } })
+    const { nonce } = await db.User.findByPk(address)
 
     res.send(nonce)
 }
