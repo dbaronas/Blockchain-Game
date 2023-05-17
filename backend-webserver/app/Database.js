@@ -62,8 +62,9 @@ const checkUser = async (req, res) => {
 const getData = async (req, res) => {
     const { address } = req.body
 
-    const { island_id } = await db.PlayerIsland.findOne( { where: { wallet_address: address }})
-    const { name } = await db.Island.findOne( { where: { id: island_id }})
+    /*const { island_id } = await db.PlayerIsland.findOne( { where: { wallet_address: address }})
+    const { name } = await db.Island.findOne( { where: { id: island_id }})*/
+    const { name } = await db.PlayerIsland.findOne( { where: { wallet_address: address }, include: { model: db.Island }})
     console.log(name)
     const { username, data } = await db.User.findOne({ where: { wallet_address: address } })
 
