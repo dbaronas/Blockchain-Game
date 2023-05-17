@@ -21,7 +21,7 @@ const User = sequelize.define('users', {
         allowNull: false
     },
     nonce: {
-        type: DataTypes.CHAR(32),
+        type: DataTypes.CHAR(100),
         allowNull: true
     }
 }, {timestamps: false})

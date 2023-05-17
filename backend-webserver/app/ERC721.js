@@ -19,7 +19,7 @@ const mint = async(req, res) => {
     if(!address || !tokenName || !item_id || !durability || !signature) {
         res.send('Error')
     } else {
-        if(verifyMessage(signature, address)) {
+        if(await verifyMessage(signature, address)) {
             var block = await web3.eth.getBlock("latest")
             await contract.methods.mint(address, uri, tokenName, durability).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((result) => {
                 res.json(result)

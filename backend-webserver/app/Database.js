@@ -22,12 +22,17 @@ const register = async (req, res) => {
                 if (existingUsername) {
                     res.status(409).send(username + ' is not available')
                 } else {
-                    const user = await db.User.create({
+                    await db.User.create({
                         wallet_address: address,
                         username: username,
                         creation_date: Date.now(),
                         data: data,
                         nonce: crypto.randomBytes(64).toString("base64")
+                    })
+                    const { id } = await db.Island.findOne({ where: { name: data.island}})
+                    await db.PlayerIsland.create({
+                        wallet_address: address,
+                        id: id
                     })
                     res.send('Registered successfully')
                 }

@@ -9,8 +9,7 @@ const verifyMessage = async (signature, address) => {
     const recoveredAddress = await web3.eth.accounts.recover(message, signature)
 
     if(recoveredAddress == address) {
-        let newNonce = crypto.randomBytes(64).toString("base64")
-        await user.update({ nonce: newNonce })
+        await user.update({ nonce: crypto.randomBytes(64).toString("base64") })
         return true
     } else {
         return false
