@@ -182,6 +182,11 @@ io.on('connection', function (socket) {
             socket.stats = stats
             socket.emit('statsLoaded')
         })
+
+        socket.removeAllListeners('update-stats')
+        socket.on('update-stats', (stats) => {
+            socket.stats = stats
+        })
     
         socket.removeAllListeners('get-stats')
         socket.on('get-stats', () => {

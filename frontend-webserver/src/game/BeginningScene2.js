@@ -224,7 +224,7 @@ export default class BeginningScene2 extends Phaser.Scene {
                         } else {
                             const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes)
                             this.player.addExp(items[randomFishType].exp)
-                            this.socket.emit('player-stats', this.player.stats)
+                            this.socket.emit('update-stats', this.player.stats)
                             this.player.inventory.addItem({name: randomFishType, quantity: 1, type: 'fish'})
                             this.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
                         }
