@@ -5,10 +5,10 @@ const Item = require('./item')
 const Inventory = require('./player_inventory')
 const PlayerIsland = require('./player_island')
 
-User.belongsToMany(Item, {through: Inventory})
-User.belongsToMany(Island, {through: PlayerIsland})
-Item.belongsToMany(User, {through: Inventory})
-Island.belongsToMany(User, {through: PlayerIsland})
+User.belongsToMany(Item, {through: Inventory, foreignKey: 'wallet_address'})
+User.belongsToMany(Island, {through: PlayerIsland, foreignKey: 'wallet_address'})
+Item.belongsToMany(User, {through: Inventory, foreignKey: 'id'})
+Island.belongsToMany(User, {through: PlayerIsland, foreignKey: 'id'})
 
 module.exports = {
     User,
