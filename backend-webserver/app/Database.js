@@ -62,7 +62,6 @@ const checkUser = async (req, res) => {
 const getData = async (req, res) => {
     const { address } = req.body
 
-    const 
     const { username, data } = await db.User.findOne({ where: { wallet_address: address } })
 
     res.send({ username: username, data: data })
