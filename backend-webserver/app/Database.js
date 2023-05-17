@@ -32,7 +32,7 @@ const register = async (req, res) => {
                     const { id } = await db.Island.findOne({ where: { name: data.island}})
                     await db.PlayerIsland.create({
                         wallet_address: address,
-                        id: id
+                        island_id: id
                     })
                     res.send('Registered successfully')
                 }

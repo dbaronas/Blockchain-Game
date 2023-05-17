@@ -7,7 +7,7 @@ const PlayerIsland = sequelize.define('player_island', {
         allowNull: false,
         primaryKey: true
     },
-    id: {
+    island_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         allowNull: false
