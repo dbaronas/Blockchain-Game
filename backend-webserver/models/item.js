@@ -2,15 +2,13 @@ const { DataTypes } = require('sequelize')
 const { sequelize } = require('../config/database')
 
 const Item = sequelize.define('items', {
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
+    item_id: {
+        type: DataTypes.CHAR(20),
         primaryKey: true,
         allowNull: false
     },
-    item_id: {
-        type: DataTypes.CHAR(20),
-        unique: true,
+    name: {
+        type: DataTypes.CHAR(30),
         allowNull: false
     },
     type: {
