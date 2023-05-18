@@ -34,8 +34,12 @@ const register = async (req, res) => {
                         wallet_address: address,
                         island_id: id
                     })
-                    data.inventory2.forEach(element => {
-                        console.log(element)
+                    data.inventory2.forEach(async element => {
+                        await db.Inventory.create({
+                            wallet_address: address,
+                            item_id: element.item_id,
+                            quantity: element.quantity
+                        })
                     })
                     res.send('Registered successfully')
                 }
