@@ -106,9 +106,20 @@ const getData = async (req, res) => {
 }
 
 const sendData = async (req, res) => {
-    const { address, data } = req.body
+    const { address, data, inventory2 } = req.body
 
     const user = await db.User.findByPk(address)
+
+    await db.Inventory.destroy({
+        where: { wallet_address: address }
+    })
+    inventory2.forEach(async element => {
+        await db.Inventory.create({
+            wallet_address: address,
+            item_id: element.item_id,
+            quantity: element.quantity
+        })
+    })
 
     if (user) {
         await user.update({ data: data })
