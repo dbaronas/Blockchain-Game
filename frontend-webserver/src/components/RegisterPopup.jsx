@@ -48,7 +48,8 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
         coins: 0,
         items: [{name: 'fr_1', quantity: 1, type: 'fishing-rod'}]
       },
-        inventory2: [{item_id: 'golden_coin', quantity: 0}, {item_id: 'fr_1', quantity: 1}]
+        inventory2: [{item_id: 'golden_coin', quantity: 0}, {item_id: 'fr_1', quantity: 1}],
+        stats: [{stat_id: 1, value: 1}, {stat_id: 2, value: 0}, {stat_id: 3, value: 0}, {stat_id: 4, value: 0}]
     }
     const doesUsernameExists = await checkIfUsernameExists(username)
     if (doesUsernameExists === true) {

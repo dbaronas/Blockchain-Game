@@ -41,6 +41,13 @@ const register = async (req, res) => {
                             quantity: element.quantity
                         })
                     })
+                    data.stats.forEach(async element => {
+                        await db.PlayerStats.create({
+                            wallet_address: address,
+                            stat_id: element.stat_id,
+                            value: element.value
+                        })
+                    })
                     res.send('Registered successfully')
                 }
             }
@@ -85,6 +92,14 @@ const getData = async (req, res) => {
         },
         raw: true
     })
+    const userStats = await db.Stat.findAll({
+        include: {
+            model: db.User,
+            where: { wallet_address: address },
+            attributes: []
+        },
+        raw: true
+    })
 
     userInventory.forEach(element => {
         delete element.owner
@@ -118,6 +133,16 @@ const sendData = async (req, res) => {
             wallet_address: address,
             item_id: element.item_id,
             quantity: element.quantity
+        })
+    })
+    await db.PlayerStats.destroy({
+        where: { wallet_address: address }
+    })
+    data.stats.forEach(async element => {
+        await db.PlayerStats.create({
+            wallet_address: address,
+            stat_id: element.stat_id,
+            value: element.value
         })
     })
 
