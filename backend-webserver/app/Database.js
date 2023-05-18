@@ -34,6 +34,7 @@ const register = async (req, res) => {
                         wallet_address: address,
                         island_id: id
                     })
+                    console.log(data.inventory2)
                     res.send('Registered successfully')
                 }
             }
