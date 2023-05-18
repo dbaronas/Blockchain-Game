@@ -69,7 +69,7 @@ const checkUser = async (req, res) => {
 const getData = async (req, res) => {
     const { address } = req.body
 
-    const user = await db.User.findByPk(address, {
+    const userIsland = await db.User.findByPk(address, {
         include: {
             model: db.Island,
             attributes: ['name']
@@ -77,13 +77,29 @@ const getData = async (req, res) => {
         attributes: ['username'],
         raw: true
     })
+    const userInventory = await db.Item.findAll({
+        include: {
+            model: db.User,
+            where: { wallet_address: address },
+            attributes: []
+        },
+        raw: true
+    })
+
+    userInventory.forEach(element => {
+        delete element.owner
+        delete element['users.player_inventory.wallet_address']
+        delete element['users.player_inventory.item_id']
+        element.quantity = element['users.player_inventory.quantity']
+        delete element['users.player_inventory.quantity']
+    })
     let playerData = {
-        username: user.username,
+        username: userIsland.username,
         data: {
-            island: user['islands.name']
+            island: userIsland['islands.name'],
+            inventory: userInventory
         }
     }
-    console.log(playerData)
     const { username, data } = await db.User.findOne({ where: { wallet_address: address } })
 
     res.send({ username: username, data: data })
