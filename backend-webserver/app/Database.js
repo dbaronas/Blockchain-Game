@@ -108,47 +108,52 @@ const getData = async (req, res) => {
         element.quantity = element['users.player_inventory.quantity']
         delete element['users.player_inventory.quantity']
     })
-    let playerData = {
-        username: userIsland.username,
-        data: {
-            island: userIsland['islands.name'],
-            inventory: userInventory
-        }
-    }
-    const { username, data } = await db.User.findOne({ where: { wallet_address: address } })
+    userStats.forEach(element => {
+        delete element['users.player_stats.wallet_address']
+        delete element['users.player_stats.stat_id']
+        element.value = element['users.player_stats.value']
+        delete element['users.player_stats.value']
+    })
 
-    res.send({ username: username, data: data })
+    let data = {
+            island: userIsland['islands.name'],
+            inventory: userInventory,
+            stats: userStats
+        }
+    res.send({ username: userIsland.username, data: data })
 }
 
 const sendData = async (req, res) => {
-    const { address, data, inventory2 } = req.body
+    const { address, data } = req.body
 
     const user = await db.User.findByPk(address)
 
-    await db.Inventory.destroy({
-        where: { wallet_address: address }
-    })
-    inventory2.forEach(async element => {
-        await db.Inventory.create({
-            wallet_address: address,
-            item_id: element.item_id,
-            quantity: element.quantity
+    if(user) {
+        const userIsland = await db.PlayerIsland.findByPk(address)
+        const { id } = await db.Island.findOne({ where: { name: data.island}})
+        userIsland.island_id = id
+        await userIsland.save()
+    
+        await db.Inventory.destroy({
+            where: { wallet_address: address }
         })
-    })
-    await db.PlayerStats.destroy({
-        where: { wallet_address: address }
-    })
-    data.stats.forEach(async element => {
-        await db.PlayerStats.create({
-            wallet_address: address,
-            stat_id: element.stat_id,
-            value: element.value
+        data.inventory.forEach(async element => {
+            await db.Inventory.create({
+                wallet_address: address,
+                item_id: element.item_id,
+                quantity: element.quantity
+            })
         })
-    })
-
-    if (user) {
-        await user.update({ data: data })
-        res.send("Data changed successfully")
+        await db.PlayerStats.destroy({
+            where: { wallet_address: address }
+        })
+        data.stats.forEach(async element => {
+            await db.PlayerStats.create({
+                wallet_address: address,
+                stat_id: element.stat_id,
+                value: element.value
+            })
+        })
     } else {
         res.send("Error")
     }
