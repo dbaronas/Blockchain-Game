@@ -49,7 +49,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         var self = this
 
-        this.scene.socket.on('statsLoaded', function () {
+        this.scene.socket.on('statsLoaded', function (stats) {
+            if(!self.stats) {
+                self.stats = stats
+            }
             const exp = self.getExp()
             const level = self.getLevel()
             const nextLevelExp = self.getNextLevelExp()

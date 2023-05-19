@@ -185,7 +185,7 @@ io.on('connection', function (socket) {
         socket.removeAllListeners('player-stats')
         socket.on('player-stats', (stats) => {
             socket.stats = stats
-            socket.emit('statsLoaded')
+            socket.emit('statsLoaded', socket.stats)
         })
 
         socket.removeAllListeners('update-stats')
