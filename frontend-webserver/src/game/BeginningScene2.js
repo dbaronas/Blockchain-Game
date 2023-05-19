@@ -1,6 +1,7 @@
 import NPC from "./NPC.js"
 import Player from "./Player.js"
 import items from "./Items.js"
+import rods from "./FishingRods.js"
 
 export default class BeginningScene2 extends Phaser.Scene {
     constructor() {
