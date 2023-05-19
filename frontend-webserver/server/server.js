@@ -114,7 +114,8 @@ io.on('connection', function (socket) {
             console.log(inventory)
             let data = {
                 island: socket.island,
-                inventory: inventory
+                inventory: inventory,
+                stats: socket.stats
             }
             await $.ajax({
                 type: 'POST',

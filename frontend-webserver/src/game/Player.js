@@ -50,13 +50,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         var self = this
 
         this.scene.socket.on('statsLoaded', function () {
+            const exp = self.getExp()
+            const level = self.getLevel()
             const nextLevelExp = self.getNextLevelExp()
-            const expPercent = self.stats.exp / nextLevelExp
+            const expPercent = exp / nextLevelExp
             const barColor = 0x00ff00
             self.expBar.fillStyle(barColor, 1)
             self.expBar.fillRect(0, 0, barWidth * expPercent, 8)
-            self.expText = self.scene.add.text(0, 9, `${self.stats.exp}/${self.getNextLevelExp()} Exp`, { fontSize: '8px', fill: '#fff' }).setResolution(5).setOrigin(0.5)
-            self.levelText = self.scene.add.text(-36, 5, `${self.stats.level}`, { fontSize: '8px', fill: '#fff' }).setResolution(5)
+            self.expText = self.scene.add.text(0, 9, `${exp}/${nextLevelExp} Exp`, { fontSize: '8px', fill: '#fff' }).setResolution(5).setOrigin(0.5)
+            self.levelText = self.scene.add.text(-36, 5, `${level}`, { fontSize: '8px', fill: '#fff' }).setResolution(5)
             self.levelingGui.add([self.expText, self.levelText, self.expBar])
         })
     }
@@ -76,20 +78,22 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.username.setDisplayName(username)
     }
 
-    addExp(exp) {
-        console.log(this.stats)
-        this.stats.exp += exp
+    addExp(experience) {
+        this.stats.find(stat => stat.name === 'exp').value += experience
         let nextLevelExp = this.getNextLevelExp()
         
-        while (this.stats.exp >= nextLevelExp) {
-            this.stats.exp -= nextLevelExp
-            this.stats.level++
+        while (this.getExp() >= nextLevelExp) {
+            this.stats.find(stat => stat.name === 'exp').value -= nextLevelExp
+            this.stats.find(stat => stat.name === 'level').value++
             nextLevelExp = this.getNextLevelExp()
         }
       
-        this.expText.setText(`${this.stats.exp}/${nextLevelExp} Exp`)
+        const exp = this.getExp()
+        const level = this.getLevel()
+        this.expText.setText(`${exp}/${nextLevelExp} Exp`)
+        this.levelText.setText(`${level}`)
       
-        const expPercent = this.stats.exp / nextLevelExp
+        const expPercent = exp / nextLevelExp
         const emptyBarColor = 0x000000
         const barColor = 0x00ff00
         const barWidth = 60
@@ -98,11 +102,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.expBar.fillRect(0, 0, barWidth, 8)
         this.expBar.fillStyle(barColor, 1)
         this.expBar.fillRect(0, 0, barWidth * expPercent, 8)
-        this.levelText.setText(`${this.stats.level}`)
     }
     
     getNextLevelExp() {
-        return Math.floor(100 * Math.pow(this.stats.level, 1.2))
+        return Math.floor(100 * Math.pow(this.getLevel(), 1.2))
+    }
+
+    getLevel() {
+        return this.stats.find(stat => stat.name === 'level').value
+    }
+
+    getExp() {
+        return this.stats.find(stat => stat.name === 'exp').value
     }
 
     update() {

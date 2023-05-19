@@ -147,17 +147,7 @@ export default class BeginningScene extends Phaser.Scene {
             self.socket.emit('get-stats')
             self.socket.on('send-stats', (stats) => {
                 if (stats) {
-                    stats.exp = parseInt(stats.exp)
-                    stats.level = parseInt(stats.level)
                     this.player.stats = stats
-                    self.socket.emit('player-stats', this.player.stats)
-                } else {
-                    this.player.stats = {
-                        fishingSpeed: 0,
-                        catchLuck: 0,
-                        level: 1,
-                        exp: 0
-                    }
                     self.socket.emit('player-stats', this.player.stats)
                 }
             })
