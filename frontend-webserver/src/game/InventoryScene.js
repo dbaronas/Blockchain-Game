@@ -62,10 +62,10 @@ export default class InventoryScene extends Phaser.Scene {
             if(item) {
                 if (item.type === 'fish') {
                     textureKey = 'items'
-                    frame = items[item.name].frame
+                    frame = items[item.iem_id].frame
                 } else if (item.type === 'fishing-rod'){
                     textureKey = 'rods'
-                    frame = rods[item.name].frame
+                    frame = rods[item.iem_id].frame
                 }
                 inventorySlot.item = this.add.sprite(inventorySlot.x, inventorySlot.y - this.tileSize / 12, textureKey, frame).setScale(1.5)
                 inventorySlot.quantityText = this.add.text(inventorySlot.x, inventorySlot.y +  this.tileSize / 6, item.quantity, {

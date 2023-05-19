@@ -8,7 +8,7 @@ export default class Inventory {
     }
 
     addItem(item){
-        let existingKey = Object.keys(this.items).find(key => this.items[key].name === item.name)
+        let existingKey = Object.keys(this.items).find(key => this.items[key].iem_id === item.iem_id)
         if(existingKey) {
             this.items[existingKey].quantity = parseInt(this.items[existingKey].quantity) + item.quantity
         } else {
@@ -39,12 +39,12 @@ export default class Inventory {
     }
 
     addCoins(amount) {
-        this.coins += amount
+        this.coins.quantity += amount
         this.events.emit('coinsUpdate')
     }
 
     getCoins() {
-        return this.coins
+        return this.coins.quantity
     }
 
     getItem(index) {

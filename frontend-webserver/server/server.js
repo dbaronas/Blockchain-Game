@@ -105,10 +105,16 @@ io.on('connection', function (socket) {
         socket.removeAllListeners('disconnect')
         socket.on('disconnect', async function () {
             let address = socket.address
+            let inventory = []
+            inventory.push(socket.inventory.coins)
+            for(const key of Object.keys(socket.inventory.items)) {
+                const item = socket.inventory.items[key]
+                inventory.push(item)
+            }
+            console.log(inventory)
             let data = {
                 island: socket.island,
-                inventory: socket.inventory,
-                stats: socket.stats
+                inventory: inventory
             }
             await $.ajax({
                 type: 'POST',
@@ -168,8 +174,7 @@ io.on('connection', function (socket) {
 
         socket.removeAllListeners('player-inventory')
         socket.on('player-inventory', (inventory) => {
-            socket.inventory.items = inventory.items
-            socket.inventory.coins = inventory.coins
+            socket.inventory = inventory
         })
 
         socket.removeAllListeners('get-inventory')

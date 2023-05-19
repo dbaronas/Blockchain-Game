@@ -127,8 +127,14 @@ export default class BeginningScene extends Phaser.Scene {
         } else {
             self.socket.emit('get-inventory')
             self.socket.on('send-inventory', (inventory) => {
-                this.player.inventory.items = inventory.items
-                this.player.inventory.coins = parseInt(inventory.coins)
+                inventory.forEach(item => {
+                    this.player.inventory.items = []
+                    if(item.item_id == 'golden_coin') {
+                        this.player.inventory.coins = item
+                    } else {
+                        this.player.inventory.items.push(item)
+                    }
+                })
                 this.scene.get('InventoryScene').refresh()
                 this.scene.get('InventoryScene').refreshCoins()
             })
@@ -220,13 +226,13 @@ export default class BeginningScene extends Phaser.Scene {
                             const randomFishRod = Phaser.Utils.Array.GetRandom(this.fishRod)
                             this.scene.pause()
                             this.scene.launch('modal', { randomFishRod: randomFishRod, scene: this })
-                            this.player.inventory.addItem({name: randomFishRod, quantity: 1, type: 'fishing-rod'})
+                            this.player.inventory.addItem({item_id: randomFishRod, quantity: 1, type: 'fishing-rod'})
                             this.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
                         } else {
                             const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes)
                             this.player.addExp(items[randomFishType].exp)
                             this.socket.emit('update-stats', this.player.stats)
-                            this.player.inventory.addItem({name: randomFishType, quantity: 1, type: 'fish'})
+                            this.player.inventory.addItem({item_id: randomFishType, quantity: 1, type: 'fish'})
                             this.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
                         }
                     },
