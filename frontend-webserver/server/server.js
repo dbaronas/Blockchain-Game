@@ -111,7 +111,6 @@ io.on('connection', function (socket) {
                 const item = socket.inventory.items[key]
                 inventory.push(item)
             }
-            console.log(inventory)
             let data = {
                 island: socket.island,
                 inventory: inventory,

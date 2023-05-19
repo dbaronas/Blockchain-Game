@@ -215,7 +215,7 @@ export default class BeginningScene2 extends Phaser.Scene {
                             const randomFishRod = Phaser.Utils.Array.GetRandom(this.fishRod)
                             this.scene.pause()
                             this.scene.launch('modal', { randomFishRod: randomFishRod, scene: this })
-                            this.player.inventory.addItem({item_id: randomFishRod, quantity: 1, type: 'fishing-rod'})
+                            this.player.inventory.addItem({item_id: randomFishRod, quantity: 1, type: 'fishing_rod'})
                             this.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
                         } else {
                             const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes)

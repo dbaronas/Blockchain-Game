@@ -22,7 +22,7 @@ export default class ShopScene extends Phaser.Scene {
         var modal = this.add.image(120, 0, 'modal').setScale(2).setOrigin(0, 0)
 
         const closeButton = this.add.text(1000, 150, 'X', { fill: '#000' }).setScale(2).setInteractive().on('pointerdown', () => {
-        const items = this.playerInventory.items.filter(item => item.iem_id !== '')
+        const items = this.playerInventory.items.filter(item => item.item_id !== '')
         this.socket.emit('player-inventory', { items: items, coins: this.playerInventory.coins })
         console.log(this.playerInventory.items)
         this.scene.stop('ShopScene')
@@ -30,7 +30,7 @@ export default class ShopScene extends Phaser.Scene {
         })
 
         this.input.keyboard.on('keydown-E', () => {
-        const items = this.playerInventory.items.filter(item => item.iem_id !== '')
+        const items = this.playerInventory.items.filter(item => item.item_id !== '')
         this.socket.emit('player-inventory', { items: items, coins: this.playerInventory.coins })
         this.scene.stop('ShopScene')
         this.scene.resume(this.parentScene)
@@ -55,7 +55,7 @@ export default class ShopScene extends Phaser.Scene {
 
         for (let index in this.playerInventory.items) {
             let item = this.playerInventory.items[index]
-            let itemName = item.iem_id
+            let itemName = item.item_id
             let itemQuantity = item.quantity
             let itemType = item.type
 
@@ -68,7 +68,7 @@ export default class ShopScene extends Phaser.Scene {
                 let sellButton = this.add.text(x + 70, y, 'Sell', { fill: '#000' }).setInteractive()
                 sellButton.on('pointerdown', () => {
                     if (itemQuantity > 0) {
-                        let itemIndex = Object.keys(this.playerInventory.items).find(key => this.playerInventory.items[key].iem_id === itemName)
+                        let itemIndex = Object.keys(this.playerInventory.items).find(key => this.playerInventory.items[key].item_id === itemName)
                         this.playerInventory.decreaseItem(itemIndex)
                         this.playerInventory.addCoins(items[itemName].price)
                         itemQuantity--

@@ -62,10 +62,11 @@ export default class InventoryScene extends Phaser.Scene {
             if(item) {
                 if (item.type === 'fish') {
                     textureKey = 'items'
-                    frame = items[item.iem_id].frame
-                } else if (item.type === 'fishing-rod'){
+                    console.log(item.item_id)
+                    frame = items[item.item_id].frame
+                } else if (item.type === 'fishing_rod'){
                     textureKey = 'rods'
-                    frame = rods[item.iem_id].frame
+                    frame = rods[item.item_id].frame
                 }
                 inventorySlot.item = this.add.sprite(inventorySlot.x, inventorySlot.y - this.tileSize / 12, textureKey, frame).setScale(1.5)
                 inventorySlot.quantityText = this.add.text(inventorySlot.x, inventorySlot.y +  this.tileSize / 6, item.quantity, {
@@ -108,7 +109,7 @@ export default class InventoryScene extends Phaser.Scene {
 
     isItemFishingRod() {
         let selectedItem = this.inventory.getItem(this.selectedItemIndex);
-        return selectedItem && selectedItem.type === 'fishing-rod';
+        return selectedItem && selectedItem.type === 'fishing_rod';
     }
 
     create(){
