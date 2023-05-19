@@ -136,6 +136,7 @@ export default class BeginningScene extends Phaser.Scene {
                         this.player.inventory.items.push(item)
                     }
                 })
+                self.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
                 this.scene.get('InventoryScene').refresh()
                 this.scene.get('InventoryScene').refreshCoins()
             })
