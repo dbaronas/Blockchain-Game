@@ -127,8 +127,8 @@ export default class BeginningScene2 extends Phaser.Scene {
         } else {
             self.socket.emit('get-inventory')
             self.socket.on('send-inventory', (inventory) => {
+                this.player.inventory.items = []
                 inventory.forEach(item => {
-                    this.player.inventory.items = []
                     if(item.item_id == 'golden_coin') {
                         this.player.inventory.coins = item
                     } else {
