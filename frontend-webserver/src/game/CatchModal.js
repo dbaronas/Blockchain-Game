@@ -49,7 +49,7 @@ export default class CatchModal extends Phaser.Scene {
                     message: `Mint NFT to connected account\n\nto: ${address}\nnonce: ${nonce}`,
                 })
                 this.socket.emit('mint', { id: this.randomFishRod, signature: signature})
-                //scene.player.inventory.addItem({item_id: this.randomFishRod, name: rods[randomFishRod].name, type: 'fishing_rod', contract_type: 'ERC-721', stackable: false, stats: {}, rarity: rods[randomFishRod].rarity, quantity: 1})
+                scene.player.inventory.addItem({item_id: this.randomFishRod, name: rods[randomFishRod].name, type: 'fishing_rod', contract_type: 'ERC-721', stackable: false, stats: {}, rarity: rods[randomFishRod].rarity, quantity: 1})
                 this.scene.stop()
                 this.scene.resume(scene.scene.key)
             } catch (error) {
