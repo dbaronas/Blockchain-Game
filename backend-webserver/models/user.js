@@ -12,7 +12,7 @@ const User = sequelize.define('users', {
         allowNull: false,
         unique: true
     },
-    createdOn: {
+    createdon: {
         type: DataTypes.DATE,
         allowNull: false
     },
