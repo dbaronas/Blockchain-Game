@@ -16,10 +16,6 @@ const User = sequelize.define('users', {
         type: DataTypes.DATE,
         allowNull: false
     },
-    data: {
-        type: DataTypes.JSONB,
-        allowNull: false
-    },
     nonce: {
         type: DataTypes.CHAR(100),
         allowNull: true
