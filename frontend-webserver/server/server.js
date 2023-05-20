@@ -103,7 +103,7 @@ io.on('connection', function (socket) {
         socket.to(roomName).emit('newPlayer', room.players[socket.id])
 
         socket.removeAllListeners('disconnect')
-        socket.on('disconnect', async function () {
+        socket.on('disconnect', function () {
             let address = socket.address
             let inventory = []
             inventory.push(socket.inventory.coins)
@@ -116,7 +116,7 @@ io.on('connection', function (socket) {
                 inventory: inventory,
                 stats: socket.stats
             }
-            await $.ajax({
+            $.ajax({
                 type: 'POST',
                 url: `${process.env.BACKEND}/api/v1/db/sendPlayerData`,
                 data: { address, data },
@@ -185,7 +185,7 @@ io.on('connection', function (socket) {
         socket.removeAllListeners('player-stats')
         socket.on('player-stats', (stats) => {
             socket.stats = stats
-            socket.emit('statsLoaded')
+            socket.emit('statsLoaded', socket.stats)
         })
 
         socket.removeAllListeners('update-stats')
