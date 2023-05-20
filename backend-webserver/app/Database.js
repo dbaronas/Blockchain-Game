@@ -25,8 +25,7 @@ const register = async (req, res) => {
                     await db.User.create({
                         wallet_address: address,
                         username: username,
-                        creation_date: Date.now(),
-                        data: data,
+                        createdon: Date.now(),
                         nonce: crypto.randomBytes(64).toString("base64")
                     })
                     const { id } = await db.Island.findOne({ where: { name: data.island}})
