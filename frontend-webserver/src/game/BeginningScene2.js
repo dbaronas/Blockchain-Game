@@ -1,7 +1,6 @@
 import NPC from "./NPC.js"
 import Player from "./Player.js"
 import items from "./Items.js"
-import rods from "./FishingRods.js"
 
 export default class BeginningScene2 extends Phaser.Scene {
     constructor() {
@@ -217,7 +216,6 @@ export default class BeginningScene2 extends Phaser.Scene {
                             const randomFishRod = Phaser.Utils.Array.GetRandom(this.fishRod)
                             this.scene.pause()
                             this.scene.launch('modal', { randomFishRod: randomFishRod, scene: this })
-                            this.player.inventory.addItem({item_id: randomFishRod, name: rods[randomFishRod].name, type: 'fishing_rod', contract_type: 'ERC-721', stackable: false, stats: {}, rarity: rods[randomFishRod].rarity, quantity: 1})
                             this.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
                         } else {
                             const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes)
