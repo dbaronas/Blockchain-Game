@@ -33,4 +33,5 @@ module.exports = (app) => {
     app.post('/api/v1/db/register', api.db.register)
     app.post('/api/v1/db/sendPlayerData', api.db.sendData)
     app.post('/api/v1/db/:address/nonce', api.db.getNonce)
+    app.get('/api/v1/db/lootPool', api.db.lootPool)
 }

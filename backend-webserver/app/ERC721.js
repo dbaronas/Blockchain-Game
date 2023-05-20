@@ -7,6 +7,7 @@ const abi = require('../ABI/PoseidonNFT.json').abi
 const contract = new Contract(abi, process.env.ERC721)
 contract.defaultAccount = process.env.OWNER
 const verifyMessage = require('../middleware/verifyMessage')
+const db = require('../models/index')
 
 const mint = async(req, res) => {
     const address = req.body.address
@@ -21,7 +22,8 @@ const mint = async(req, res) => {
     } else {
         if(await verifyMessage(signature, address)) {
             var block = await web3.eth.getBlock("latest")
-            await contract.methods.mint(address, uri, tokenName, durability).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((result) => {
+            await contract.methods.mint(address, uri, tokenName, durability).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then(async (result) => {
+                await db.Item.update({ owner: address }, { where: { item_id: item_id }})
                 res.json(result)
             }).catch((error) => {
                 res.json({error: '' + error})

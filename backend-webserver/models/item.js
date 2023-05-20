@@ -34,6 +34,10 @@ const Item = sequelize.define('items', {
     rarity: {
         type: DataTypes.CHAR(20),
         allowNull: true
+    },
+    weight: {
+        type: DataTypes.FLOAT,
+        allowNull: false
     }
 }, {timestamps: false})
 

@@ -165,11 +165,17 @@ const getNonce = async (req, res) => {
     res.send(nonce)
 }
 
+const lootPool = async (req, res) => {
+    const pool = await db.Item.findAll({ where: { owner: null }})
+    res.json(pool)
+}
+
 module.exports = {
     getNews,
     checkUser,
     getData,
     register,
     sendData,
-    getNonce
+    getNonce,
+    lootPool
 }
