@@ -129,9 +129,8 @@ const sendData = async (req, res) => {
     const user = await db.User.findByPk(address)
 
     if(user) {
-        const userIsland = await db.PlayerIsland.findByPk(address)
         const { id } = await db.Island.findOne({ where: { name: data.island}})
-        await userIsland.update( { island_id: id })
+        await db.PlayerIsland.update( { island_id: id }, { where: { wallet_address: address }})
     
         await db.Inventory.destroy({
             where: { wallet_address: address }
