@@ -7,6 +7,7 @@ const { window } = new JSDOM( "" )
 const $ = require( 'jquery' )( window )
 const cookie = require('cookie')
 const path = require('path')
+const LootTable = require('loot-table')
 const Filter = require('bad-words')
 const filter = new Filter()
 require('dotenv').config()
@@ -196,6 +197,28 @@ io.on('connection', function (socket) {
         socket.removeAllListeners('get-stats')
         socket.on('get-stats', () => {
             socket.emit('send-stats', socket.stats)
+        })
+
+        socket.removeAllListeners('get-pool')
+        socket.on('get-pool', () => {
+            $.ajax({
+                type: 'GET',
+                url: `${process.env.BACKEND}/api/v1/db/lootPool`,
+                success: function (result) {
+                    const lootPool = result
+                    const lootTable = new LootTable()
+                    lootPool.forEach(item => {
+                        lootTable.add(item.item_id, item.weight)
+                    })
+                    const selectedItemID = lootTable.choose()
+                    const selectedItem = lootPool.find(item => item.item_id === selectedItemID)
+                    socket.emit('send-pool', selectedItem)
+                    console.log(selectedItem)
+                },
+                error: function (result, status) {
+                    console.log(result)
+                }
+            })
         })
 
         socket.removeAllListeners('mint')
