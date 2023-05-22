@@ -38,6 +38,10 @@ const Item = sequelize.define('items', {
     weight: {
         type: DataTypes.FLOAT,
         allowNull: false
+    },
+    location: {
+        type: DataTypes.CHAR(20),
+        allowNull: true
     }
 }, {timestamps: false})
 

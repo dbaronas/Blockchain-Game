@@ -165,8 +165,11 @@ const getNonce = async (req, res) => {
 }
 
 const lootPool = async (req, res) => {
-    const pool = await db.Item.findAll({ where: { owner: null }})
-    res.json(pool)
+    const { island } = req.body
+    const pool = await db.Item.findAll({ where: { owner: null, location: island }})
+    const pool2 = await db.Item.findAll({ where: { owner: null, location: 'everywhere' }})
+    let finalPool = pool.concat(pool2)
+    res.json(finalPool)
 }
 
 module.exports = {
