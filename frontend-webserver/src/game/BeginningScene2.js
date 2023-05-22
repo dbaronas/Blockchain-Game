@@ -203,33 +203,26 @@ export default class BeginningScene2 extends Phaser.Scene {
                     repeat: -1
                 })
                 this.fishingText.setVisible(true)
-                //console.log("fishing")
                 this.fishingTimer = this.time.addEvent({
                     delay: randomDelay,
                     callback: () => {
                         this.fishingText.setVisible(false)
                         this.canMove = true
-                        const options = ['fish', 'fishrod']
-                        const randomNum = Math.floor(Math.random() * 2)
-                        const selectedOption = options[randomNum]
-                        if (selectedOption === 'fishrod') {
-                            const randomFishRod = Phaser.Utils.Array.GetRandom(this.fishRod)
-                            this.scene.pause()
-                            this.scene.launch('modal', { randomFishRod: randomFishRod, scene: this })
-                            this.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
-                        } else {
-                            const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes)
-                            this.player.addExp(items[randomFishType].exp)
-                            this.socket.emit('update-stats', this.player.stats)
-                            this.player.inventory.addItem({item_id: randomFishType, name: items[randomFishType].name, type: 'fish', contract_type: 'ERC1155', stackable: true, stats: null, rarity: items[randomFishType].rarity, quantity: 1})
-                            this.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
-                        }
+                        self = this
+                        this.socket.emit('get-pool')
+                        this.socket.removeAllListeners('send-pool')
+                        this.socket.on('send-pool', function(item) {
+                            item.quantity = 1
+                            console.log(item)
+                            self.player.inventory.addItem(item)
+                            self.socket.emit('player-inventory', { items: self.player.inventory.items, coins: self.player.inventory.coins })
+                            self.player.addExp(items[item.item_id].exp)
+                            self.socket.emit('update-stats', self.player.stats)
+                        })
                     },
                     callbackScope: this,
                     loop: false
                 })
-            } else {
-                //console.log("not fishing")
             }
     
             var x = this.player.x
@@ -244,12 +237,11 @@ export default class BeginningScene2 extends Phaser.Scene {
             }
         } else if (!this.canMove && Phaser.Input.Keyboard.JustDown(this.inputKeys.e)) {
             this.canMove = true
-            //console.log("stopped fishing")
             if (this.fishingTimer) {
                 this.fishingTimer.remove()
                 this.fishingTimer = null
                 this.fishingText.setVisible(false)
-            } // cancel timer so if the player cancels fishing, he wouldnt get fish after the timer ends
+            }
         }
     }
 }
