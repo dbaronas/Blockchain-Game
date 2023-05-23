@@ -19,7 +19,6 @@
     "i18next-http-backend": "^2.2.0",
     "jquery": "^3.6.4",
     "js-cookie": "^3.0.1",
-    "loot-table": "^0.1.0",
     "phaser": "^3.55.2",
     "react": "^18.2.0",
     "react-device-detect": "^2.2.3",
