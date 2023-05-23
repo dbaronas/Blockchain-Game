@@ -22,7 +22,7 @@ export default class CatchModal extends Phaser.Scene {
         var button = this.add.sprite(0, -290, 'mintbutton').setInteractive({ pixelPerfect: true }).setScale(0.8).setOrigin(0.5, 0)
         var buttonText = this.add.text(0, 0, 'MINT').setOrigin(0.5, -1).setFontSize(40)
         var text = this.add.text(0, 0, 'YOU GOT A FISH GG!').setOrigin(0.5, 2).setFontSize(20)
-        var fishing_rod = this.add.sprite(0, 0, 'rods', rods[this.randomFishRod].frame).setOrigin(0.5, 2).setScale(2)
+        var fishing_rod = this.add.sprite(0, 0, 'rods', rods[this.randomFishRod.item_id].frame).setOrigin(0.5, 2).setScale(2)
         this.container = this.add.container(650, 200, [modal, button, buttonText, text, fishing_rod])
         this.socket = this.registry.get('socket')
 
@@ -48,8 +48,8 @@ export default class CatchModal extends Phaser.Scene {
                 const signature = await signMessage({
                     message: `Mint NFT to connected account\n\nto: ${address}\nnonce: ${nonce}`,
                 })
-                this.socket.emit('mint', { id: this.randomFishRod, signature: signature})
-                scene.player.inventory.addItem({item_id: this.randomFishRod, name: rods[this.randomFishRod].name, type: 'fishing_rod', contract_type: 'ERC-721', stackable: false, stats: {}, rarity: rods[this.randomFishRod].rarity, quantity: 1})
+                this.socket.emit('mint', { id: this.randomFishRod.item_id, signature: signature})
+                scene.player.inventory.addItem({item_id: this.randomFishRod.item_id, name: this.randomFishRod.name, type: this.randomFishRod.type, contract_type: this.randomFishRod.contract_type, stackable: this.randomFishRod.stackable, stats: this.randomFishRod.stats, rarity: this.randomFishRod.rarity, quantity: 1})
                 this.scene.stop()
                 this.scene.resume(scene.scene.key)
             } catch (error) {

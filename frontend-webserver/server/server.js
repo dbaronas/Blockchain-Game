@@ -202,8 +202,9 @@ io.on('connection', function (socket) {
         socket.removeAllListeners('get-pool')
         socket.on('get-pool', () => {
             $.ajax({
-                type: 'GET',
+                type: "POST",
                 url: `${process.env.BACKEND}/api/v1/db/lootPool`,
+                data: { island: socket.island },
                 success: function (result) {
                     const lootPool = result
                     const lootTable = new LootTable()

@@ -1,6 +1,7 @@
 import NPC from "./NPC.js"
 import Player from "./Player.js"
 import items from "./Items.js"
+import rods from "./FishingRods.js"
 
 export default class BeginningScene2 extends Phaser.Scene {
     constructor() {
@@ -115,6 +116,9 @@ export default class BeginningScene2 extends Phaser.Scene {
                 }
                 this.player.selectedItem.visible = true
             }
+            if (data.textureKey === 'rods' && this.player.stats) {
+                this.player.stats.find(stat => stat.name === 'fishing_speed').value = data.rodStats
+            }
         })
     }
 
@@ -140,7 +144,6 @@ export default class BeginningScene2 extends Phaser.Scene {
             })
         }
         if(this.playerStats) {
-            console.log(this.playerStats)
             this.player.stats = this.playerStats
             self.socket.emit('player-stats', this.player.stats)
         } else {
@@ -187,8 +190,14 @@ export default class BeginningScene2 extends Phaser.Scene {
                 this.scene.stop('BeginningScene2')
             }
     
-            if (this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0) && Phaser.Input.Keyboard.JustDown(this.inputKeys.e) && this.scene.get('InventoryScene').isItemFishingRod()) {
-                const randomDelay = Phaser.Math.Between(1000, 2000)
+            if(this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0) && Phaser.Input.Keyboard.JustDown(this.inputKeys.e) && this.scene.get('InventoryScene').isItemFishingRod()) {
+                const speed = 1 - (this.player.stats.find(stat => stat.name === 'fishing_speed').value / 100)
+                const minDelay = 5000 * speed
+                const maxDelay = 10000 * speed
+                console.log(minDelay)
+                console.log(maxDelay)
+                const randomDelay = Phaser.Math.Between(minDelay, maxDelay)
+                console.log(randomDelay)
                 this.canMove = false
                 this.fishingText = this.add.text(this.player.x - 30, this.player.y - 48, 'Fishing...', {
                     fontSize: '10px',
@@ -213,11 +222,16 @@ export default class BeginningScene2 extends Phaser.Scene {
                         this.socket.removeAllListeners('send-pool')
                         this.socket.on('send-pool', function(item) {
                             item.quantity = 1
-                            console.log(item)
-                            self.player.inventory.addItem(item)
-                            self.socket.emit('player-inventory', { items: self.player.inventory.items, coins: self.player.inventory.coins })
-                            self.player.addExp(items[item.item_id].exp)
-                            self.socket.emit('update-stats', self.player.stats)
+                            if(item.type === 'fish') {
+                                self.player.inventory.addItem(item)
+                                self.socket.emit('player-inventory', { items: self.player.inventory.items, coins: self.player.inventory.coins })
+                                self.player.addExp(items[item.item_id].exp)
+                                self.socket.emit('update-stats', self.player.stats)
+                            } else if (item.type === 'fishing_rod') {
+                                self.scene.pause()
+                                self.scene.launch('modal', { randomFishRod: item, scene: this })
+                                self.socket.emit('player-inventory', { items: self.player.inventory.items, coins: self.player.inventory.coins })
+                            }
                         })
                     },
                     callbackScope: this,
