@@ -116,9 +116,9 @@ export default class BeginningScene2 extends Phaser.Scene {
                 }
                 this.player.selectedItem.visible = true
             }
-            if (data.textureKey === 'rods' && this.player.stats) {
-                this.player.stats.find(stat => stat.name === 'fishing_speed').value = data.rodStats
-            }
+            // if (data.textureKey === 'rods' && this.player.stats) {
+            //     this.player.stats.find(stat => stat.name === 'fishing_speed').value = data.rodStats
+            // }
         })
     }
 
@@ -191,9 +191,9 @@ export default class BeginningScene2 extends Phaser.Scene {
             }
     
             if(this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0) && Phaser.Input.Keyboard.JustDown(this.inputKeys.e) && this.scene.get('InventoryScene').isItemFishingRod()) {
-                const speed = 1 - (this.player.stats.find(stat => stat.name === 'fishing_speed').value / 100)
-                const minDelay = 5000 * speed
-                const maxDelay = 10000 * speed
+                // const speed = 1 - (this.player.stats.find(stat => stat.name === 'fishing_speed').value / 100)
+                const minDelay = 5000 //* speed
+                const maxDelay = 10000 //* speed
                 console.log(minDelay)
                 console.log(maxDelay)
                 const randomDelay = Phaser.Math.Between(minDelay, maxDelay)
