@@ -230,7 +230,7 @@ export default class BeginningScene extends Phaser.Scene {
                                 self.socket.emit('update-stats', self.player.stats)
                             } else if (item.type === 'fishing_rod') {
                                 self.scene.pause()
-                                self.scene.launch('modal', { randomFishRod: item, scene: this })
+                                self.scene.launch('modal', { randomFishRod: item, scene: self.scene })
                                 self.socket.emit('player-inventory', { items: self.player.inventory.items, coins: self.player.inventory.coins })
                             }
                         })
