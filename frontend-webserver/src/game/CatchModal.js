@@ -54,6 +54,7 @@ export default class CatchModal extends Phaser.Scene {
                 this.scene.stop()
                 this.scene.resume(scene.key)
             } catch (error) {
+                console.log(error)
                 text.setText(`Transaction failed!`)
                 buttonText.setText('Close')
                 button.once('pointerdown', () => {
