@@ -117,6 +117,7 @@ export default class BeginningScene extends Phaser.Scene {
                 this.player.selectedItem.visible = true
             }
             if (data.textureKey === 'rods' && this.player.stats) {
+                console.log(this.player.stats)
                 this.player.stats.find(stat => stat.name === 'fishing_speed').value = data.rodStats
             }
         })

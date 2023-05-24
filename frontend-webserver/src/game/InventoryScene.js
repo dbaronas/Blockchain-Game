@@ -77,7 +77,6 @@ export default class InventoryScene extends Phaser.Scene {
                 inventorySlot.item.setInteractive()
                 this.input.setDraggable(inventorySlot.item)
                 if(index === this.selectedItemIndex) {
-                    console.log(rodStats)
                     this.scene.events.emit('select-item', { frame, textureKey, rodStats })
                 }
             } else {
