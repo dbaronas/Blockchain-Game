@@ -15,9 +15,13 @@ export const getGameInstance = () => {
   if (!game) {
     const config = {
       type: Phaser.AUTO,
-      parent: 'fisherman',
-      width: 1280,
-      height: 720,
+      scale: {
+        mode: Phaser.Scale.FIT,
+        parent: 'fisherman',
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: 1280,
+        height: 720,
+      },
       disableContextMenu: true,
       scene: [
         MainMenu,
