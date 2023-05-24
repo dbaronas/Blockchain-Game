@@ -6,8 +6,9 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
-contract PoseidonNFT is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
+contract PoseidonNFT is ERC721, ERC721URIStorage, ERC721Burnable, Ownable, ERC721Enumerable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIdCounter;
     address marketContract;
@@ -46,8 +47,13 @@ contract PoseidonNFT is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
         emit NFTMinted(tokenId);
     }
 
-    function getMyTokens(address _wallet) public view returns (NFT[] memory) {
-        return tokenAddress[_wallet];
+    function getTokenIds(address _owner) public view returns (uint[] memory) {
+        uint[] memory _tokensOfOwner = new uint[](ERC721.balanceOf(_owner));
+
+        for (uint i = 0; i < ERC721.balanceOf(_owner); i++){
+            _tokensOfOwner[i] = ERC721Enumerable.tokenOfOwnerByIndex(_owner, i);
+        }
+        return (_tokensOfOwner);
     }
 
     function getDurability(uint256 tokenId) public view returns (uint256) {
@@ -89,5 +95,21 @@ contract PoseidonNFT is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
         uint256 tokenId
     ) public view override(ERC721, ERC721URIStorage) returns (string memory) {
         return super.tokenURI(tokenId);
+    }
+
+    function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize)
+        internal
+        override(ERC721, ERC721Enumerable)
+    {
+        super._beforeTokenTransfer(from, to, tokenId, batchSize);
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721, ERC721Enumerable)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
     }
 }
