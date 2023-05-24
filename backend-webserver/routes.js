@@ -9,7 +9,8 @@ module.exports = (app) => {
     app.post('/api/v1/721/mint', api.erc721.mint)
     app.post('/api/v1/721/getDurability', api.erc721.getTokenDurability)
     app.post('/api/v1/721/updateDurability', api.erc721.updateTokenDurability)
-    app.get('/api/v1/721/getMyTokens', api.erc721.getMyTokens)
+    app.post('/api/v1/721/getMyTokens', api.erc721.getMyTokens)
+    app.post('/api/v1/721/tokenURI', api.erc721.tokenURI)
     //ERC1155
 
     //MARKETPLACE

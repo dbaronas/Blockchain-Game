@@ -35,7 +35,7 @@ const mint = async(req, res) => {
 }
 
 const getMyTokens = async(req, res) => {
-    const address = req.query.address
+    const { address } = req.body
 
     await contract.methods.getTokenIds(address).call({from: address}).then((result) => {
         res.json(result)
@@ -69,9 +69,19 @@ const updateTokenDurability = async(req, res) => {
 }
 
 const ownerOf = async(req, res) => {
-    const tokenId = req.query.id
+    const { tokenId } = req.body
     await contract.methods.ownerOf(tokenId).call().then((result) => {
         res.json({owner: result})
+    }).catch((error) => {
+        res.json({error: '' + error})
+    })
+}
+
+const tokenURI = async (req, res) => {
+    const { tokenId } = req.body
+
+    await contract.methods.tokenURI(tokenId).call().then((result) => {
+        res.json({uri: result})
     }).catch((error) => {
         res.json({error: '' + error})
     })
@@ -82,5 +92,6 @@ module.exports = {
     getMyTokens,
     getTokenDurability,
     updateTokenDurability,
-    ownerOf
+    ownerOf,
+    tokenURI
 }
