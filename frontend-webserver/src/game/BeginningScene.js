@@ -163,6 +163,7 @@ export default class BeginningScene extends Phaser.Scene {
         } else {
             self.scene.get('chat').setEmit()
         }
+        console.log(self.player.stats)
     }
 
     addOtherPlayers(self, playerInfo) {
