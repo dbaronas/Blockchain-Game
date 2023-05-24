@@ -40,7 +40,7 @@ const updateListing = async(req, res) => {
     const price = req.body.price
     const quantity = req.body.quantity
 
-    await contract.methods.updateListing(address, listingId, quantity, price).call({from: contract.defaultAccount}).then((results) => {
+    await contract.methods.updateListing(address, listingId, quantity, price).send({from: contract.defaultAccount}).then((results) => {
         res.json(results)
     }).catch((error) => {
         res.json(error)
@@ -51,7 +51,7 @@ const cancelListing = async(req, res) => {
     const address = req.body.address
     const listingId = req.body.listingId
 
-    await contract.methods.cancelListing(address, listingId).call({from: contract.defaultAccount}).then((results) => {
+    await contract.methods.cancelListing(address, listingId).send({from: contract.defaultAccount}).then((results) => {
         res.json(results)
     }).catch((error) => {
         res.json(error)
@@ -119,6 +119,14 @@ const withdraw = async(req, res) => {
     })
 }
 
+const checkTransactionStatus = async (req, res) => {
+    let { receipt } = req.body
+
+    await web3.eth.getTransactionReceipt(receipt).then(console.log)
+
+    res.send('done')
+}
+
 module.exports = {
     createNFTListing,
     createItemListing,
@@ -129,5 +137,6 @@ module.exports = {
     getNFTListings,
     getItemListings,
     getEarnings,
-    withdraw
+    withdraw,
+    checkTransactionStatus
 }

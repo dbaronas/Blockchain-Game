@@ -37,7 +37,7 @@ const mint = async(req, res) => {
 const getMyTokens = async(req, res) => {
     const address = req.query.address
 
-    await contract.methods.getMyTokens().call({from: address}).then((result) => {
+    await contract.methods.getTokenIds(address).call({from: address}).then((result) => {
         res.json(result)
     }).catch((error) => {
         res.json({error: '' + error})

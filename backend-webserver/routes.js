@@ -5,15 +5,14 @@ module.exports = (app) => {
     //ERC20
 
     //ERC721
-    //app.get('/api/v1/721/ownerof', api.erc721.ownerOf)
+    app.get('/api/v1/721/ownerof', api.erc721.ownerOf)
     app.post('/api/v1/721/mint', api.erc721.mint)
-    //app.post('/api/v1/721/getDurability', api.erc721.getTokenDurability)
-    //app.post('/api/v1/721/updateDurability', api.erc721.updateTokenDurability)
-    //app.get('/api/v1/721/getMyTokens', api.erc721.getMyTokens)
+    app.post('/api/v1/721/getDurability', api.erc721.getTokenDurability)
+    app.post('/api/v1/721/updateDurability', api.erc721.updateTokenDurability)
+    app.get('/api/v1/721/getMyTokens', api.erc721.getMyTokens)
     //ERC1155
 
     //MARKETPLACE
-    /*
     app.post('/api/v1/marketplace/createNFTListing', api.marketplace.createNFTListing)
     app.post('/api/v1/marketplace/createItemListing', api.marketplace.createItemListing)
     app.post('/api/v1/marketplace/updateListing', api.marketplace.updateListing)
@@ -24,7 +23,7 @@ module.exports = (app) => {
     app.get('/api/v1/marketplace/ItemListings', api.marketplace.getItemListings)
     app.post('/api/v1/marketplace/earnings', api.marketplace.getEarnings)
     app.post('/api/v1/marketplace/withdraw', api.marketplace.withdraw)
-    */
+    app.post('/test', api.marketplace.checkTransactionStatus)
 
     //DATABASE
     app.get('/api/v1/db/news', api.db.getNews)
