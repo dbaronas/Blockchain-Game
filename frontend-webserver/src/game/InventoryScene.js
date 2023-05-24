@@ -68,7 +68,6 @@ export default class InventoryScene extends Phaser.Scene {
                     textureKey = 'rods'
                     frame = rods[item.item_id].frame
                     rodStats = item.stats.stats.fishing_speed
-                    console.log(item)
                 }
                 inventorySlot.item = this.add.sprite(inventorySlot.x, inventorySlot.y - this.tileSize / 12, textureKey, frame).setScale(1.5)
                 inventorySlot.quantityText = this.add.text(inventorySlot.x, inventorySlot.y +  this.tileSize / 6, item.quantity, {
@@ -78,6 +77,7 @@ export default class InventoryScene extends Phaser.Scene {
                 inventorySlot.item.setInteractive()
                 this.input.setDraggable(inventorySlot.item)
                 if(index === this.selectedItemIndex) {
+                    console.log(rodStats)
                     this.scene.events.emit('select-item', { frame, textureKey, rodStats })
                 }
             } else {
