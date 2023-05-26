@@ -80,11 +80,33 @@ const ownerOf = async(req, res) => {
 const tokenURI = async (req, res) => {
     const { tokenId } = req.body
 
-    await contract.methods.tokenURI(tokenId).call().then((result) => {
-        res.json({uri: result})
-    }).catch((error) => {
-        res.json({error: '' + error})
-    })
+    if(typeof tokenId === 'object') {
+        let tokenURI = []
+        for await (const element of tokenId) {
+            try {
+                await contract.methods.tokenURI(parseInt(element)).call().then((result) => {
+                    tokenURI.push(result)
+                }).catch((error) => {
+                    return res.json({error: '' + error})
+                })
+            } catch (err) {
+                return res.send(err)
+            }
+        }
+        return res.send(tokenURI)
+
+    } else if(typeof tokenId === 'string' || typeof tokenId === 'number') {
+        try {
+            await contract.methods.tokenURI(parseInt(tokenId)).call().then((result) => {
+                return res.send(result)
+            }).catch((error) => {
+                return res.json({error: '' + error})
+            })
+
+        } catch (err) {
+            return res.send(err)
+        }
+    }
 }
 
 module.exports = {
