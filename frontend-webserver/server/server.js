@@ -211,10 +211,9 @@ io.on('connection', function (socket) {
                     for await (const item of lootPool) {
                         pool.push(LootTable.LootTableEntry(item.item_id, item.weight))
                     }
-                    const selectedItemID = LootTable.GetLoot(pool)
-                    console.log(selectedItemID)
-                    const selectedItem = lootPool.find(item => item.item_id === selectedItemID[0].id)
-                    socket.emit('send-pool', selectedItem)
+                    const loot = LootTable.GetLoot(pool)
+                    const item = lootPool.find(item => item.item_id === loot[0].id)
+                    socket.emit('send-pool', item)
                 },
                 error: function (result, status) {
                     console.log(result)
