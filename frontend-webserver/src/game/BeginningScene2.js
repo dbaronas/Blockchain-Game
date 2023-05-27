@@ -190,6 +190,10 @@ export default class BeginningScene2 extends Phaser.Scene {
             }
     
             if(this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0) && Phaser.Input.Keyboard.JustDown(this.inputKeys.e) && this.scene.get('InventoryScene').isItemFishingRod()) {
+                this.player.setVelocity(0)
+                this.player.username.body.setVelocity(0)
+                this.player.selectedItem.setVelocity(0)
+                this.player.levelingGui.body.setVelocity(0)
                 const speed = 1 - (this.player.stats.find(stat => stat.name === 'fishing_speed').value / 100)
                 const minDelay = 5000 * speed
                 const maxDelay = 10000 * speed
