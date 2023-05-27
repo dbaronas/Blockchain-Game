@@ -213,7 +213,7 @@ io.on('connection', function (socket) {
                     }
                     const selectedItemID = LootTable.GetLoot(pool)
                     console.log(selectedItemID)
-                    const selectedItem = lootPool.find(item => item.item_id === selectedItemID)
+                    const selectedItem = lootPool.find(item => item.item_id === selectedItemID[0].id)
                     socket.emit('send-pool', selectedItem)
                 },
                 error: function (result, status) {
