@@ -7,7 +7,7 @@ const { window } = new JSDOM( "" )
 const $ = require( 'jquery' )( window )
 const cookie = require('cookie')
 const path = require('path')
-const LootTable = require('loot-table')
+const LootTable = require('loot-table-advanced')
 const Filter = require('bad-words')
 const filter = new Filter()
 require('dotenv').config()
@@ -205,16 +205,16 @@ io.on('connection', function (socket) {
                 type: "POST",
                 url: `${process.env.BACKEND}/api/v1/db/lootPool`,
                 data: { island: socket.island },
-                success: function (result) {
+                success: async function (result) {
                     const lootPool = result
-                    const lootTable = new LootTable()
-                    lootPool.forEach(item => {
-                        lootTable.add(item.item_id, item.weight)
-                    })
-                    const selectedItemID = lootTable.choose()
+                    let pool = []
+                    for await (const item of lootPool) {
+                        pool.push(LootTable.LootTableEntry(item.item_id, item.weight))
+                    }
+                    const selectedItemID = LootTable.GetLoot(pool)
+                    console.log(selectedItemID)
                     const selectedItem = lootPool.find(item => item.item_id === selectedItemID)
                     socket.emit('send-pool', selectedItem)
-                    console.log(selectedItem)
                 },
                 error: function (result, status) {
                     console.log(result)
