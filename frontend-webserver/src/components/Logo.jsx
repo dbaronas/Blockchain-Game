@@ -1,8 +1,11 @@
 import { useEffect } from 'react';
 import ReactPlayer from 'react-player'
 import { logo2 } from '../assets'
+import { useNavigate } from 'react-router-dom';
 
 const Logo = () => {
+
+  const navigate = useNavigate()
 
     useEffect(() => {
         function handleContextMenu(e) {
@@ -17,7 +20,7 @@ const Logo = () => {
     }, []);
 
     return(
-        <ReactPlayer id="logo" url={logo2} playing={true} controls={false} playsinline={true} loop={true} muted={true} width={266} height={73} />
+        <ReactPlayer id="logo" url={logo2} playing={true} controls={false} playsinline={true} loop={true} muted={true} width={266} height={73} onClick={() => navigate('/')}/>
     )
 }
 
