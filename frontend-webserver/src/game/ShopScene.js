@@ -24,10 +24,10 @@ export default class ShopScene extends Phaser.Scene {
         const closeButton = this.add.text(1000, 150, 'X', { fill: '#000' }).setScale(2).setInteractive().on('pointerdown', () => {
         console.log(this.playerInventory.items)
         if(Array.isArray(this.playerInventory.items)) {
-            items = this.playerInventory.items.filter(item => item.item_id !== '')
+            itemsFinal = this.playerInventory.items.filter(item => item.item_id !== '')
         }
         if(this.parentScene.roomName != 'TutorialScene') {
-            this.socket.emit('player-inventory', { items: items, coins: this.playerInventory.coins })
+            this.socket.emit('player-inventory', { items: itemsFinal, coins: this.playerInventory.coins })
         }
         this.scene.stop('ShopScene')
         this.scene.resume(this.parentScene)
@@ -36,10 +36,10 @@ export default class ShopScene extends Phaser.Scene {
         this.input.keyboard.on('keydown-E', () => {
         console.log(this.playerInventory.items)
         if(Array.isArray(this.playerInventory.items)) {
-            items = this.playerInventory.items.filter(item => item.item_id !== '')
+            itemsFinal = this.playerInventory.items.filter(item => item.item_id !== '')
         }
         if(this.parentScene.roomName != 'TutorialScene') {
-            this.socket.emit('player-inventory', { items: items, coins: this.playerInventory.coins })
+            this.socket.emit('player-inventory', { items: itemsFinal, coins: this.playerInventory.coins })
         }
         this.scene.stop('ShopScene')
         this.scene.resume(this.parentScene)
