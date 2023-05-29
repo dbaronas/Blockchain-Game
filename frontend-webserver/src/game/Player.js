@@ -203,7 +203,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             }
             this.setVelocity(playerVelocity.x, playerVelocity.y)
             this.username.body.setVelocity(usernameVelocity.x, usernameVelocity.y)
-            this.levelingGui.body.setVelocity(playerVelocity.x, playerVelocity.y)
+            if(this.levelingGui.body) {
+                this.levelingGui.body.setVelocity(playerVelocity.x, playerVelocity.y)
+            }
             if(this.selectedItem.body) {
                 this.selectedItem.body.setVelocity(selectedItemVelocity.x, selectedItemVelocity.y)
             }
