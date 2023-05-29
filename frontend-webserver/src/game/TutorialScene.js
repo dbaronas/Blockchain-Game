@@ -4,6 +4,7 @@ import Player from "./Player.js"
 export default class TutorialScene extends Phaser.Scene {
     constructor() {
         super('TutorialScene')
+        this.roomName = 'TutorialScene'
     }
 
     preload() {
@@ -27,7 +28,6 @@ export default class TutorialScene extends Phaser.Scene {
     create() {
         this.socket = this.registry.get('socket')
         this.canMove = true
-        this.fishTypes = ['salmon', 'bass', 'pike', 'pufferfish']
         const map = this.make.tilemap({key: 'map2'})
         const tileset = map.addTilesetImage('tileset', 'tilesbegin', 32, 32, 2, 3)
         const layer = map.createLayer('Tile Layer 1', tileset, 0, 0)
@@ -35,6 +35,10 @@ export default class TutorialScene extends Phaser.Scene {
         this.fishing_zone = map.createLayer('fishingZone', tileset, 0, 0)
         water.setCollisionBetween(3, 4)
         this.player = new Player({scene:this, x:100, y:150, texture:'fisherman', frame:'fisherman_13', isLocal: true})
+        this.player.expBar.destroy()
+        this.player.levelingGui.destroy()
+        this.player.inventory.addItem({item_id: 'fr_1', name: 'Tutorial Rod', stats: {stats: {fishing_speed: 10}}, quantity: 1, type: 'fishing_rod'})
+        this.player.inventory.coins = {item_id: 'golden_coin', quantity: 0}
         this.player.setUsername("Arthur")
         this.npc = new NPC({scene:this, x:100, y:100, texture:'fisherman', frame:'fisherman_13'})
         this.npc.isInteractive = false
@@ -84,11 +88,6 @@ export default class TutorialScene extends Phaser.Scene {
         })
 
         this.inventoryScene = this.scene.launch('InventoryScene', {scene: this})
-        this.socket.emit('get-inventory')
-        this.socket.on('send-inventory', (inventory) => {
-            this.player.inventory.items = inventory.items
-            this.scene.get('InventoryScene').refresh()
-        })
 
         this.scene.get('TutorialScene').events.on('select-item', (data) => {
             if (data.frame === -1) {
@@ -164,9 +163,7 @@ export default class TutorialScene extends Phaser.Scene {
                             delay: randomDelay,
                             callback: () => {
                                 this.canMove = true
-                                const randomFishType = Phaser.Utils.Array.GetRandom(this.fishTypes)
-                                this.player.inventory.addItem({name: randomFishType, quantity: 1, type: 'fish'})
-                                this.scene.get('InventoryScene').refresh()
+                                this.player.inventory.addItem({contract_type: "ERC-1155", item_id: "salmon", location: "BeginningScene", name: "Salmon", owner: null, quantity: 1, rarity: "common", stackable: true, stats: null, type: "fish", weight: 500})
                             },
                             callbackScope: this,
                             loop: false
@@ -200,7 +197,7 @@ export default class TutorialScene extends Phaser.Scene {
                     }
                     console.log("thats mission5")
                     this.npc.isInteractive = true
-                    if(this.player.inventory.coins > 0 && this.isShopClosed) {
+                    if(this.player.inventory.coins.quantity > 0 && this.isShopClosed) {
                         this.quest++
                         this.started = false
                         console.log("Mission complete 5")
