@@ -78,8 +78,10 @@ export default class TutorialScene extends Phaser.Scene {
         var missionButtonText = this.add.text(900, 500, 'Check mission').setOrigin(0.5, -1).setFontSize(12).setScrollFactor(0, 0)
 
         var skipMission = this.add.image(900, 313, 'button').setInteractive({ pixelPerfect: true }).setScale(0.4).setOrigin(0.5, 0).setScrollFactor(0, 0).on('pointerdown', () => {
-            this.scene.stop()
+            this.scene.stop('InventoryScene')
             this.scene.start('BeginningScene')
+            this.scene.stop()
+            this.socket.off()
         })
         var skipText = this.add.text(900, 465, 'Skip tutorial').setOrigin(0.5, -1).setFontSize(12).setScrollFactor(0, 0)
 
@@ -229,6 +231,7 @@ export default class TutorialScene extends Phaser.Scene {
                         this.scene.stop('InventoryScene')
                         this.scene.start('BeginningScene')
                         this.scene.stop()
+                        this.socket.off()
                         console.log("Mission complete 6")
                     }
                     break
