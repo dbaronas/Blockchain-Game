@@ -84,8 +84,19 @@ const buyItem = async(req, res) => {
 }
 
 const getNFTListings = async(req, res) => {
-    await contract.methods.get721Listings().call({from: contract.defaultAccount}).then((results) => {
-        res.json(results)
+    await contract.methods.get721Listings().call({from: contract.defaultAccount}).then(async (results) => {
+        let listings = []
+        for await (const nft of results) {
+            let obj = {}
+            obj.listingId = nft[0]
+            obj.seller = nft[1]
+            obj.contract = nft[2]
+            obj.tokenId = nft[3]
+            obj.quantity = nft[4]
+            obj.price = nft[5]
+            listings.push(obj)
+        }
+        res.json(listings)
     }).catch((error) => {
         res.json(error)
     })
