@@ -21,17 +21,27 @@ export default class ShopScene extends Phaser.Scene {
         this.socket = this.registry.get('socket')
         var modal = this.add.image(120, 0, 'modal').setScale(2).setOrigin(0, 0)
 
+        var itemsFinal
         const closeButton = this.add.text(1000, 150, 'X', { fill: '#000' }).setScale(2).setInteractive().on('pointerdown', () => {
-        const items = this.playerInventory.items.filter(item => item.item_id !== '')
-        this.socket.emit('player-inventory', { items: items, coins: this.playerInventory.coins })
         console.log(this.playerInventory.items)
+        if(Array.isArray(this.playerInventory.items)) {
+            itemsFinal = this.playerInventory.items.filter(item => item.item_id !== '')
+        }
+        if(this.parentScene.roomName != 'TutorialScene') {
+            this.socket.emit('player-inventory', { items: itemsFinal, coins: this.playerInventory.coins })
+        }
         this.scene.stop('ShopScene')
         this.scene.resume(this.parentScene)
         })
 
         this.input.keyboard.on('keydown-E', () => {
-        const items = this.playerInventory.items.filter(item => item.item_id !== '')
-        this.socket.emit('player-inventory', { items: items, coins: this.playerInventory.coins })
+        console.log(this.playerInventory.items)
+        if(Array.isArray(this.playerInventory.items)) {
+            itemsFinal = this.playerInventory.items.filter(item => item.item_id !== '')
+        }
+        if(this.parentScene.roomName != 'TutorialScene') {
+            this.socket.emit('player-inventory', { items: itemsFinal, coins: this.playerInventory.coins })
+        }
         this.scene.stop('ShopScene')
         this.scene.resume(this.parentScene)
         })
@@ -47,7 +57,7 @@ export default class ShopScene extends Phaser.Scene {
         let fishesToSell = []
         let indexOffset = 0
 
-        if (this.parentScene.roomName === 'BeginningScene') {
+        if (this.parentScene.roomName === 'BeginningScene' || this.parentScene.roomName === 'TutorialScene') {
             fishesToSell = ['salmon', 'bass', 'pike', 'pufferfish']
         } else if (this.parentScene.roomName === 'BeginningScene2') {
             fishesToSell = ['toxic_pike', 'toxic_pufferfish', 'toxic_salmon', 'toxic_bass']
