@@ -103,8 +103,19 @@ const getNFTListings = async(req, res) => {
 }
 
 const getItemListings = async(req, res) => {
-    await contract.methods.get1155Listings().call({from: contract.defaultAccount}).then((results) => {
-        res.json(results)
+    await contract.methods.get1155Listings().call({from: contract.defaultAccount}).then(async (results) => {
+        let listings = []
+        for await (const sft of results) {
+            let obj = {}
+            obj.listingId = sft[0]
+            obj.seller = sft[1]
+            obj.contract = sft[2]
+            obj.tokenId = sft[3]
+            obj.quantity = sft[4]
+            obj.price = sft[5]
+            listings.push(obj)
+        }
+        res.json(listings)
     }).catch((error) => {
         res.json(error)
     })
