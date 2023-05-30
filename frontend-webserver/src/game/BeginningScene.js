@@ -117,7 +117,6 @@ export default class BeginningScene extends Phaser.Scene {
                 this.player.selectedItem.visible = true
             }
             if (data.textureKey === 'rods' && this.player.stats) {
-                console.log(this.player.stats)
                 this.player.stats.find(stat => stat.name === 'fishing_speed').value = data.rodStats
             }
         })
@@ -163,7 +162,6 @@ export default class BeginningScene extends Phaser.Scene {
         } else {
             self.scene.get('chat').setEmit()
         }
-        console.log(self.player.stats)
     }
 
     addOtherPlayers(self, playerInfo) {
@@ -200,10 +198,7 @@ export default class BeginningScene extends Phaser.Scene {
                 const speed = 1 - (this.player.stats.find(stat => stat.name === 'fishing_speed').value / 100)
                 const minDelay = 3000 * speed
                 const maxDelay = 5000 * speed
-                console.log(minDelay)
-                console.log(maxDelay)
                 const randomDelay = Phaser.Math.Between(minDelay, maxDelay)
-                console.log(randomDelay)
                 this.canMove = false
                 this.fishingText = this.add.text(this.player.x - 30, this.player.y - 48, 'Fishing...', {
                     fontSize: '10px',

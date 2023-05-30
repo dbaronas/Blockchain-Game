@@ -122,7 +122,6 @@ export default class ChatScene extends Phaser.Scene {
     setEmit() {
         this.io.on('messageResponse', (message) => {
             let parsed = this.wordWrap(message, 55)
-            console.log(parsed)
             this.chatMessages.push(parsed)
             if (this.chatMessages.length > 100) {
                 this.chatMessages.shift()

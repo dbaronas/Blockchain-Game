@@ -119,7 +119,7 @@ export default class TutorialScene extends Phaser.Scene {
                         this.scene.launch('quest-modal', { scene: this, quest: this.quest })
                         this.started = true
                     }
-                    console.log("thats mission1")
+                    ("thats mission1")
                     if (Phaser.Input.Keyboard.JustDown(this.inputKeys.left)) {
                         this.aButtonClicked = true
                     }
@@ -135,7 +135,6 @@ export default class TutorialScene extends Phaser.Scene {
                     if (this.aButtonClicked && this.wButtonClicked && this.dButtonClicked && this.sButtonClicked) {
                         this.quest++
                         this.started = false
-                        console.log("Mission complete 1")
                     }
                     break
                 case 2:
@@ -144,11 +143,9 @@ export default class TutorialScene extends Phaser.Scene {
                         this.scene.launch('quest-modal', { scene: this, quest: this.quest })
                         this.started = true
                     }
-                    console.log("thats mission2")
                     if (this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0)) {
                         this.quest++
                         this.started = false
-                        console.log("Mission complete 2")
                     }
                     break
                 case 3:
@@ -157,7 +154,6 @@ export default class TutorialScene extends Phaser.Scene {
                         this.scene.launch('quest-modal', { scene: this, quest: this.quest })
                         this.started = true
                     }
-                    console.log("thats mission3")
                     if (this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0) && Phaser.Input.Keyboard.JustDown(this.inputKeys.e) && this.scene.get('InventoryScene').isItemFishingRod()) {
                         const randomDelay = Phaser.Math.Between(1000, 2000)
                         this.canMove = false
@@ -172,7 +168,6 @@ export default class TutorialScene extends Phaser.Scene {
                         })
                         this.quest++
                         this.started = false
-                        console.log("Mission complete 3")
                     }
                     break
                 case 4:
@@ -181,13 +176,11 @@ export default class TutorialScene extends Phaser.Scene {
                         this.scene.launch('quest-modal', { scene: this, quest: this.quest })
                         this.started = true
                     }
-                    console.log("thats mission4")
                     if (Phaser.Input.Keyboard.JustDown(this.inputKeys.i)) {
                         this.iCounter++
                         if (this.iCounter == 2) {
                             this.quest++
                             this.started = false
-                            console.log("Mission complete 4")
                         }
                     }
                     break
@@ -197,16 +190,13 @@ export default class TutorialScene extends Phaser.Scene {
                         this.scene.launch('quest-modal', { scene: this, quest: this.quest })
                         this.started = true
                     }
-                    console.log("thats mission5")
                     this.npc.isInteractive = true
                     if(this.player.inventory.coins.quantity > 0 && this.isShopClosed) {
                         this.quest++
                         this.started = false
-                        console.log("Mission complete 5")
                     }
                     break
                 case 6:
-                    console.log("thats mission6")
                     if(this.started == false) {
                         this.scene.pause()
                         this.scene.launch('quest-modal', { scene: this, quest: this.quest })
@@ -215,11 +205,9 @@ export default class TutorialScene extends Phaser.Scene {
                     if(this.isQuest6Closed) {
                         this.quest++
                         this.started = false
-                        console.log("Mission complete 6")
                     }
                     break
                 case 7:
-                    console.log("thats mission7")
                     if(this.started == false) {
                         this.scene.pause()
                         this.scene.launch('quest-modal', { scene: this, quest: this.quest })
@@ -232,7 +220,6 @@ export default class TutorialScene extends Phaser.Scene {
                         this.scene.start('BeginningScene')
                         this.scene.stop()
                         this.socket.off()
-                        console.log("Mission complete 6")
                     }
                     break
             }

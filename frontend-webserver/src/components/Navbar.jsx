@@ -49,7 +49,7 @@ const Navbar = () => {
           src={toggle ? close : menu}
           alt='menu'
           className='w-[28px] h-[28px] object-contain'
-          onClick={() => { setToggle((prev) => !prev); console.log(toggle) }}
+          onClick={() => { setToggle((prev) => !prev);}}
         />
         <div className={`${toggle ? 'flex sidebar' : 'hidden'} p-6 bg-black-gradient absolute top-20 mx-4 my-2 min-w-[140px] rounded-xl`}>
           <ul className='list-none flex flex-col justify-end items-center flex-1'>

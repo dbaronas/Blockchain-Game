@@ -42,19 +42,16 @@ export default class CatchModal extends Phaser.Scene {
                     resolve(data)
                 })
             })
-            console.log(nonce)
             buttonText.setText('Processing...').setFontSize(20).setOrigin(0.5, -2.3)
             try {
                 const signature = await signMessage({
                     message: `Mint NFT to connected account\n\nto: ${address}\nnonce: ${nonce}`,
                 })
-                console.log(this.randomFishRod)
                 this.socket.emit('mint', { id: this.randomFishRod.item_id, signature: signature})
                 scene.scene.player.inventory.addItem({item_id: this.randomFishRod.item_id, name: this.randomFishRod.name, type: this.randomFishRod.type, contract_type: this.randomFishRod.contract_type, stackable: this.randomFishRod.stackable, stats: this.randomFishRod.stats, rarity: this.randomFishRod.rarity, quantity: 1})
                 this.scene.stop()
                 this.scene.resume(scene.key)
             } catch (error) {
-                console.log(error)
                 text.setText(`Transaction failed!`)
                 buttonText.setText('Close')
                 button.once('pointerdown', () => {

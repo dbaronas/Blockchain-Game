@@ -16,14 +16,11 @@ export default class ShopScene extends Phaser.Scene {
 
     create() {
 
-        console.log(this.playerInventory)
-
         this.socket = this.registry.get('socket')
         var modal = this.add.image(120, 0, 'modal').setScale(2).setOrigin(0, 0)
 
         var itemsFinal
         const closeButton = this.add.text(1000, 150, 'X', { fill: '#000' }).setScale(2).setInteractive().on('pointerdown', () => {
-        console.log(this.playerInventory.items)
         if(Array.isArray(this.playerInventory.items)) {
             itemsFinal = this.playerInventory.items.filter(item => item.item_id !== '')
         }
@@ -35,7 +32,6 @@ export default class ShopScene extends Phaser.Scene {
         })
 
         this.input.keyboard.on('keydown-E', () => {
-        console.log(this.playerInventory.items)
         if(Array.isArray(this.playerInventory.items)) {
             itemsFinal = this.playerInventory.items.filter(item => item.item_id !== '')
         }
