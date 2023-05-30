@@ -161,9 +161,23 @@ export default class TutorialScene extends Phaser.Scene {
                     if (this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0) && Phaser.Input.Keyboard.JustDown(this.inputKeys.e) && this.scene.get('InventoryScene').isItemFishingRod()) {
                         const randomDelay = Phaser.Math.Between(1000, 2000)
                         this.canMove = false
+                        this.fishingText = this.add.text(this.player.x - 30, this.player.y - 48, 'Fishing...', {
+                            fontSize: '10px',
+                            fill: '#000000'
+                        }).setDepth(100).setResolution(5)
+                        this.tweens.add({
+                            targets: this.fishingText,
+                            alpha: 0,
+                            duration: 1000,
+                            ease: 'Power1',
+                            yoyo: true,
+                            repeat: -1
+                        })
+                        this.fishingText.setVisible(true)
                         this.fishingTimer = this.time.addEvent({
                             delay: randomDelay,
                             callback: () => {
+                                this.fishingText.setVisible(false)
                                 this.canMove = true
                                 this.player.inventory.addItem({contract_type: "ERC-1155", item_id: "salmon", location: "BeginningScene", name: "Salmon", owner: null, quantity: 1, rarity: "common", stackable: true, stats: null, type: "fish", weight: 500})
                             },
@@ -235,12 +249,6 @@ export default class TutorialScene extends Phaser.Scene {
                         console.log("Mission complete 6")
                     }
                     break
-            }
-        } else if (!this.canMove && Phaser.Input.Keyboard.JustDown(this.inputKeys.e)) {
-            this.canMove = true
-            if (this.fishingTimer) {
-                this.fishingTimer.remove()
-                this.fishingTimer = null
             }
         }
     }
