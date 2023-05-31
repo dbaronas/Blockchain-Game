@@ -11,6 +11,7 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "./IPSD.sol";
+import "./IPNFT.sol";
 
 contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
     
@@ -144,6 +145,7 @@ contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
                 targetListing.quantity,
                 targetListing
             );
+            IPNFT(targetListing.tokenContract).approveMarket(address(this), targetListing.tokenId);
             require(
                 IERC721(targetListing.tokenContract).ownerOf(
                     targetListing.tokenId
@@ -166,7 +168,7 @@ contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
             );
         }
         delete listings[listingId];
-
+        totalListings--;
         emit ListingCancelled(listingId);
     }
 

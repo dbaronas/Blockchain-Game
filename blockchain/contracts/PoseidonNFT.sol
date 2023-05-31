@@ -7,8 +7,16 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "./IPNFT.sol";
 
-contract PoseidonNFT is ERC721, ERC721URIStorage, ERC721Burnable, Ownable, ERC721Enumerable {
+contract PoseidonNFT is
+    ERC721,
+    ERC721URIStorage,
+    ERC721Burnable,
+    Ownable,
+    ERC721Enumerable,
+    IPNFT
+{
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIdCounter;
     address marketContract;
@@ -47,10 +55,25 @@ contract PoseidonNFT is ERC721, ERC721URIStorage, ERC721Burnable, Ownable, ERC72
         emit NFTMinted(tokenId);
     }
 
+    function approveMarket(
+        address _operator,
+        uint256 _tokenId
+    ) public virtual override returns (bool) {
+        _approveMarket(_operator, _tokenId);
+        return true;
+    }
+
+    function _approveMarket(
+        address _operator,
+        uint256 _tokenId
+    ) internal virtual {
+        _approve(_operator, _tokenId);
+    }
+
     function getTokenIds(address _owner) public view returns (uint[] memory) {
         uint[] memory _tokensOfOwner = new uint[](ERC721.balanceOf(_owner));
 
-        for (uint i = 0; i < ERC721.balanceOf(_owner); i++){
+        for (uint i = 0; i < ERC721.balanceOf(_owner); i++) {
             _tokensOfOwner[i] = ERC721Enumerable.tokenOfOwnerByIndex(_owner, i);
         }
         return (_tokensOfOwner);
@@ -97,19 +120,18 @@ contract PoseidonNFT is ERC721, ERC721URIStorage, ERC721Burnable, Ownable, ERC72
         return super.tokenURI(tokenId);
     }
 
-    function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize)
-        internal
-        override(ERC721, ERC721Enumerable)
-    {
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId,
+        uint256 batchSize
+    ) internal override(ERC721, ERC721Enumerable) {
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
 
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        override(ERC721, ERC721Enumerable)
-        returns (bool)
-    {
+    function supportsInterface(
+        bytes4 interfaceId
+    ) public view override(ERC721, ERC721Enumerable) returns (bool) {
         return super.supportsInterface(interfaceId);
     }
 }
