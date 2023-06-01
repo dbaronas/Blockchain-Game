@@ -40,7 +40,8 @@ const updateListing = async(req, res) => {
     const price = req.body.price
     const quantity = req.body.quantity
 
-    await contract.methods.updateListing(address, listingId, quantity, price).send({from: contract.defaultAccount}).then((results) => {
+    var block = await web3.eth.getBlock("latest")
+    await contract.methods.updateListing(address, listingId, quantity, price).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((results) => {
         res.json(results)
     }).catch((error) => {
         res.json(error)
@@ -51,7 +52,8 @@ const cancelListing = async(req, res) => {
     const address = req.body.address
     const listingId = req.body.listingId
 
-    await contract.methods.cancelListing(address, listingId).send({from: contract.defaultAccount}).then((results) => {
+    var block = await web3.eth.getBlock("latest")
+    await contract.methods.cancelListing(address, listingId).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((results) => {
         res.json(results)
     }).catch((error) => {
         res.json(error)
@@ -134,7 +136,8 @@ const getEarnings = async(req, res) => {
 const withdraw = async(req, res) => {
     const address = req.body.address
 
-    await contract.methods.withdraw(address).send({from: contract.defaultAccount}).then((results) => {
+    var block = await web3.eth.getBlock("latest")
+    await contract.methods.withdraw(address).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((results) => {
         res.json(results)
     }).catch((error) => {
         res.json(error)
