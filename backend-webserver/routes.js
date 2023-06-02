@@ -1,4 +1,5 @@
 const api = require('./app/index')
+const verifyMessage = require('./middleware/verifyMessage')
 
 module.exports = (app) => {
 
@@ -6,7 +7,7 @@ module.exports = (app) => {
 
     //ERC721
     app.post('/api/v1/721/ownerof', api.erc721.ownerOf)
-    app.post('/api/v1/721/mint', api.erc721.mint)
+    app.post('/api/v1/721/mint', verifyMessage, api.erc721.mint)
     app.post('/api/v1/721/getDurability', api.erc721.getTokenDurability)
     app.post('/api/v1/721/updateDurability', api.erc721.updateTokenDurability)
     app.post('/api/v1/721/getMyTokens', api.erc721.getMyTokens)

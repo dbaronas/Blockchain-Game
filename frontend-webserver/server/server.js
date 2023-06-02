@@ -227,7 +227,7 @@ io.on('connection', function (socket) {
             $.ajax({
                 type: "POST",
                 url: `${process.env.BACKEND}/api/v1/721/mint`,
-                data: JSON.stringify({ "address": socket.address, "id": data.id, "name": "name", "durability" : 100, "signature": data.signature  }),
+                data: JSON.stringify({ "address": socket.address, "id": data.id, "name": "name", "durability" : 100, "signature": data.signature, "action" : "mint" }),
                 contentType: "application/json",
                 success: function (result) {
                     console.log(result)
