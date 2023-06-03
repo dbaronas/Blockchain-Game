@@ -1,5 +1,6 @@
 import NPC from "./NPC.js"
 import Player from "./Player.js"
+import Boat from "./Boat.js"
 import items from "./Items.js"
 
 export default class BeginningScene2 extends Phaser.Scene {
@@ -12,11 +13,13 @@ export default class BeginningScene2 extends Phaser.Scene {
         this.playerInventory = data.inventory
         this.playerStats = data.stats
         this.socket = data.socket
+        this.playerNFTs = data.nfts
     }
 
     preload() {
         Player.preload(this)
         NPC.preload(this)
+        Boat.preload(this)
         this.load.atlas('fisherman', 'assets/fisherman/fisherman.png', 'assets/fisherman/fisherman_atlas.json')
         this.load.image('tiles2', 'assets/tileset2.png')
         this.load.tilemapTiledJSON('map', 'assets/map3.json')
@@ -26,7 +29,8 @@ export default class BeginningScene2 extends Phaser.Scene {
             left: Phaser.Input.Keyboard.KeyCodes.A,
             right: Phaser.Input.Keyboard.KeyCodes.D,
             shift: Phaser.Input.Keyboard.KeyCodes.SHIFT,
-            e: Phaser.Input.Keyboard.KeyCodes.E
+            e: Phaser.Input.Keyboard.KeyCodes.E,
+            f: Phaser.Input.Keyboard.KeyCodes.F
         })
     }
 
@@ -39,8 +43,20 @@ export default class BeginningScene2 extends Phaser.Scene {
         var water = map.createLayer('water', tileset, 0, 0)
         this.fishing_zone = map.createLayer('fishingZone', tileset, 0, 0)
         var ground = map.createLayer('ground', tileset, 0, 0)
+        this.boat = new Boat({scene:this, x:670, y:690})
         water.setCollisionBetween(3, 4)
         this.npc = new NPC({scene:this, x:250, y:250, texture:'fisherman', frame:'fisherman_13'})
+
+        this.teleportText = this.add.text(670, 680,'Teleport to the next island (F)',{
+            fontFamily: 'VT323',
+            fontSize: '10px',
+            color: '#fff',
+            stroke: '#000000',
+            strokeThickness: 1,
+            shadow: { color: '#000000', fill: true, blur: 1, stroke: true }
+        }).setOrigin(0.5, 2.2).setResolution(5)
+        this.teleportText.setDepth(2)
+        this.boatOverlapTween = null
 
         this.scene.get('chat').setScene(this)
         var self = this
@@ -122,10 +138,12 @@ export default class BeginningScene2 extends Phaser.Scene {
     }
 
     addPlayer(self, playerInfo) {
-        self.player = new Player({scene:this, x: playerInfo.x, y: playerInfo.y, texture: 'fisherman', frame: 'fisherman_13', isLocal: true})
-        if(this.playerInventory) {
+        self.player = new Player({scene: this, x: playerInfo.x, y: playerInfo.y, texture: 'fisherman', frame: 'fisherman_13', isLocal: true})
+        if(this.playerInventory && this.player.nftsList) {
             this.player.inventory = this.playerInventory
+            this.player.nftsList = this.playerNFTs
             self.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
+            self.socket.emit('player-nfts', { items: this.player.nftsList })
         } else {
             self.socket.emit('get-inventory')
             self.socket.on('send-inventory', (inventory) => {
@@ -133,10 +151,13 @@ export default class BeginningScene2 extends Phaser.Scene {
                 inventory.forEach(item => {
                     if(item.item_id == 'golden_coin') {
                         this.player.inventory.coins = item
+                    } else if (item.type == 'trophy'){
+                        this.player.nftsList.push(item)
                     } else {
                         this.player.inventory.items.push(item)
                     }
                 })
+                self.socket.emit('player-nfts', { items: this.player.nftsList })
                 self.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
                 this.scene.get('InventoryScene').refresh()
                 this.scene.get('InventoryScene').refreshCoins()
@@ -168,6 +189,9 @@ export default class BeginningScene2 extends Phaser.Scene {
         otherPlayer.playerId = playerInfo.playerId
         otherPlayer.animation = playerInfo.animation
         otherPlayer.setUsername(playerInfo.playerUsername)
+        if(otherPlayer.levelingGui) {
+            otherPlayer.levelingGui.destroy()
+        }
         self.otherPlayers.add(otherPlayer)
     }
 
@@ -180,13 +204,35 @@ export default class BeginningScene2 extends Phaser.Scene {
                 this.npc.handleCollision(this.player, this)
             }
 
-            if(this.player.x > 612 && this.player.y > 612){
-                this.player.x = 500
-                this.player.y = 500
-                this.socket.emit('leave-room')
-                this.scene.start('BeginningScene', { inventory: this.player.inventory, stats: this.player.stats, socket: this.socket })
-                this.socket.off()
-                this.scene.stop('BeginningScene2')
+            if (this.boat) {
+                if (this.physics.overlap(this.player, this.boat.circle)) {
+                    this.teleportText.setVisible(true)
+                    if (!this.boatOverlapTween) {
+                        this.boatOverlapTween = this.tweens.add({
+                            targets: this.teleportText,
+                            alpha: 0.4,
+                            duration: 1000,
+                            ease: 'Power1',
+                            yoyo: true,
+                            repeat: -1,
+                        })
+                    }
+                    if (Phaser.Input.Keyboard.JustDown(this.inputKeys.f)) {
+                        this.boatOverlapTween.stop()
+                        this.boatOverlapTween = null
+                        this.socket.emit('leave-room')
+                        this.scene.start('BeginningScene', { inventory: this.player.inventory, stats: this.player.stats, socket: this.socket, nfts: this.player.nftsList })
+                        this.socket.off()
+                        this.scene.stop('BeginningScene2')
+                    }
+                } else {
+                    if (this.boatOverlapTween) {
+                        this.boatOverlapTween.stop()
+                        this.boatOverlapTween = null
+                        this.teleportText.setAlpha(1)
+                    }
+                    this.teleportText.setVisible(false)
+                }
             }
     
             if(this.fishing_zone.hasTileAtWorldXY(this.player.x, this.player.y, null, 0) && Phaser.Input.Keyboard.JustDown(this.inputKeys.e) && this.scene.get('InventoryScene').isItemFishingRod()) {
@@ -195,8 +241,8 @@ export default class BeginningScene2 extends Phaser.Scene {
                 this.player.selectedItem.setVelocity(0)
                 this.player.levelingGui.body.setVelocity(0)
                 const speed = 1 - (this.player.stats.find(stat => stat.name === 'fishing_speed').value / 100)
-                const minDelay = 5000 * speed
-                const maxDelay = 10000 * speed
+                const minDelay = 1000 * speed
+                const maxDelay = 2000 * speed
                 const randomDelay = Phaser.Math.Between(minDelay, maxDelay)
                 this.canMove = false
                 this.fishingText = this.add.text(this.player.x - 30, this.player.y - 48, 'Fishing...', {
@@ -227,10 +273,12 @@ export default class BeginningScene2 extends Phaser.Scene {
                                 self.socket.emit('player-inventory', { items: self.player.inventory.items, coins: self.player.inventory.coins })
                                 self.player.addExp(items[item.item_id].exp)
                                 self.socket.emit('update-stats', self.player.stats)
-                            } else if (item.type === 'fishing_rod') {
+                            } else if (item.type === 'fishing_rod' || item.type === 'trophy') {
                                 self.scene.pause()
-                                self.scene.launch('modal', { randomFishRod: item, scene: self.scene })
-                                self.socket.emit('player-inventory', { items: self.player.inventory.items, coins: self.player.inventory.coins })
+                                self.scene.launch('modal', { randomNFT: item, scene: self.scene, type: item.type })
+                                if (item.type === 'fishing_rod') {
+                                    self.socket.emit('player-inventory', { items: self.player.inventory.items, coins: self.player.inventory.coins })
+                                }
                             }
                         })
                     },
