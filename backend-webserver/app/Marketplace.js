@@ -100,6 +100,7 @@ const getNFTListings = async(req, res) => {
         }
         res.json(listings)
     }).catch((error) => {
+        console.log(error)
         res.json(error)
     })
 }

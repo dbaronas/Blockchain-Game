@@ -22,13 +22,13 @@
 }
 
 .text-gold {
-  color: #e2c000;
+  color: #e3c100;
 }
 .text-gold:hover {
   text-shadow: 0 0 20px #00f7ff;
 }
 .background-gold {
-  background-color: #e2c000;
+  background-color: #e3c100;
 }
 .background-gold:hover {
   background-color: #00f7ff;
@@ -38,7 +38,7 @@ input::placeholder {
   padding: 0.4rem;
 }
 .text-gold2 {
-  color: #e2c000;
+  color: #e3c100;
 }
 
 .text-gradient {
