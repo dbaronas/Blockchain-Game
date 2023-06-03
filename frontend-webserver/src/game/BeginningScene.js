@@ -132,8 +132,10 @@ export default class BeginningScene extends Phaser.Scene {
                 this.player.selectedItem.visible = true
             }
             if (data.textureKey === 'rods' && this.player.stats) {
+                console.log('before select' + this.player.stats.find(stat => stat.name === 'fishing_speed').value)
                 this.player.stats.find(stat => stat.name === 'fishing_speed').value += data.rodStats - this.player.lastRodSpeed
                 this.player.lastRodSpeed = data.rodStats
+                console.log('after select' + this.player.stats.find(stat => stat.name === 'fishing_speed').value)
             }
         })
     }
@@ -166,7 +168,9 @@ export default class BeginningScene extends Phaser.Scene {
                         this.player.inventory.coins = item
                     } else if (item.type == 'trophy'){
                         this.player.nftsList.push(item)
+                        console.log('before: ' + this.player.stats.find(stat => stat.name === 'fishing_speed').value)
                         this.player.stats.find(stat => stat.name === 'fishing_speed').value += item.stats.stats.fishing_speed
+                        console.log('after: ' + this.player.stats.find(stat => stat.name === 'fishing_speed').value)
                     } else {
                         this.player.inventory.items.push(item)
                     }
