@@ -132,13 +132,26 @@ export default class BeginningScene2 extends Phaser.Scene {
                 this.player.selectedItem.visible = true
             }
             if (data.textureKey === 'rods' && this.player.stats) {
-                this.player.stats.find(stat => stat.name === 'fishing_speed').value = data.rodStats
+                this.player.stats.find(stat => stat.name === 'fishing_speed').value += data.rodStats - this.player.lastRodSpeed
+                this.player.lastRodSpeed = data.rodStats
             }
         })
     }
 
     addPlayer(self, playerInfo) {
         self.player = new Player({scene: this, x: playerInfo.x, y: playerInfo.y, texture: 'fisherman', frame: 'fisherman_13', isLocal: true})
+        if(this.playerStats) {
+            this.player.stats = this.playerStats
+            self.socket.emit('player-stats', this.player.stats)
+        } else {
+            self.socket.emit('get-stats')
+            self.socket.on('send-stats', (stats) => {
+                if (stats) {
+                    this.player.stats = stats
+                    self.socket.emit('player-stats', this.player.stats)
+                }
+            })
+        }
         if(this.playerInventory && this.player.nftsList) {
             this.player.inventory = this.playerInventory
             this.player.nftsList = this.playerNFTs
@@ -153,6 +166,7 @@ export default class BeginningScene2 extends Phaser.Scene {
                         this.player.inventory.coins = item
                     } else if (item.type == 'trophy'){
                         this.player.nftsList.push(item)
+                        this.player.stats.find(stat => stat.name === 'fishing_speed').value += item.stats.stats.fishing_speed
                     } else {
                         this.player.inventory.items.push(item)
                     }
@@ -161,18 +175,6 @@ export default class BeginningScene2 extends Phaser.Scene {
                 self.socket.emit('player-inventory', { items: this.player.inventory.items, coins: this.player.inventory.coins })
                 this.scene.get('InventoryScene').refresh()
                 this.scene.get('InventoryScene').refreshCoins()
-            })
-        }
-        if(this.playerStats) {
-            this.player.stats = this.playerStats
-            self.socket.emit('player-stats', this.player.stats)
-        } else {
-            self.socket.emit('get-stats')
-            self.socket.on('send-stats', (stats) => {
-                if (stats) {
-                    this.player.stats = stats
-                    self.socket.emit('player-stats', this.player.stats)
-                }
             })
         }
         self.player.setUsername(playerInfo.playerUsername)

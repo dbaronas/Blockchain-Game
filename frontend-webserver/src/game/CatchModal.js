@@ -61,6 +61,7 @@ export default class CatchModal extends Phaser.Scene {
                     scene.scene.player.inventory.addItem({item_id: this.randomNFT.item_id, name: this.randomNFT.name, type: this.randomNFT.type, contract_type: this.randomNFT.contract_type, stackable: this.randomNFT.stackable, stats: this.randomNFT.stats, rarity: this.randomNFT.rarity, quantity: 1})
                 } else if (this.randomNFT.type === 'trophy') {
                     scene.scene.player.nftsList.push({item_id: this.randomNFT.item_id, name: this.randomNFT.name, type: this.randomNFT.type, contract_type: this.randomNFT.contract_type, stackable: this.randomNFT.stackable, stats: this.randomNFT.stats, rarity: this.randomNFT.rarity, quantity: 1})
+                    scene.scene.player.stats.find(stat => stat.name === 'fishing_speed').value += this.randomNFT.stats.stats.fishing_speed
                     this.socket.emit('player-nfts', { items: self.player.nftsList })
                 }
                 this.scene.stop()
