@@ -20,6 +20,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.scene.cameras.main.zoom = 2
         }
 
+        this.scene = data.scene
         this.inventory = new Inventory()
         this.selectedItem = this.scene.physics.add.sprite(this.x, this.y, 'items', 0)
         this.selectedItem.visible = false
@@ -62,8 +63,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             self.expBar.fillRect(0, 0, barWidth * expPercent, 8)
             self.expText = self.scene.add.text(0, 9, `${exp}/${nextLevelExp} Exp`, { fontSize: '8px', fill: '#fff' }).setResolution(5).setOrigin(0.5)
             self.levelText = self.scene.add.text(-36, 5, `${level}`, { fontSize: '8px', fill: '#fff' }).setResolution(5)
-            self.levelingGui.add([self.expText, self.levelText, self.expBar])
+            if (isLocal) {
+                self.levelingGui.add([self.expText, self.levelText, self.expBar])
+            }
         })
+
+        this.nftsList = []
     }
 
     static preload(scene) {
@@ -71,6 +76,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         scene.load.animation('fisherman_animation', 'assets/fisherman/fisherman_anim.json')
         scene.load.spritesheet('items', 'assets/items.png', {frameWidth: 32, frameHeight: 32})
         scene.load.spritesheet('rods', 'assets/fishing_rods.png', {frameWidth: 32, frameHeight: 32})
+        scene.load.spritesheet('nfts', 'assets/nfts.png', {frameWidth: 256, frameHeight: 256})
     }
 
     get velocity() {

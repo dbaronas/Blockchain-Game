@@ -112,6 +112,10 @@ io.on('connection', function (socket) {
                 const item = socket.inventory.items[key]
                 inventory.push(item)
             }
+            for(const key of Object.keys(socket.nfts.items)) {
+                const item = socket.nfts.items[key]
+                inventory.push(item)
+            }
             let data = {
                 island: socket.island,
                 inventory: inventory,
@@ -169,13 +173,17 @@ io.on('connection', function (socket) {
         socket.removeAllListeners('message')
         socket.on('message', (data) => {
             data = socket.username + ': ' + filter.clean(data)
-            console.log(data)
             io.emit('messageResponse', data);
         })
 
         socket.removeAllListeners('player-inventory')
         socket.on('player-inventory', (inventory) => {
             socket.inventory = inventory
+        })
+
+        socket.removeAllListeners('player-nfts')
+        socket.on('player-nfts', (nfts) => {
+            socket.nfts = nfts
         })
 
         socket.removeAllListeners('get-inventory')
@@ -256,7 +264,6 @@ io.on('connection', function (socket) {
 
     socket.on('get-inventory', () => {
         socket.emit('send-inventory', socket.inventory)
-        console.log(socket.inventory)
     })
 
     socket.on('player-stats', (stats) => {

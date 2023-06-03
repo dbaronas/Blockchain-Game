@@ -119,7 +119,6 @@ export default class TutorialScene extends Phaser.Scene {
                         this.scene.launch('quest-modal', { scene: this, quest: this.quest })
                         this.started = true
                     }
-                    ("thats mission1")
                     if (Phaser.Input.Keyboard.JustDown(this.inputKeys.left)) {
                         this.aButtonClicked = true
                     }

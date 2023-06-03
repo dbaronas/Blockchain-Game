@@ -8,6 +8,7 @@ import ShopScene from "./ShopScene.js"
 import ChatScene from "./ChatScene.js"
 import MainMenu from "./MainMenu.js"
 import QuestModal from "./QuestModal.js"
+import NFTsDisplay from "./NFTsDisplay.js"
 
 let game = null
 
@@ -28,7 +29,8 @@ export const getGameInstance = () => {
         QuestModal,
         InventoryScene,
         ShopScene,
-        ChatScene
+        ChatScene,
+        NFTsDisplay
       ],
       dom: {
         createContainer: true

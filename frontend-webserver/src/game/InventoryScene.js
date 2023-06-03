@@ -13,10 +13,15 @@ export default class InventoryScene extends Phaser.Scene {
         this.selectedItemIndex = 0
     }
 
+    preload() {
+        this.load.image('button', 'assets/btn.png')
+    }
+
     init(data) {
         let { scene } = data
         this.scene = scene
         this.inventory = scene.player.inventory
+        this.nftsList = scene.player.nftsList
         this.maxColumns = this.inventory.maxColumns
         this.maxRows = this.inventory.maxRows
     }
@@ -150,5 +155,14 @@ export default class InventoryScene extends Phaser.Scene {
         })
         this.refresh()
         this.refreshCoins()
+
+        if(this.scene !== 'TutorialScene') {
+            var nftsButton = this.add.image(1170, 420, 'button').setInteractive({ pixelPerfect: true }).setScale(0.6).setOrigin(0.5, 0).setScrollFactor(0, 0).on('pointerdown', () => {
+                this.scene.scene.launch('NFTsDisplay', { scene: this.scene, nfts: this.nftsList })
+                this.scene.scene.pause(this)
+                this.scene.scene.pause()
+            })
+            var text = this.add.text(1170, 708, 'Check NFTs').setOrigin(0.5, 2).setFontSize(20)
+        }
     }
 }
