@@ -242,15 +242,15 @@ export default class BeginningScene extends Phaser.Scene {
                 this.player.username.body.setVelocity(0)
                 this.player.selectedItem.setVelocity(0)
                 this.player.levelingGui.body.setVelocity(0)
-                const speed = 1 - (this.player.stats.find(stat => stat.name === 'fishing_speed').value / 100)
+                const speed = 1 - (this.player.stats.find(stat => stat.stat_id === 3).value / 100)
                 const minDelay = 1000 * speed
                 const maxDelay = 2000 * speed
                 const randomDelay = Phaser.Math.Between(minDelay, maxDelay)
-                console.log('player: ' + this.player.stats)
+                console.log('player: ' + JSON.stringify(this.player.stats))
                 console.log('min: ' + minDelay)
                 console.log('max: ' + maxDelay)
                 console.log('delay: ' + randomDelay)
-                console.log('speed stat:' + this.player.stats.find(stat => stat.name === 'fishing_speed').value)
+                console.log('speed stat:' + this.player.stats.find(stat => stat.stat_id === 3).value)
                 console.log('speed:' + speed)
                 this.canMove = false
                 this.fishingText = this.add.text(this.player.x - 30, this.player.y - 48, 'Fishing...', {
