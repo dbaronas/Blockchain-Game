@@ -68,6 +68,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             }
         })
 
+        this.lastRodSpeed = 0
         this.nftsList = []
     }
 

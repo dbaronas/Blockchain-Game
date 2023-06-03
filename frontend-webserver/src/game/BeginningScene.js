@@ -132,10 +132,8 @@ export default class BeginningScene extends Phaser.Scene {
                 this.player.selectedItem.visible = true
             }
             if (data.textureKey === 'rods' && this.player.stats) {
-                console.log('before select' + this.player.stats.find(stat => stat.name === 'fishing_speed').value)
                 this.player.stats.find(stat => stat.name === 'fishing_speed').value += data.rodStats - this.player.lastRodSpeed
                 this.player.lastRodSpeed = data.rodStats
-                console.log('after select' + this.player.stats.find(stat => stat.name === 'fishing_speed').value)
             }
         })
     }
@@ -168,9 +166,7 @@ export default class BeginningScene extends Phaser.Scene {
                         this.player.inventory.coins = item
                     } else if (item.type == 'trophy'){
                         this.player.nftsList.push(item)
-                        console.log('before: ' + this.player.stats.find(stat => stat.name === 'fishing_speed').value)
                         this.player.stats.find(stat => stat.name === 'fishing_speed').value += item.stats.stats.fishing_speed
-                        console.log('after: ' + this.player.stats.find(stat => stat.name === 'fishing_speed').value)
                     } else {
                         this.player.inventory.items.push(item)
                     }
@@ -246,16 +242,10 @@ export default class BeginningScene extends Phaser.Scene {
                 this.player.username.body.setVelocity(0)
                 this.player.selectedItem.setVelocity(0)
                 this.player.levelingGui.body.setVelocity(0)
-                const speed = 1 - (this.player.stats.find(stat => stat.stat_id === 3).value / 100)
+                const speed = 1 - (this.player.stats.find(stat => stat.name === 'fishing_speed').value / 100)
                 const minDelay = 1000 * speed
                 const maxDelay = 2000 * speed
                 const randomDelay = Phaser.Math.Between(minDelay, maxDelay)
-                console.log('player: ' + JSON.stringify(this.player.stats))
-                console.log('min: ' + minDelay)
-                console.log('max: ' + maxDelay)
-                console.log('delay: ' + randomDelay)
-                console.log('speed stat:' + this.player.stats.find(stat => stat.stat_id === 3).value)
-                console.log('speed:' + speed)
                 this.canMove = false
                 this.fishingText = this.add.text(this.player.x - 30, this.player.y - 48, 'Fishing...', {
                     fontSize: '10px',
