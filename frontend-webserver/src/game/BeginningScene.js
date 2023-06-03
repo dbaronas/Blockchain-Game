@@ -246,7 +246,7 @@ export default class BeginningScene extends Phaser.Scene {
                 const minDelay = 1000 * speed
                 const maxDelay = 2000 * speed
                 const randomDelay = Phaser.Math.Between(minDelay, maxDelay)
-                console.log('player: ' + JSON.stringify(this.player))
+                console.log('player: ' + this.player.stats)
                 console.log('min: ' + minDelay)
                 console.log('max: ' + maxDelay)
                 console.log('delay: ' + randomDelay)
