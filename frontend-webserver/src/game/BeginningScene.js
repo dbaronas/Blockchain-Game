@@ -246,6 +246,11 @@ export default class BeginningScene extends Phaser.Scene {
                 const minDelay = 1000 * speed
                 const maxDelay = 2000 * speed
                 const randomDelay = Phaser.Math.Between(minDelay, maxDelay)
+                console.log('min: ' + minDelay)
+                console.log('max: ' + maxDelay)
+                console.log('delay: ' + randomDelay)
+                console.log('speed stat:' + this.player.stats.find(stat => stat.name === 'fishing_speed').value)
+                console.log('speed:' + speed)
                 this.canMove = false
                 this.fishingText = this.add.text(this.player.x - 30, this.player.y - 48, 'Fishing...', {
                     fontSize: '10px',
