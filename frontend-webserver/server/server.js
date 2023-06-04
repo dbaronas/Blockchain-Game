@@ -116,6 +116,7 @@ io.on('connection', function (socket) {
                 const item = socket.nfts.items[key]
                 inventory.push(item)
             }
+            socket.stats.find(stat => stat.name === 'fishing_speed').value = 0
             let data = {
                 island: socket.island,
                 inventory: inventory,

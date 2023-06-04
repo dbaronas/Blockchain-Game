@@ -142,6 +142,7 @@ export default class BeginningScene extends Phaser.Scene {
         self.player = new Player({scene: this, x: playerInfo.x, y: playerInfo.y, texture: 'fisherman', frame: 'fisherman_13', isLocal: true})
         if(this.playerStats) {
             this.player.stats = this.playerStats
+            this.player.stats.find(stat => stat.name === 'fishing_speed').value = 0
             self.socket.emit('player-stats', this.player.stats)
         } else {
             self.socket.emit('get-stats')
