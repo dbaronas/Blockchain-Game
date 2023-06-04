@@ -70,7 +70,7 @@ const MyTokenDetails = () => {
           )}
         </div>
         {isOwner && (
-          <button className="w-1/2 background-gold text-white font-bold py-2 px-4 rounded" onClick={handleListNFTClick}>
+          <button className="w-1/3 background-gold text-white font-bold py-2 px-4 rounded" onClick={handleListNFTClick}>
             Sell
           </button>
         )}
