@@ -43,7 +43,7 @@ const RegisterPopup = ({ onSubmit, currentAddress }) => {
     event.preventDefault()
     const username = document.getElementById("username").value
     const data = { 
-      island: 'BeginningScene',
+      island: 'TutorialScene',
       inventory: {
         coins: 0,
         items: [{name: 'fr_1', quantity: 1}]
