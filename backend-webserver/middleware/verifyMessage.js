@@ -15,19 +15,19 @@ const verifyMessage = async (req, res, next) => {
                 var message = `Mint NFT to connected account\n\nto: ${address}\nnonce: ${user.nonce}`
                 break
             case 'sell':
-                var message = ``
+                var message = `Sell NFT with connected account: ${address}\nnonce: ${user.nonce}`
                 break
             case 'buy':
-                var message = ``
+                var message = `Buy NFT to connected account: ${address}\nnonce: ${user.nonce}`
                 break
             case 'update':
-                var message = ``
+                var message = `Update NFT listing price of connected account: ${address}\nnonce: ${user.nonce}`
                 break
             case 'cancel':
-                var message = ``
+                var message = `Cancel NFT listing of connected account: ${address}\nnonce: ${user.nonce}`
                 break
             case 'withdraw':
-                var message = ``
+                var message = `Withdraw earnings to connected account: ${address}\nnonce: ${user.nonce}`
                 break
                     
         }

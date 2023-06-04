@@ -15,16 +15,16 @@ module.exports = (app) => {
     //ERC1155
 
     //MARKETPLACE
-    app.post('/api/v1/marketplace/createNFTListing', api.marketplace.createNFTListing)
+    app.post('/api/v1/marketplace/createNFTListing', verifyMessage, api.marketplace.createNFTListing)
     app.post('/api/v1/marketplace/createItemListing', api.marketplace.createItemListing)
-    app.post('/api/v1/marketplace/updateListing', api.marketplace.updateListing)
-    app.post('/api/v1/marketplace/cancelListing', api.marketplace.cancelListing)
-    app.post('/api/v1/marketplace/buyNFT', api.marketplace.buyNFT)
+    app.post('/api/v1/marketplace/updateListing', verifyMessage, api.marketplace.updateListing)
+    app.post('/api/v1/marketplace/cancelListing', verifyMessage, api.marketplace.cancelListing)
+    app.post('/api/v1/marketplace/buyNFT', verifyMessage, api.marketplace.buyNFT)
     app.post('/api/v1/marketplace/buyItem', api.marketplace.buyItem)
     app.get('/api/v1/marketplace/NFTListings', api.marketplace.getNFTListings)
     app.get('/api/v1/marketplace/ItemListings', api.marketplace.getItemListings)
     app.post('/api/v1/marketplace/earnings', api.marketplace.getEarnings)
-    app.post('/api/v1/marketplace/withdraw', api.marketplace.withdraw)
+    app.post('/api/v1/marketplace/withdraw', verifyMessage, api.marketplace.withdraw)
     app.post('/test', api.marketplace.checkTransactionStatus)
 
     //DATABASE
