@@ -4,9 +4,10 @@ const web3 = new Web3(new Web3.providers.HttpProvider(process.env.BLOCKCHAIN_RPC
 const Contract = require('web3-eth-contract')
 Contract.setProvider(new Web3.providers.HttpProvider(process.env.BLOCKCHAIN_RPC))
 const abi = require('../ABI/PoseidonMarket.json').abi
+const nft_abi = require('../ABI/PoseidonNFT.json').abi
 const contract = new Contract(abi, process.env.MARKETPLACE)
+const nft = new Contract(nft_abi, process.env.ERC721)
 contract.defaultAccount = process.env.OWNER
-const nft = require('./ERC721')
 const db = require('../models/index')
 
 const createNFTListing = async(req, res) => {
@@ -14,11 +15,15 @@ const createNFTListing = async(req, res) => {
     const tokenId = req.body.tokenId
     const price = req.body.price
 
+    let itemId = null
+
     var block = await web3.eth.getBlock("latest")
     await contract.methods.createListing(address, process.env.ERC721, tokenId, 1, price).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then(async (results) => {
-        const { itemId } = await nft.tokenURI(tokenId)
+        await nft.methods.tokenURI(tokenId).call().then((results) => {
+            itemId = results.itemId
+        })
         await db.Inventory.destroy({ where: { wallet_address: address, item_id: itemId} })
-        res.json(results)
+        res.send(results)
     }).catch((error) => {
         res.json(error)
     })
@@ -58,8 +63,11 @@ const cancelListing = async(req, res) => {
 
     var block = await web3.eth.getBlock("latest")
     await contract.methods.cancelListing(address, listingId).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then(async (results) => {
-        const listings = getNFTListings()
+        let listings = null
         let tokenId = null
+        await contract.methods.get721Listings().call().then((results) => {
+            listings = results
+        })
         for await (const listing of listings) {
             if(listing.listingId == listingId){
                 tokenId = listing.tokenId
@@ -83,8 +91,11 @@ const buyNFT = async(req, res) => {
 
     var block = await web3.eth.getBlock("latest")
     await contract.methods.buy(address, listingId, 1).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then(async (results) => {
-        const listings = getNFTListings()
+        let listings = null
         let tokenId = null
+        await contract.methods.get721Listings().call().then((results) => {
+            listings = results
+        })
         for await (const listing of listings) {
             if(listing.listingId == listingId){
                 tokenId = listing.tokenId
