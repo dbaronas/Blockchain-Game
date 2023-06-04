@@ -173,7 +173,7 @@ contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
             );
         }
         uint256 lastIndex = totalListings - 1;
-        if (target.listingId != lastIndex) {
+        if (targetListing.listingId != lastIndex) {
             Listing storage lastListing = listings[lastIndex];
             listings[targetListing.listingId] = lastListing;
             lastListing.listingId = targetListing.listingId;
@@ -251,7 +251,7 @@ contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
             );
         } else {
             uint256 lastIndex = totalListings - 1;
-            if (target.listingId != lastIndex) {
+            if (targetListing.listingId != lastIndex) {
                 Listing storage lastListing = listings[lastIndex];
                 listings[targetListing.listingId] = lastListing;
                 lastListing.listingId = targetListing.listingId;
