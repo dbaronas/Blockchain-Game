@@ -17,7 +17,7 @@ const UpdatePricePopup = ({
     onClose()
   }
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = (event) => {
     event.preventDefault()
     const price = document.getElementById("price").value
     console.log(price)
@@ -55,7 +55,6 @@ const UpdatePricePopup = ({
         price: Number(price),
         quantity: parseInt(quantity),
       }
-      console.log(requestedData)
       fetch("http://193.219.91.103:6172/api/v1/marketplace/updateListing", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -63,7 +62,7 @@ const UpdatePricePopup = ({
       })
         .then((response) => response.json())
         .then((receipt) => {
-          if (receipt.transactionHash) {
+          if (receipt) {
             if (isMarket) {
               navigateTo("/marketplace")
             } else {

@@ -11,7 +11,7 @@ const PricePopup = ({ onClose, tokenId, walletAddress }) => {
     onClose()
   }
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = (event) => {
     event.preventDefault()
     const price = document.getElementById("price").value
     console.log(price)
@@ -46,7 +46,6 @@ const PricePopup = ({ onClose, tokenId, walletAddress }) => {
         tokenId: parseInt(tokenId),
         price: Number(price),
       }
-      console.log(requestedData)
       fetch("http://193.219.91.103:6172/api/v1/marketplace/createNFTListing", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -56,7 +55,7 @@ const PricePopup = ({ onClose, tokenId, walletAddress }) => {
         .then((receipt) => {
           console.log(receipt)
           if (receipt) {
-            navigateTo("/marketplace/mylistings")
+            navigateTo("/marketplace/mynfts")
             // notifaction alert
           }
         })

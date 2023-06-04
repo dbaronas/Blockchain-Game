@@ -156,7 +156,7 @@ export default class InventoryScene extends Phaser.Scene {
         this.refresh()
         this.refreshCoins()
 
-        if(this.scene !== 'TutorialScene') {
+        if(this.scene.roomName !== 'TutorialScene') {
             var nftsButton = this.add.image(1170, 420, 'button').setInteractive({ pixelPerfect: true }).setScale(0.6).setOrigin(0.5, 0).setScrollFactor(0, 0).on('pointerdown', () => {
                 this.scene.scene.launch('NFTsDisplay', { scene: this.scene, nfts: this.nftsList })
                 this.scene.scene.pause(this)
