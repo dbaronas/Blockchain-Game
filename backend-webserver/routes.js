@@ -4,6 +4,7 @@ const verifyMessage = require('./middleware/verifyMessage')
 module.exports = (app) => {
 
     //ERC20
+    app.post('/api/v1/20/PSDbalance', api.erc20.psdBalance)
 
     //ERC721
     app.post('/api/v1/721/ownerof', api.erc721.ownerOf)
