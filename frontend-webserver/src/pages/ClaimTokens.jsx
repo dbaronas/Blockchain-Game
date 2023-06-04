@@ -16,7 +16,8 @@ const ClaimTokens = () => {
       .then((response) => response.json())
       .then((earnings) => {
         console.log(earnings)
-        setEarnings(Number(earnings))
+        const earningInPSD = (Number(earnings) / 10 ** 18) * 0.97
+        setEarnings(earningInPSD)
       })
       .catch((err) => console.log(err))
   }
@@ -49,7 +50,9 @@ const ClaimTokens = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
+          if(data.transactionHash) {
+            setEarnings(0)
+          }
         })
         .catch((err) => console.log(err))
     } catch (err) {
