@@ -188,6 +188,7 @@ contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
                 targetListing.quantity,
                 targetListing
             );
+            IPNFT(targetListing.tokenContract).approveMarket(address(this), targetListing.tokenId);
             require(
                 IERC721(targetListing.tokenContract).ownerOf(
                     targetListing.tokenId

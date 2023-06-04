@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "blockchain": "npx ganache -d -a 1 --chain.chainId 6888 --db ./db --gasPrice 0x5208 -h 0.0.0.0",
+    "blockchain": "npx ganache -d -a 1 --chain.chainId 6888 --db ./db -g 0x7530 -h 0.0.0.0",
     "start": "pm2 start npm -- blockchain"
   },
   "keywords": [],
