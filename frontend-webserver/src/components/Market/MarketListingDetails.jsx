@@ -91,7 +91,6 @@ const MyListingDetails = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestedData),
       })
-      console.log(requestedData)
         .then((response) => response.json())
         .then((receipt) => {
           if (receipt) {
@@ -182,7 +181,7 @@ const MyListingDetails = () => {
           </div>
         ) : (
           <button
-            className="w-1/2 background-gold text-white font-bold py-2 px-4 rounded"
+            className="w-1/3 background-gold text-white font-bold py-2 px-4 rounded"
             onClick={buyNFT}
           >
             Buy

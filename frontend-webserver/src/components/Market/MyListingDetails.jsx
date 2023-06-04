@@ -3,6 +3,7 @@ import { MarketContext } from "./MarketContext"
 import { useNavigate } from "react-router-dom"
 import { useAccount } from "wagmi"
 import UpdatePricePopup from "./UpdatePricePopup"
+import { signMessage } from "@wagmi/core"
 
 const MyListingDetails = () => {
   const { selectedCard } = useContext(MarketContext)
@@ -62,8 +63,13 @@ const MyListingDetails = () => {
     try {
       const nonce = await getNonce()
       console.log(nonce)
+      const signature = await signMessage({
+        message: `Cancel NFT listing of connected account: ${walletAddress}\nnonce: ${nonce}`,
+      })
       const requestedData = {
+        signature: signature,
         address: walletAddress.toString(),
+        action: 'cancel',
         listingId: parseInt(listingId),
       }
       fetch("http://193.219.91.103:6172/api/v1/marketplace/cancelListing", {
@@ -73,8 +79,8 @@ const MyListingDetails = () => {
       })
         .then((response) => response.json())
         .then((receipt) => {
-          if (receipt.transactionHash) {
-            navigateTo("/marketplace")
+          if (receipt) {
+            navigateTo("/marketplace/mylistings")
             // notifaction alert
           }
         })
