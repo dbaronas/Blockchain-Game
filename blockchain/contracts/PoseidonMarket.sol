@@ -14,7 +14,6 @@ import "./IPSD.sol";
 import "./IPNFT.sol";
 
 contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
-    
     function onERC721Received(
         address,
         address,
@@ -131,7 +130,10 @@ contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
         emit ListingUpdated(listingId, quantity, price);
     }
 
-    function cancelListing(address _wallet, uint256 listingId) public nonReentrant {
+    function cancelListing(
+        address _wallet,
+        uint256 listingId
+    ) public nonReentrant {
         Listing memory targetListing = listings[listingId];
         require(
             targetListing.seller == _wallet,
@@ -145,7 +147,10 @@ contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
                 targetListing.quantity,
                 targetListing
             );
-            IPNFT(targetListing.tokenContract).approveMarket(address(this), targetListing.tokenId);
+            IPNFT(targetListing.tokenContract).approveMarket(
+                address(this),
+                targetListing.tokenId
+            );
             require(
                 IERC721(targetListing.tokenContract).ownerOf(
                     targetListing.tokenId
@@ -167,12 +172,23 @@ contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
                 "Failed to return ERC1155 tokens"
             );
         }
-        delete listings[listingId];
+        uint256 lastIndex = totalListings - 1;
+        if (target.listingId != lastIndex) {
+            Listing storage lastListing = listings[lastIndex];
+            listings[targetListing.listingId] = lastListing;
+            lastListing.listingId = target.listingId;
+        }
+
+        delete listings[lastIndex];
         totalListings--;
         emit ListingCancelled(listingId);
     }
 
-    function buy(address _wallet, uint256 listingId, uint256 quantity) public nonReentrant {
+    function buy(
+        address _wallet,
+        uint256 listingId,
+        uint256 quantity
+    ) public nonReentrant {
         Listing memory targetListing = listings[listingId];
 
         require(targetListing.seller != address(0), "Sale does not exist");
@@ -188,7 +204,10 @@ contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
                 targetListing.quantity,
                 targetListing
             );
-            IPNFT(targetListing.tokenContract).approveMarket(address(this), targetListing.tokenId);
+            IPNFT(targetListing.tokenContract).approveMarket(
+                address(this),
+                targetListing.tokenId
+            );
             require(
                 IERC721(targetListing.tokenContract).ownerOf(
                     targetListing.tokenId
@@ -211,7 +230,11 @@ contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
             );
         }
 
-        IPSD(coinContract).approveMarket(_wallet, address(this), targetListing.price * 10 ** 18);
+        IPSD(coinContract).approveMarket(
+            _wallet,
+            address(this),
+            targetListing.price * 10 ** 18
+        );
         IERC20(coinContract).transferFrom(
             _wallet,
             address(this),
@@ -227,7 +250,14 @@ contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
                 targetListing.price
             );
         } else {
-            delete listings[listingId];
+            uint256 lastIndex = totalListings - 1;
+            if (target.listingId != lastIndex) {
+                Listing storage lastListing = listings[lastIndex];
+                listings[targetListing.listingId] = lastListing;
+                lastListing.listingId = target.listingId;
+            }
+
+            delete listings[lastIndex];
             totalListings--;
             emit ListingSold(listingId, _wallet);
         }
@@ -253,7 +283,7 @@ contract PoseidonMarket is ERC1155, Ownable, IERC721Receiver, ReentrancyGuard {
         return result;
     }
 
-        function get1155Listings() public view returns (Listing[] memory) {
+    function get1155Listings() public view returns (Listing[] memory) {
         Listing[] memory _listings = new Listing[](totalListings);
         uint256 count = 0;
 
