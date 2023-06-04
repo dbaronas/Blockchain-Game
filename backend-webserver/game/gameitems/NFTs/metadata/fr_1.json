@@ -2,6 +2,7 @@
     "name": "Beginner's Fishing Rod",
     "description": "Fishing rod used by beginner fisherman.",
     "image": "http://193.219.91.103:6172/gameitems/NFTs/item/fr_1.png",
+    "itemId": "fr_1",
     "rarity": "common",
     "stats": {
         "fishing_speed": 5,

@@ -2,6 +2,7 @@
     "name": "Metal Fishing Rod",
     "description": "Standard fishing rod used by ameteur fishermen.",
     "image": "http://193.219.91.103:6172/gameitems/NFTs/item/fr_2.png",
+    "itemId": "fr_2",
     "rarity": "uncommon",
     "stats": {
         "fishing_speed": 7,

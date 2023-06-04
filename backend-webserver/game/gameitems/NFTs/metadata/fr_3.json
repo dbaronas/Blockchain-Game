@@ -2,6 +2,7 @@
     "name": "Obsidian Fishing Rod",
     "description": "Legendary fishing rod forged by the ancient fisherman named Arthur. Myth says that the rod possesses power of the sea beast called Jörmungandr.",
     "image": "http://193.219.91.103:6172/gameitems/NFTs/item/fr_3.png",
+    "itemId": "fr_3",
     "rarity": "legendary",
     "stats": {
         "fishing_speed": 20,
