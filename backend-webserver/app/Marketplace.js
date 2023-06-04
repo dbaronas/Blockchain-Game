@@ -69,21 +69,27 @@ const cancelListing = async(req, res) => {
     var block = await web3.eth.getBlock("latest")
     await contract.methods.cancelListing(address, listingId).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then(async (results) => {
         let listings = null
-        let tokenId = null
+        let targetListing
         await contract.methods.get721Listings().call().then((results) => {
             listings = results
         })
         for await (const listing of listings) {
             if(listing.listingId == listingId){
-                tokenId = listing.tokenId
+                targetListing = listing.tokenId
                 break
             }
         }
-        await nft.methods.tokenURI(tokenId).call().then(async (results) => {
+        await nft.methods.tokenURI(targetListing.tokenId).call().then(async (results) => {
             const uri = results.replace('193.219.91.103:6172', '127.0.0.1:3000')
             const response = await fetch(uri)
             const parsedResponse = await response.json()
-            itemId = parsedResponse.itemId
+            let itemId = parsedResponse.itemId
+
+            await db.Inventory.create({
+                wallet_address: address,
+                item_id: itemId,
+                quantity: targetListing.quantity
+            })
         }).catch((error) => {
             return res.json(error)
         })
@@ -114,7 +120,13 @@ const buyNFT = async(req, res) => {
             const uri = results.replace('193.219.91.103:6172', '127.0.0.1:3000')
             const response = await fetch(uri)
             const parsedResponse = await response.json()
-            itemId = parsedResponse.itemId
+            let itemId = parsedResponse.itemId
+
+            await db.Inventory.create({
+                wallet_address: address,
+                item_id: itemId,
+                quantity: 1
+            })
         }).catch((error) => {
             return res.json(error)
         })
