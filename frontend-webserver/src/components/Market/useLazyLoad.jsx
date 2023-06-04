@@ -1,74 +1,45 @@
-import { useEffect, useReducer, useCallback } from "react"
-import debounce from "lodash/debounce"
+import { useEffect, useRef, useState } from "react"
 
-const INTERSECTION_THRESHOLD = 5
-const LOAD_DELAY_MS = 300
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "set": {
-      return {
-        ...state,
-        ...action.payload
-      }
-    }
-    case "onGrabData": {
-      return {
-        ...state,
-        loading: false,
-        data: [...state.data, ...action.payload.data],
-        currentPage: state.currentPage + 1
-      }
-    }
-    default:
-      return state
-  }
-}
-
-const useLazyLoad = ({ triggerRef, onGrabData, options }) => {
-  const [state, dispatch] = useReducer(reducer, {
-    loading: false,
-    currentPage: 1,
-    data: []
-  })
-
-  const _handleEntry = async (entry) => {
-    const boundingRect = entry.boundingClientRect;
-    const intersectionRect = entry.intersectionRect;
-
-    if (
-      !state.loading &&
-      entry.isIntersecting &&
-      intersectionRect.bottom - boundingRect.bottom <= INTERSECTION_THRESHOLD
-    ) {
-      dispatch({ type: "set", payload: { loading: true } })
-      const data = await onGrabData(state.currentPage);
-      dispatch({ type: "onGrabData", payload: { data } })
-    }
-  }
-  const handleEntry = debounce(_handleEntry, LOAD_DELAY_MS)
-
-  const onIntersect = useCallback(
-    (entries) => {
-      handleEntry(entries[0])
-    },
-    [handleEntry]
-  );
+const useLazyLoad = ({ triggerRef, onGrabData }) => {
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const observer = useRef(null)
 
   useEffect(() => {
+    const loadMore = async () => {
+      // Check if data is already being loaded
+      if (loading) return 
+      setLoading(true)
+      const newData = await onGrabData(currentPage)
+      setData((prevData) => [...prevData, ...newData])
+      setLoading(false)
+      setCurrentPage((prevPage) => prevPage + 1)
+    }
+    
+
+    observer.current = new IntersectionObserver(
+      (entries) => {
+        const target = entries[0]
+        if (target.isIntersecting) {
+          loadMore()
+        }
+      },
+      { threshold: 0.1 }
+    )
+
     if (triggerRef.current) {
-      const container = triggerRef.current;
-      const observer = new IntersectionObserver(onIntersect, options)
+      observer.current.observe(triggerRef.current)
+    }
 
-      observer.observe(container)
-
-      return () => {
-        observer.disconnect()
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect()
       }
     }
-  }, [triggerRef, onIntersect, options])
+  }, [triggerRef, onGrabData, currentPage])
 
-  return state
+  return { data, loading }
 }
 
 export default useLazyLoad

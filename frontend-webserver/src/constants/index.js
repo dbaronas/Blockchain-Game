@@ -21,11 +21,21 @@ export const navLinks = [
     title: "Mint NFT",
     link: '/mint'
   },
-  // {
-  //   id: "connect_wallet",
-  //   title: "Connect Wallet",
-  //   link: '/connectwallet'
-  // }
+  {
+    id: "my_nfts",
+    title: "My NFTs",
+    link: '/marketplace/mynfts'
+  },
+  {
+    id: "my_listings",
+    title: "My Listings",
+    link: '/marketplace/mylistings'
+  },
+  {
+    id: "claim_tokens",
+    title: "Claim tokens",
+    link: '/marketplace/claimtokens'
+  }
 ];
 
 export const features = [

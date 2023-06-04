@@ -20,25 +20,45 @@
 * {
   scroll-behavior: smooth;
 }
-
+.dropdown:hover .dropdown-content {
+  @apply block;
+}
 .text-gold {
-  color: #e3c100;
+  color: #e2c000;
+}
+.text-gold3 {
+  color: #f5c31f;
 }
 .text-gold:hover {
   text-shadow: 0 0 20px #00f7ff;
 }
 .background-gold {
-  background-color: #e3c100;
+  background-color: #e2c000;
+}
+.background-gold2 {
+  background-color: #e2c000;
+}
+.background-gold3 {
+  background-color: #f5c31f;
 }
 .background-gold:hover {
+  background-color: #00f7ff;
+}
+.background-gold3:hover {
   background-color: #00f7ff;
 }
 input::placeholder {
   opacity: 1;
   padding: 0.4rem;
 }
+input[type="text"] {
+  padding-left: 0.4rem;
+}
+input[type="number"] {
+  padding-left: 0.4rem;
+}
 .text-gold2 {
-  color: #e3c100;
+  color: #e2c000;
 }
 
 .text-gradient {

@@ -7,6 +7,9 @@ const Clients = lazy(() => import("./Clients"))
 const MarketplaceBar = lazy(() => import("./MarketplaceBar"))
 const Stats = lazy(() => import("./Stats"))
 const Testimonials = lazy(() => import("./Testimonials"))
+const MyTokenDetails = lazy(() => import("./Market/MyTokenDetails"))
+const MyListingDetails = lazy(() => import("./Market/MyListingDetails"))
+const MarketListingDetails = lazy(() => import("./Market/MarketListingDetails"))
 import RouteGuard from './RouteGuard'
 import Footer from "./Footer";
 import Hero from "./Hero";
@@ -22,5 +25,8 @@ export {
   Footer,
   Testimonials,
   Hero,
-  RouteGuard
+  RouteGuard,
+  MyTokenDetails,
+  MyListingDetails,
+  MarketListingDetails
 };
