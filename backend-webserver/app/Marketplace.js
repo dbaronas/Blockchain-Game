@@ -19,8 +19,13 @@ const createNFTListing = async(req, res) => {
 
     var block = await web3.eth.getBlock("latest")
     await contract.methods.createListing(address, process.env.ERC721, tokenId, 1, price).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then(async (results) => {
-        await nft.methods.tokenURI(tokenId).call().then((results) => {
-            itemId = results.itemId
+        await nft.methods.tokenURI(tokenId).call().then(async (results) => {
+            const uri = results.replace('193.219.91.103:6172', '127.0.0.1:3000')
+            const response = await fetch(uri)
+            const parsedResponse = await response.json()
+            itemId = parsedResponse.itemId
+        }).catch((error) => {
+            return res.json(error)
         })
         await db.Inventory.destroy({ where: { wallet_address: address, item_id: itemId} })
         res.send(results)
@@ -74,10 +79,13 @@ const cancelListing = async(req, res) => {
                 break
             }
         }
-        const { itemId } = await nft.tokenURI(tokenId)
-        await db.Inventory.create({
-            wallet_address: address,
-            item_id: itemId
+        await nft.methods.tokenURI(tokenId).call().then(async (results) => {
+            const uri = results.replace('193.219.91.103:6172', '127.0.0.1:3000')
+            const response = await fetch(uri)
+            const parsedResponse = await response.json()
+            itemId = parsedResponse.itemId
+        }).catch((error) => {
+            return res.json(error)
         })
         res.json(results)
     }).catch((error) => {
@@ -102,10 +110,13 @@ const buyNFT = async(req, res) => {
                 break
             }
         }
-        const { itemId } = await nft.tokenURI(tokenId)
-        await db.Inventory.create({
-            wallet_address: address,
-            item_id: itemId
+        await nft.methods.tokenURI(tokenId).call().then(async (results) => {
+            const uri = results.replace('193.219.91.103:6172', '127.0.0.1:3000')
+            const response = await fetch(uri)
+            const parsedResponse = await response.json()
+            itemId = parsedResponse.itemId
+        }).catch((error) => {
+            return res.json(error)
         })
         res.json(results)
     }).catch((error) => {
