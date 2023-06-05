@@ -17,9 +17,9 @@ export const navLinks = [
     link: '/marketplace'
   },
   {
-    id: "mint",
-    title: "Mint NFT",
-    link: '/mint'
+    id: "play_now",
+    title: "Play Now",
+    link: '/game'
   },
   {
     id: "my_nfts",
