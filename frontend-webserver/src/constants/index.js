@@ -1,4 +1,4 @@
-import { people01, people02, people03, people04, facebook, instagram, linkedin, twitter, airbnb, binance, coinbase, dropbox, send, shield, star  } from "../assets";
+import { people01, people02, people03, people04, people05, people06, facebook, instagram, linkedin, twitter, airbnb, binance, coinbase, dropbox, send, shield, star  } from "../assets";
 
 export const navLinks = [
   {
@@ -90,12 +90,29 @@ export const feedback = [
   },
   {
     id: "feedback-4",
-    content: "Padedu kolegoms su testavimu",
+    content: "Padedu kolegoms su testavimu ir padedu litpi karjeros laiptais.",
     name: "Arthur Vilkas",
     title: "Honorable team member",
     img: people04,
     link: "https://www.linkedin.com/"
   },
+  {
+    id: "feedback-5",
+    content: "WHAT IS LOVE? BABY DON'T HURT ME. DON'T HURT ME. NO MORE.",
+    name: "Mike O'Hearn",
+    title: "Team motivator",
+    img: people05,
+    link: "https://www.linkedin.com/"
+  },
+  {
+    id: "feedback-6",
+    content: "Hmm? Nothing. Me? Hehe, just hanging around.",
+    name: "Beetlejuice",
+    title: "Honorable team member",
+    img: people06,
+    link: "https://www.linkedin.com/"
+  },
+  
 ];
 
 export const stats = [
@@ -202,25 +219,5 @@ export const socialMedia = [
     id: "social-media-4",
     icon: linkedin,
     link: "https://www.linkedin.com/",
-  },
-];
-
-
-export const clients = [
-  {
-    id: "client-1",
-    logo: airbnb,
-  },
-  {
-    id: "client-2",
-    logo: binance,
-  },
-  {
-    id: "client-3",
-    logo: coinbase,
-  },
-  {
-    id: "client-4",
-    logo: dropbox,
   },
 ];

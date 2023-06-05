@@ -5,7 +5,6 @@ import {
   NFTs,
   AboutGame,
   Testimonials,
-  Clients,
   MarketplaceBar,
 } from "../components";
 import styles from "../style";
@@ -27,7 +26,6 @@ const Main = () => (
         <MarketplaceBar />
         <PatchNotes />
         <Testimonials />
-        <Clients />
       </div>
     </div>
   </div>
