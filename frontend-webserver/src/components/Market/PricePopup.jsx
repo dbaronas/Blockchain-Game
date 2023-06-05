@@ -35,7 +35,6 @@ const PricePopup = ({ onClose, tokenId, walletAddress }) => {
   const createNFTListing = async (price) => {
     try {
       let nonce = await getNonce()
-      console.log(nonce)
       setLoadingMsg("Awaiting wallet signature approval...")
       const signature = await signMessage({
         message: `Sell NFT with connected account: ${walletAddress}\nnonce: ${nonce}`,
@@ -54,7 +53,6 @@ const PricePopup = ({ onClose, tokenId, walletAddress }) => {
       })
         .then((response) => response.json())
         .then((receipt) => {
-          console.log(receipt)
           if (receipt) {
             setAlert("Transaction has been completed")
             setTimeout(() => {

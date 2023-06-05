@@ -37,7 +37,6 @@ const MarketCards = ({ listingsData }) => {
   }
 
   const { data, loading } = useLazyLoad({ triggerRef, onGrabData })
-  console.log(data)
 
   return (
     <>

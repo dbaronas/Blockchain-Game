@@ -22,13 +22,11 @@ const MyNFTs = () => {
       .then((tokens) => {
         const tokenIdsObject = { tokenId: tokens }
         setMyTokens(tokens)
-        console.log(tokens)
         const updatedTokens = tokens.map((token) => {
           return {
             tokenId: token
           }
         })
-        console.log(updatedTokens)
         fetchTokenURI(tokenIdsObject, updatedTokens)
       })
       .catch((err) => console.log(err))
@@ -43,15 +41,13 @@ const MyNFTs = () => {
       .then((response) => response.json())
       .then((tokenURIs) => {
         tokenURIs.forEach((tokenURI, index) => {
-          fetchTokenData(tokenURI, tokenIdsObject.tokenId[index], updatedTokens, index)
-          console.log(tokenURI) }
+          fetchTokenData(tokenURI, tokenIdsObject.tokenId[index], updatedTokens, index) }
         )
       })
       .catch((err) => console.log(err))
   }
 
   const fetchTokenData = (tokenURI, tokenId, updatedTokens, index) => {
-    console.log(tokenId)
     fetch(`${tokenURI}`)
       .then((response) => response.json())
       .then((data) => {
