@@ -8,6 +8,10 @@ const contract = new Contract(abi, process.env.ERC20)
 
 const psdBalance = async (req, res) => {
     const { address } = req.body
+
+    if(!address) {
+        return res.send('Error')
+    }
     await contract.methods.balanceOf(address).call().then((results) => {
         res.json(results)
     }).catch((err) => {

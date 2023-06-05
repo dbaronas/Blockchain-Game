@@ -16,20 +16,23 @@ const mint = async(req, res) => {
     const uri = `${process.env.IP}/gameitems/NFTs/metadata/${item_id}.json`
 
     if(!address || !tokenName || !item_id || !durability) {
-        res.send('Error')
-    } else {
-            var block = await web3.eth.getBlock("latest")
-            await contract.methods.mint(address, uri, tokenName, durability).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then(async (result) => {
-                await db.Item.update({ owner: address }, { where: { item_id: item_id }})
-                res.json(result)
-            }).catch((error) => {
-                res.json({error: '' + error})
-            })
+        return res.send('Error')
     }
+    var block = await web3.eth.getBlock("latest")
+    await contract.methods.mint(address, uri, tokenName, durability).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then(async (result) => {
+        await db.Item.update({ owner: address }, { where: { item_id: item_id }})
+        res.json(result)
+    }).catch((error) => {
+        res.json({error: '' + error})
+    })
 }
 
 const getMyTokens = async(req, res) => {
     const { address } = req.body
+
+    if(!address) {
+        return res.send('Error')
+    }
 
     await contract.methods.getTokenIds(address).call({from: address}).then((result) => {
         res.json(result)
@@ -41,6 +44,10 @@ const getMyTokens = async(req, res) => {
 const getTokenDurability = async(req, res) => {
     const tokenId = req.body.id
     const address = req.body.address
+    
+    if(!address || !tokenId) {
+        return res.send('Error')
+    }
 
     await contract.methods.getDurability(tokenId).call({from: address}).then((result) => {
         res.json(result)
@@ -54,6 +61,10 @@ const updateTokenDurability = async(req, res) => {
     const durability = req.body.durability
     const address = req.body.address
 
+    if(!address || !tokenId || !durability) {
+        return res.send('Error')
+    }
+
     var block = await web3.eth.getBlock("latest");
     await contract.methods.updateDurability(tokenId, durability).send({from: address, gasLimit: block.gasLimit}).then((result) => {
         res.json(result)
@@ -64,6 +75,11 @@ const updateTokenDurability = async(req, res) => {
 
 const ownerOf = async(req, res) => {
     const { tokenId } = req.body
+
+    if(!tokenId) {
+        return res.send('Error')
+    }
+
     await contract.methods.ownerOf(tokenId).call().then((result) => {
         res.json({owner: result})
     }).catch((error) => {
@@ -73,6 +89,10 @@ const ownerOf = async(req, res) => {
 
 const tokenURI = async (req, res) => {
     const { tokenId } = req.body
+
+    if(!tokenId) {
+        return res.send('Error')
+    }
 
     if(typeof tokenId === 'object') {
         let tokenURI = []

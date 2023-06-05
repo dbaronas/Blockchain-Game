@@ -15,6 +15,10 @@ const createNFTListing = async(req, res) => {
     const tokenId = req.body.tokenId
     const price = req.body.price
 
+    if(!address || !tokenId || !price) {
+        return res.send('Error')
+    }
+
     let itemId = null
 
     var block = await web3.eth.getBlock("latest")
@@ -40,6 +44,10 @@ const createItemListing = async(req, res) => {
     const quantity = req.body.quantity
     const price = req.body.price
 
+    if(!address || !tokenId || !quantity || !price) {
+        return res.send('Error')
+    }
+
     var block = await web3.eth.getBlock("latest")
     await contract.methods.createListing(address, process.env.ERC1155, tokenId, quantity, price).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((results) => {
         res.json(results)
@@ -54,6 +62,10 @@ const updateListing = async(req, res) => {
     const price = req.body.price
     const quantity = req.body.quantity
 
+    if(!address || !listingId || !quantity || !price) {
+        return res.send('Error')
+    }
+
     var block = await web3.eth.getBlock("latest")
     await contract.methods.updateListing(address, listingId, quantity, price).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((results) => {
         res.json(results)
@@ -65,6 +77,10 @@ const updateListing = async(req, res) => {
 const cancelListing = async(req, res) => {
     const address = req.body.address
     const listingId = req.body.listingId
+
+    if(!address || !listingId) {
+        return res.send('Error')
+    }
 
     var block = await web3.eth.getBlock("latest")
     let listings = null
@@ -102,6 +118,10 @@ const buyNFT = async(req, res) => {
     const address = req.body.address
     const listingId = req.body.listingId
 
+    if(!address || !listingId) {
+        return res.send('Error')
+    }
+    let listings
     var block = await web3.eth.getBlock("latest")
     await contract.methods.get721Listings().call().then((results) => {
         listings = results
@@ -187,6 +207,10 @@ const getItemListings = async(req, res) => {
 const getEarnings = async(req, res) => {
     const address = req.body.address
 
+    if(!address) {
+        return res.send('Error')
+    }
+
     await contract.methods.getEarnings(address).call({from: contract.defaultAccount}).then((results) => {
         res.json(results)
     }).catch((error) => {
@@ -196,6 +220,10 @@ const getEarnings = async(req, res) => {
 
 const withdraw = async(req, res) => {
     const address = req.body.address
+
+    if(!address) {
+        return res.send('Error')
+    }
 
     var block = await web3.eth.getBlock("latest")
     await contract.methods.withdraw(address).send({from: contract.defaultAccount, gasLimit: block.gasLimit}).then((results) => {
@@ -207,6 +235,10 @@ const withdraw = async(req, res) => {
 
 const checkTransactionStatus = async (req, res) => {
     let { receipt } = req.body
+
+    if(!receipt) {
+        return res.send('Error')
+    }
 
     await web3.eth.getTransactionReceipt(receipt).then(console.log)
 
