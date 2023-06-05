@@ -62,7 +62,7 @@ const updateListing = async(req, res) => {
     const price = req.body.price
     const quantity = req.body.quantity
 
-    if(!address || !listingId || !quantity || !price) {
+    if(!address || !listingId.toString() || !quantity || !price) {
         return res.send('Error')
     }
 
@@ -78,7 +78,7 @@ const cancelListing = async(req, res) => {
     const address = req.body.address
     const listingId = req.body.listingId
 
-    if(!address || !listingId) {
+    if(!address || !listingId.toString()) {
         return res.send('Error')
     }
 
@@ -118,7 +118,7 @@ const buyNFT = async(req, res) => {
     const address = req.body.address
     const listingId = req.body.listingId
 
-    if(!address || !listingId) {
+    if(!address || !listingId.toString()) {
         return res.send('Error')
     }
     let listings
