@@ -14,7 +14,6 @@ const MyListings = () => {
       .then(response => response.json())
       .then(listings => {
         const ownerListings = listings.filter((listing) => listing.seller === address.toString())
-        console.log(ownerListings)
         setMyListings(ownerListings)
         getMyListingsData(ownerListings)
       })
@@ -22,11 +21,9 @@ const MyListings = () => {
 
   const getMyListingsData = (ownerListings) => {
     const myTokenIds = ownerListings.map((listing) => listing.tokenId)
-    console.log(myTokenIds)
     const tokenIdsObject = {
       tokenId: myTokenIds
     }
-    console.log(tokenIdsObject)
     fetchTokenURI(tokenIdsObject, ownerListings)
   }
 
@@ -38,7 +35,6 @@ const MyListings = () => {
     })
         .then(response => response.json())
         .then(tokenURIs => {
-          console.log(tokenURIs)
             tokenURIs.forEach((tokenURI, index) => fetchTokenData(tokenURI, tokenIdsObject.tokenId[index], ownerListings, index))
         })
         .catch(err => console.log(err))

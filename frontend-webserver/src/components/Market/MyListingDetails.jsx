@@ -65,7 +65,6 @@ const MyListingDetails = () => {
   const cancelNFTListing = async () => {
     try {
       const nonce = await getNonce()
-      console.log(nonce)
       setLoadingMsg("Awaiting wallet signature approval...")
       const signature = await signMessage({
         message: `Cancel NFT listing of connected account: ${walletAddress}\nnonce: ${nonce}`,

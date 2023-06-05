@@ -3,9 +3,12 @@
         "Home": "Home",
         "News": "News",
         "Marketplace": "Marketplace",
-        "Mint NFT": "Mint NFT",
+        "Play Now": "Play Now",
         "Wallet": "Connect Wallet",
-        "Connecting": "Connecting..."
+        "Connecting": "Connecting...",
+        "My NFTs": "My NFTs",
+        "My Listings": "My Listings",
+        "Claim tokens": "Claim Tokens"
     },
     "Hero": {
         "Tag": "#1 NFT Game in Lithuania",

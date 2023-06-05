@@ -22,7 +22,6 @@ const UpdatePricePopup = ({
   const handleFormSubmit = (event) => {
     event.preventDefault()
     const price = document.getElementById("price").value
-    console.log(price)
     updateNFTListing(price)
     toggleModal()
   }
@@ -47,8 +46,6 @@ const UpdatePricePopup = ({
       const signature = await signMessage({
         message: `Update NFT listing price of connected account: ${walletAddress}\nnonce: ${nonce}`,
       })
-      console.log(nonce)
-      console.log(signature)
       const requestedData = {
         signature: signature,
         address: walletAddress.toString(),

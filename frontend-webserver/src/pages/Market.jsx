@@ -19,7 +19,6 @@ const Market = () => {
     fetch("http://193.219.91.103:6172/api/v1/marketplace/NFTListings")
       .then(response => response.json())
       .then(listings => {
-        console.log(listings)
         getListingData(listings)
         setAllListings(listings)
       })
@@ -31,12 +30,10 @@ const Market = () => {
       tokenId: allTokensIds
     }
     const updatedListings = [...listings]
-    console.log(updatedListings)
     fetchTokenURI(tokenIdsObject, updatedListings)
   }
 
   const fetchTokenURI = (tokenIdsObject, updatedListings) => {
-    console.log(updatedListings)
     fetch("http://193.219.91.103:6172/api/v1/721/tokenURI", {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

@@ -8,7 +8,6 @@ import MyNFTsCard from './MyNFTsCard'
 
 const MyNFTsCards = ({ tokenData }) => {
   const nfts = tokenData
-  console.log(tokenData)
   const triggerRef = useRef(null)
   const { width } = useWindowSize()
   let cardsPerPage = 4
@@ -39,7 +38,6 @@ const MyNFTsCards = ({ tokenData }) => {
   }
   
   const { data, loading} = useLazyLoad({ triggerRef, onGrabData })
-  console.log(data)
 
   return (
     <>

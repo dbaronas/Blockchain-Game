@@ -21,7 +21,6 @@ const ClaimTokens = () => {
     })
       .then((response) => response.json())
       .then((earnings) => {
-        console.log(earnings)
         const earningInPSD = (Number(earnings) / 10 ** 18) * 0.97
         setEarnings(earningInPSD)
       })
@@ -58,7 +57,6 @@ const ClaimTokens = () => {
         .then((response) => response.json())
         .then((data) => {
           if (data.transactionHash) {
-            console.log(data.transactionHash)
             setAlert("Transaction has been completed")
             setEarnings(0)
           }

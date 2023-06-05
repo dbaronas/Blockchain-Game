@@ -7,7 +7,6 @@ import MyListingCard from "./MyListingCard"
 
 const MyListingCards = ({ listingsData }) => {
   const nfts = listingsData
-  console.log(nfts)
   const triggerRef = useRef(null)
   const { width } = useWindowSize()
   let cardsPerPage = 4
@@ -38,7 +37,6 @@ const MyListingCards = ({ listingsData }) => {
   }
 
   const { data, loading } = useLazyLoad({ triggerRef, onGrabData })
-  console.log(data)
   return (
     <>
       <div
