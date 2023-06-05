@@ -65,20 +65,6 @@ const App = () => {
               }
             />
             <Route
-              path="/mint"
-              element={
-                <RouteGuard walletConnected={isConnected}>
-                  <div className={`${styles.flexCenter} h-[50vh]`}>
-                    <p
-                      className={`${styles.flex} max-w-[300px] text-white text-center`}
-                    >
-                      NFT minting coming soon!
-                    </p>
-                  </div>
-                </RouteGuard>
-              }
-            />
-            <Route
               path="/marketplace/mynfts"
               element={
                 <RouteGuard walletConnected={isConnected}>
