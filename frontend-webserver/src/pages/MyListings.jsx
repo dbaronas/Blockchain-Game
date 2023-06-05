@@ -10,7 +10,7 @@ const MyListings = () => {
   let { address } = useAccount()
 
   const fetchAllListings = () => {
-    fetch("http://193.219.91.103:6172/api/v1/marketplace/NFTListings")
+    fetch(`${import.meta.env.VITE_BACKEND}/api/v1/marketplace/NFTListings`)
       .then(response => response.json())
       .then(listings => {
         const ownerListings = listings.filter((listing) => listing.seller === address.toString())
@@ -28,7 +28,7 @@ const MyListings = () => {
   }
 
   const fetchTokenURI = (tokenIdsObject, ownerListings) => {
-    fetch("http://193.219.91.103:6172/api/v1/721/tokenURI", {
+    fetch(`${import.meta.env.VITE_BACKEND}/api/v1/721/tokenURI`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(tokenIdsObject)

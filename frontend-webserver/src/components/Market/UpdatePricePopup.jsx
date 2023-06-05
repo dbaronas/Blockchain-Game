@@ -28,7 +28,7 @@ const UpdatePricePopup = ({
 
   const getNonce = () => {
     return fetch(
-      `http://193.219.91.103:6172/api/v1/db/${walletAddress}/nonce`,
+      `${import.meta.env.VITE_BACKEND}/api/v1/db/${walletAddress}/nonce`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -54,7 +54,7 @@ const UpdatePricePopup = ({
         price: Number(price),
         quantity: parseInt(quantity),
       }
-      fetch("http://193.219.91.103:6172/api/v1/marketplace/updateListing", {
+      fetch(`${import.meta.env.VITE_BACKEND}/api/v1/marketplace/updateListing`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestedData),
@@ -78,7 +78,6 @@ const UpdatePricePopup = ({
         .catch((err) => setAlert("Transaction has failed", "red"))
     } catch (err) {
       setAlert("Transaction has been canceled", "red")
-      console.log(err)
     }
   }
 

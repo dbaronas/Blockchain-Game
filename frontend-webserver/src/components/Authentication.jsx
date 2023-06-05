@@ -66,7 +66,7 @@ const Authentication = () => {
       })
       setWalletExists(response.exists)
     } catch (error) {
-      console.log(error)
+      return
     }
   }
 
@@ -81,7 +81,7 @@ const Authentication = () => {
         crossDomain: true,
       })
     } catch (error) {
-      console.log(error)
+      return
     }
   }
   

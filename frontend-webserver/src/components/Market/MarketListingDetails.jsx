@@ -51,7 +51,7 @@ const MyListingDetails = () => {
   } = selectedCard
 
   const getBuyerPSDBalance = () => {
-    return fetch("http://193.219.91.103:6172/api/v1/20/PSDbalance", {
+    return fetch(`${import.meta.env.VITE_BACKEND}/api/v1/20/PSDbalance`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({address}),
@@ -63,7 +63,7 @@ const MyListingDetails = () => {
 
   const getNonceOwner = () => {
     return fetch(
-      `http://193.219.91.103:6172/api/v1/db/${walletAddress}/nonce`,
+      `${import.meta.env.VITE_BACKEND}/api/v1/db/${walletAddress}/nonce`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -75,7 +75,7 @@ const MyListingDetails = () => {
   }
 
   const getNonceBuyer = () => {
-    return fetch(`http://193.219.91.103:6172/api/v1/db/${address}/nonce`, {
+    return fetch(`${import.meta.env.VITE_BACKEND}/api/v1/db/${address}/nonce`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     })
@@ -102,7 +102,7 @@ const MyListingDetails = () => {
         action: "buy",
         listingId: parseInt(listingId),
       }
-      fetch("http://193.219.91.103:6172/api/v1/marketplace/buyNFT", {
+      fetch(`${import.meta.env.VITE_BACKEND}/api/v1/marketplace/buyNFT`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestedData),
@@ -135,7 +135,7 @@ const MyListingDetails = () => {
         action: "cancel",
         listingId: parseInt(listingId),
       }
-      fetch("http://193.219.91.103:6172/api/v1/marketplace/cancelListing", {
+      fetch(`${import.meta.env.VITE_BACKEND}/api/v1/marketplace/cancelListing`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestedData),

@@ -51,7 +51,7 @@ const MyListingDetails = () => {
 
   const getNonce = () => {
     return fetch(
-      `http://193.219.91.103:6172/api/v1/db/${walletAddress}/nonce`,
+      `${import.meta.env.VITE_BACKEND}/api/v1/db/${walletAddress}/nonce`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -75,7 +75,7 @@ const MyListingDetails = () => {
         action: 'cancel',
         listingId: parseInt(listingId),
       }
-      fetch("http://193.219.91.103:6172/api/v1/marketplace/cancelListing", {
+      fetch(`${import.meta.env.VITE_BACKEND}/api/v1/marketplace/cancelListing`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestedData),

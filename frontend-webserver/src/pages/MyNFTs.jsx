@@ -13,7 +13,7 @@ const MyNFTs = () => {
   }, [address])
 
   const fetchMyTokens = (address) => {
-    fetch("http://193.219.91.103:6172/api/v1/721/getMyTokens", {
+    fetch(`${import.meta.env.VITE_BACKEND}/api/v1/721/getMyTokens`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ address }),
@@ -33,7 +33,7 @@ const MyNFTs = () => {
   }
 
   const fetchTokenURI = (tokenIdsObject, updatedTokens) => {
-    fetch("http://193.219.91.103:6172/api/v1/721/tokenURI", {
+    fetch(`${import.meta.env.VITE_BACKEND}/api/v1/721/tokenURI`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(tokenIdsObject),

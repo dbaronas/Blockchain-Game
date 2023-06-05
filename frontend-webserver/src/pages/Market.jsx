@@ -2,21 +2,15 @@ import React, { useState, useEffect } from 'react'
 import { useAccount } from 'wagmi'
 import MarketCards from '../components/Market/MarketCards'
 import styles from '../style'
-// import { useBalance } from 'wagmi'
 
 const Market = () => {
   const [allListings, setAllListings] = useState([])
   const [listingsData, setListingsData] = useState([])
   let { address } = useAccount()
-  // const balance = useBalance({
-  //   address: `${address}`,
-  //   token: '0x5b1869D9A4C187F2EAa108f3062412ecf0526b24',
-  //   enabled: false
-  // })
-  // console.log(balance)
+
 
   const fetchAllListings = () => {
-    fetch("http://193.219.91.103:6172/api/v1/marketplace/NFTListings")
+    fetch(`${import.meta.env.VITE_BACKEND}/api/v1/marketplace/NFTListings`)
       .then(response => response.json())
       .then(listings => {
         getListingData(listings)
@@ -34,7 +28,7 @@ const Market = () => {
   }
 
   const fetchTokenURI = (tokenIdsObject, updatedListings) => {
-    fetch("http://193.219.91.103:6172/api/v1/721/tokenURI", {
+    fetch(`${import.meta.env.VITE_BACKEND}/api/v1/721/tokenURI`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(tokenIdsObject)

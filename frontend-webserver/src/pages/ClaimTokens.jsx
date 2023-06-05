@@ -14,7 +14,7 @@ const ClaimTokens = () => {
   let { address } = useAccount()
 
   const fetchMyEarnings = () => {
-    fetch("http://193.219.91.103:6172/api/v1/marketplace/earnings", {
+    fetch(`${import.meta.env.VITE_BACKEND}/api/v1/marketplace/earnings`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ address }),
@@ -22,13 +22,13 @@ const ClaimTokens = () => {
       .then((response) => response.json())
       .then((earnings) => {
         const earningInPSD = (Number(earnings) / 10 ** 18) * 0.97
-        setEarnings(earningInPSD)
+        setEarnings(earningInPSD.toFixed(2))
       })
       .catch((err) => console.log(err))
   }
 
   const getNonce = () => {
-    return fetch(`http://193.219.91.103:6172/api/v1/db/${address}/nonce`, {
+    return fetch(`${import.meta.env.VITE_BACKEND}/api/v1/db/${address}/nonce`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     })
@@ -49,7 +49,7 @@ const ClaimTokens = () => {
         address: address,
         action: `withdraw`,
       }
-      fetch("http://193.219.91.103:6172/api/v1/marketplace/withdraw", {
+      fetch(`${import.meta.env.VITE_BACKEND}/api/v1/marketplace/withdraw`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestedData),
@@ -80,6 +80,7 @@ const ClaimTokens = () => {
             className={`${styles.flex} ${styles.heading2} w-full text-gold2 text-center`}
           >
             There are no tokens to be claimed.
+            <span><p className={`${styles.flex} ${styles.heading2} w-full text-gold2 text-center`}>3 percent fee is applied when claiming tokens.</p></span>
           </h3>
         </div>
       ) : (
@@ -88,6 +89,7 @@ const ClaimTokens = () => {
             className={`${styles.flex} ${styles.heading2} w-full text-gold2 text-center`}
           >
             You have earned: {earnings} PSD.
+            <span><p className={`${styles.flex} ${styles.heading2} w-full text-gold2 text-center`}>3 percent fee is applied when claiming tokens.</p></span>
           </h3>
           <button
             className="background-gold text-white font-bold py-2 px-4 rounded"
