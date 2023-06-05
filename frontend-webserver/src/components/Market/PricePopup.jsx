@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { signMessage } from '@wagmi/core'
-
+import { signMessage } from "@wagmi/core"
+import { setAlert, setLoadingMsg } from "./NotificationManagement"
 
 const PricePopup = ({ onClose, tokenId, walletAddress }) => {
   const [modal, setModal] = useState(true)
@@ -36,13 +36,14 @@ const PricePopup = ({ onClose, tokenId, walletAddress }) => {
     try {
       let nonce = await getNonce()
       console.log(nonce)
+      setLoadingMsg("Awaiting wallet signature approval...")
       const signature = await signMessage({
         message: `Sell NFT with connected account: ${walletAddress}\nnonce: ${nonce}`,
       })
       const requestedData = {
         signature: signature,
         address: walletAddress.toString(),
-        action: 'sell',
+        action: "sell",
         tokenId: parseInt(tokenId),
         price: Number(price),
       }
@@ -55,12 +56,15 @@ const PricePopup = ({ onClose, tokenId, walletAddress }) => {
         .then((receipt) => {
           console.log(receipt)
           if (receipt) {
-            navigateTo("/marketplace/mynfts")
-            // notifaction alert
+            setAlert("Transaction has been completed")
+            setTimeout(() => {
+              navigateTo("/marketplace/mynfts")
+            }, 2000)
           }
         })
-        .catch((err) => console.log(err))
+        .catch((err) => setAlert("Transaction has failed", "red"))
     } catch (err) {
+      setAlert("Transaction has been canceled", "red")
       console.log(err)
     }
   }

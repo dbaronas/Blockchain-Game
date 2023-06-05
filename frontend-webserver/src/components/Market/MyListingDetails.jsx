@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom"
 import { useAccount } from "wagmi"
 import UpdatePricePopup from "./UpdatePricePopup"
 import { signMessage } from "@wagmi/core"
+import LoadingPopup from "./LoadingPopup"
+import Alert from "./Alert"
+import { setAlert, setLoadingMsg } from "./NotificationManagement"
 
 const MyListingDetails = () => {
   const { selectedCard } = useContext(MarketContext)
@@ -63,6 +66,7 @@ const MyListingDetails = () => {
     try {
       const nonce = await getNonce()
       console.log(nonce)
+      setLoadingMsg("Awaiting wallet signature approval...")
       const signature = await signMessage({
         message: `Cancel NFT listing of connected account: ${walletAddress}\nnonce: ${nonce}`,
       })
@@ -80,12 +84,15 @@ const MyListingDetails = () => {
         .then((response) => response.json())
         .then((receipt) => {
           if (receipt) {
-            navigateTo("/marketplace/mylistings")
-            // notifaction alert
+            setAlert("Transaction has been completed")
+            setTimeout(() => {
+              navigateTo("/marketplace/mylistings")
+            }, 2000)
           }
         })
-        .catch((err) => console.log(err))
+        .catch((err) => setAlert("Transaction has failed", "red"))
     } catch (err) {
+      setAlert("Transaction has been canceled", "red")
       console.log(err)
     }
   }
@@ -143,6 +150,8 @@ const MyListingDetails = () => {
           quantity={quantity}
         />
       )}
+      <LoadingPopup/>
+      <Alert/>
     </div>
   )
 }

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { signMessage } from '@wagmi/core'
-
+import { signMessage } from "@wagmi/core"
+import LoadingPopup from "./LoadingPopup"
+import Alert from "./Alert"
+import { setAlert, setLoadingMsg } from "./NotificationManagement"
 
 const UpdatePricePopup = ({
   onClose,
@@ -37,11 +39,11 @@ const UpdatePricePopup = ({
       .then((nonce) => nonce)
       .catch((err) => console.log(err))
   }
-  
 
   const updateNFTListing = async (price) => {
     try {
       let nonce = await getNonce()
+      setLoadingMsg("Awaiting wallet signature approval...")
       const signature = await signMessage({
         message: `Update NFT listing price of connected account: ${walletAddress}\nnonce: ${nonce}`,
       })
@@ -50,7 +52,7 @@ const UpdatePricePopup = ({
       const requestedData = {
         signature: signature,
         address: walletAddress.toString(),
-        action: 'update',
+        action: "update",
         listingId: parseInt(listingId),
         price: Number(price),
         quantity: parseInt(quantity),
@@ -64,15 +66,21 @@ const UpdatePricePopup = ({
         .then((receipt) => {
           if (receipt) {
             if (isMarket) {
-              navigateTo("/marketplace")
+              setAlert("Transaction has been completed")
+              setTimeout(() => {
+                navigateTo("/marketplace")
+              }, 2000)
             } else {
-              navigateTo("/marketplace/mylistings")
+              setAlert("Transaction has been completed")
+              setTimeout(() => {
+                navigateTo("/marketplace/mylistings")
+              }, 2000)
             }
-            // notifaction alert
           }
         })
-        .catch((err) => console.log(err))
+        .catch((err) => setAlert("Transaction has failed", "red"))
     } catch (err) {
+      setAlert("Transaction has been canceled", "red")
       console.log(err)
     }
   }
@@ -120,6 +128,8 @@ const UpdatePricePopup = ({
           </div>
         </div>
       )}
+      <LoadingPopup />
+      <Alert />
     </>
   )
 }

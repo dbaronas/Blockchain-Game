@@ -1,9 +1,12 @@
 import { useContext, useEffect, useState } from "react"
 import { MarketContext } from "./MarketContext"
 import { useNavigate } from "react-router-dom"
-import { useAccount, useBalance } from "wagmi"
+import { useAccount } from "wagmi"
 import UpdatePricePopup from "./UpdatePricePopup"
-import { signMessage } from '@wagmi/core'
+import { signMessage } from "@wagmi/core"
+import LoadingPopup from "./LoadingPopup"
+import Alert from "./Alert"
+import { setAlert, setLoadingMsg } from "./NotificationManagement"
 
 const MyListingDetails = () => {
   const { selectedCard } = useContext(MarketContext)
@@ -47,6 +50,17 @@ const MyListingDetails = () => {
     fishing_speed,
   } = selectedCard
 
+  const getBuyerPSDBalance = () => {
+    return fetch("http://193.219.91.103:6172/api/v1/20/PSDbalance", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({address}),
+    })
+      .then((response) => response.json())
+      .then((balance) => Number(balance) / 10 ** 18)
+      .catch((err) => console.log(err))
+  }
+
   const getNonceOwner = () => {
     return fetch(
       `http://193.219.91.103:6172/api/v1/db/${walletAddress}/nonce`,
@@ -61,13 +75,10 @@ const MyListingDetails = () => {
   }
 
   const getNonceBuyer = () => {
-    return fetch(
-      `http://193.219.91.103:6172/api/v1/db/${address}/nonce`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      }
-    )
+    return fetch(`http://193.219.91.103:6172/api/v1/db/${address}/nonce`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    })
       .then((response) => response.text())
       .then((nonce) => nonce)
       .catch((err) => console.log(err))
@@ -75,15 +86,21 @@ const MyListingDetails = () => {
 
   const buyNFT = async () => {
     try {
+      const buyerBalance = await getBuyerPSDBalance()
+      if (Number(price) > buyerBalance) {
+        setAlert("Insufficient PSD balance for transaction", 'red')
+        return
+      }
       let nonce = await getNonceBuyer()
       console.log(nonce)
+      setLoadingMsg("Awaiting wallet signature approval...")
       const signature = await signMessage({
         message: `Buy NFT to connected account: ${address}\nnonce: ${nonce}`,
       })
       const requestedData = {
         signature: signature,
         address: `${address.toString()}`,
-        action: 'buy',
+        action: "buy",
         listingId: parseInt(listingId),
       }
       fetch("http://193.219.91.103:6172/api/v1/marketplace/buyNFT", {
@@ -94,12 +111,15 @@ const MyListingDetails = () => {
         .then((response) => response.json())
         .then((receipt) => {
           if (receipt) {
-            navigateTo("/marketplace")
-            // notifaction alert
+            setAlert("Transaction has been completed")
+            setTimeout(() => {
+              navigateTo("/marketplace")
+            }, 2000)
           }
         })
-        .catch((err) => console.log(err))
+        .catch((err) => setAlert("Transaction has failed", "red"))
     } catch (err) {
+      setAlert("Transaction has been canceled", "red")
       console.log(err)
     }
   }
@@ -108,13 +128,14 @@ const MyListingDetails = () => {
     try {
       let nonce = await getNonceOwner()
       console.log(nonce)
+      setLoadingMsg("Awaiting wallet signature approval...")
       const signature = await signMessage({
         message: `Cancel NFT listing of connected account: ${walletAddress}\nnonce: ${nonce}`,
       })
       const requestedData = {
         signature: signature,
         address: walletAddress.toString(),
-        action: 'cancel',
+        action: "cancel",
         listingId: parseInt(listingId),
       }
       fetch("http://193.219.91.103:6172/api/v1/marketplace/cancelListing", {
@@ -125,12 +146,15 @@ const MyListingDetails = () => {
         .then((response) => response.json())
         .then((receipt) => {
           if (receipt) {
-            navigateTo("/marketplace")
-            // notifaction alert
+            setAlert("Transaction has been completed")
+            setTimeout(() => {
+              navigateTo("/marketplace")
+            }, 2000)
           }
         })
-        .catch((err) => console.log(err))
+        .catch((err) => setAlert("Transaction has failed", "red"))
     } catch (err) {
+      setAlert("Transaction has been canceled", "red")
       console.log(err)
     }
   }
@@ -197,6 +221,8 @@ const MyListingDetails = () => {
           isMarket={isMarket}
         />
       )}
+      <LoadingPopup />
+      <Alert />
     </div>
   )
 }

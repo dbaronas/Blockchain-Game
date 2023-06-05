@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react"
 import { useAccount } from "wagmi"
 import styles from "../style"
 import { signMessage } from "@wagmi/core"
+import LoadingPopup from "../components/Market/LoadingPopup"
+import Alert from "../components/Market/Alert"
+import {
+  setAlert,
+  setLoadingMsg,
+} from "../components/Market/NotificationManagement"
 
 const ClaimTokens = () => {
   const [earnings, setEarnings] = useState(0)
@@ -35,6 +41,7 @@ const ClaimTokens = () => {
   const withdrawMyEarnings = async () => {
     try {
       let nonce = await getNonce()
+      setLoadingMsg("Awaiting wallet signature approval...")
       const signature = await signMessage({
         message: `Withdraw earnings to connected account: ${address}\nnonce: ${nonce}`,
       })
@@ -50,12 +57,15 @@ const ClaimTokens = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          if(data.transactionHash) {
+          if (data.transactionHash) {
+            console.log(data.transactionHash)
+            setAlert("Transaction has been completed")
             setEarnings(0)
           }
         })
-        .catch((err) => console.log(err))
+        .catch((err) => setAlert("Transaction has failed", "red"))
     } catch (err) {
+      setAlert("Transaction has been canceled", "red")
       console.error(err)
     }
   }
@@ -89,6 +99,8 @@ const ClaimTokens = () => {
           </button>
         </div>
       )}
+      <LoadingPopup />
+      <Alert />
     </div>
   )
 }

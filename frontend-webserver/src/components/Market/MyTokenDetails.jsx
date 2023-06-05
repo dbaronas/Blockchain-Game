@@ -3,6 +3,8 @@ import { MarketContext } from "./MarketContext"
 import { useNavigate } from "react-router-dom"
 import { useAccount } from 'wagmi'
 import PricePopup from "./PricePopup"
+import LoadingPopup from "./LoadingPopup"
+import Alert from "./Alert"
 
 
 const MyTokenDetails = () => {
@@ -76,6 +78,8 @@ const MyTokenDetails = () => {
         )}
       </div>
       {showPricePopup && <PricePopup onClose={() => setShowPricePopup(false)} tokenId={tokenId} walletAddress={walletAddress}/>}
+      <LoadingPopup />
+      <Alert />
     </div>
   )
 }
