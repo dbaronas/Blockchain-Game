@@ -47,10 +47,11 @@ export default class BeginningScene extends Phaser.Scene {
         water.setCollisionBetween(3, 4)
         this.npc = new NPC({scene:this, x:250, y:250, texture:'fisherman', frame:'fisherman_13'})
 
-        this.teleportText = this.add.text(670, 680,'Teleport to the next island (F)',{
+        this.teleportText = this.add.text(670, 680,'Teleport to the next island (F)\nRequired level: 3',{
             fontFamily: 'VT323',
             fontSize: '10px',
             color: '#fff',
+            align: 'center',
             stroke: '#000000',
             strokeThickness: 1,
             shadow: { color: '#000000', fill: true, blur: 1, stroke: true }
@@ -219,7 +220,7 @@ export default class BeginningScene extends Phaser.Scene {
                             repeat: -1,
                         })
                     }
-                    if (Phaser.Input.Keyboard.JustDown(this.inputKeys.f)) {
+                    if (Phaser.Input.Keyboard.JustDown(this.inputKeys.f) && this.player.stats.find(stat => stat.name === 'level').value >= 3) {
                         this.boatOverlapTween.stop()
                         this.boatOverlapTween = null
                         this.socket.emit('leave-room')
