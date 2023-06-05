@@ -59,7 +59,7 @@ const MyListingDetails = () => {
     )
       .then((response) => response.text())
       .then((nonce) => nonce)
-      .catch((err) => console.log(err))
+      .catch((err) => err)
   }
 
   const cancelNFTListing = async () => {
@@ -92,7 +92,6 @@ const MyListingDetails = () => {
         .catch((err) => setAlert("Transaction has failed", "red"))
     } catch (err) {
       setAlert("Transaction has been canceled", "red")
-      console.log(err)
     }
   }
 

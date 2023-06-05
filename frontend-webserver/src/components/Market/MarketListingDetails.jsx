@@ -58,7 +58,7 @@ const MyListingDetails = () => {
     })
       .then((response) => response.json())
       .then((balance) => Number(balance) / 10 ** 18)
-      .catch((err) => console.log(err))
+      .catch((err) => err)
   }
 
   const getNonceOwner = () => {
@@ -71,7 +71,7 @@ const MyListingDetails = () => {
     )
       .then((response) => response.text())
       .then((nonce) => nonce)
-      .catch((err) => console.log(err))
+      .catch((err) => err)
   }
 
   const getNonceBuyer = () => {
@@ -81,7 +81,7 @@ const MyListingDetails = () => {
     })
       .then((response) => response.text())
       .then((nonce) => nonce)
-      .catch((err) => console.log(err))
+      .catch((err) => err)
   }
 
   const buyNFT = async () => {
@@ -119,7 +119,6 @@ const MyListingDetails = () => {
         .catch((err) => setAlert("Transaction has failed", "red"))
     } catch (err) {
       setAlert("Transaction has been canceled", "red")
-      console.log(err)
     }
   }
 
@@ -153,7 +152,6 @@ const MyListingDetails = () => {
         .catch((err) => setAlert("Transaction has failed", "red"))
     } catch (err) {
       setAlert("Transaction has been canceled", "red")
-      console.log(err)
     }
   }
 
@@ -183,7 +181,7 @@ const MyListingDetails = () => {
           </p>
           <p className="p-2">{description}</p>
           {fishing_speed && (
-            <p className="pl-2 pb-2">Fishing speed: {fishing_speed}</p>
+            <p className="pl-2 pb-2 lg:text-[1.2rem]">Fishing speed: {fishing_speed}</p>
           )}
         </div>
         {isOwner ? (
