@@ -5,7 +5,10 @@
         "Marketplace": "Place de marché",
         "Play Now": "Joue Maintenant",
         "Wallet": "Connecter un portefeuille",
-        "Connecting": "Connexion en cours..."
+        "Connecting": "Connexion en cours...",
+        "My NFTs": "Mon NFTs",
+        "My Listings": "Mes annonces",
+        "Claim tokens": "Réclamer des jetons"
     },
     "Hero": {
         "Tag": "#1 Jeu NFT en Lituanie",

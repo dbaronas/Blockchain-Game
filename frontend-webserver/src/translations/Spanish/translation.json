@@ -5,7 +5,10 @@
         "Marketplace": "Mercado",
         "Play Now": "Reproducir ahora",
         "Wallet": "Conectar Billetera",
-        "Connecting": "Conectando..."
+        "Connecting": "Conectando...",
+        "My NFTs": "Mi NFTs",
+        "My Listings": "Mis Listados",
+        "Claim tokens": "Reclamar Tokens"
     },
     "Hero": {
         "Tag": "#1 Juego NFT en Lituania",
