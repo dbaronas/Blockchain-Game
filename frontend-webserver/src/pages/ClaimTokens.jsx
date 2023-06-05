@@ -57,7 +57,6 @@ const ClaimTokens = () => {
         .then((response) => response.json())
         .then((data) => {
           if (data.transactionHash) {
-            console.log(data.transactionHash)
             setAlert("Transaction has been completed")
             setEarnings(0)
           }
