@@ -1,0 +1,77 @@
+{
+    "NavBar": {
+        "Home": "Home",
+        "News": "News",
+        "Marketplace": "Marketplace",
+        "Play Now": "Play Now",
+        "Wallet": "Connect Wallet",
+        "Connecting": "Connecting...",
+        "My NFTs": "My NFTs",
+        "My Listings": "My Listings",
+        "Claim tokens": "Claim Tokens"
+    },
+    "Hero": {
+        "Tag": "#1 NFT Game in Lithuania",
+        "Title1": "The Next",
+        "Title2": "Generation",
+        "Title3": "NFT Game",
+        "Paragraph": "Our team of experts used advanced blockchain technology to create this insanely fun, addicting and secure NFT game. This 2D experience will not only bring back nostalgia but will make you some cash aswell!",
+        "Play": "Play",
+        "Now": "Now"
+    },
+    "Stats": {
+        "stats-1": "Users Active",
+        "stats-2": "Worlds to Explore",
+        "stats-3": "Items to Acquire"
+    },
+    "Business": {
+        "feature-1-title": "Rewards",
+        "feature-1-content": "Fish to earn exclusive NFTs and many other items",
+        "feature-2-title": "100% Secured",
+        "feature-2-content": "All transactions are made using blockchain technology",
+        "feature-3-title": "Marketplace",
+        "feature-3-content": "Trade and sell earned NFTs and other items in MetaOcean Marketplace",
+        "Paragraph1": "Cast your creativity into the digital waters - with fishing NFTs, the possibilities are as endless as the ocean!",
+        "Paragraph2": "Immerse yourself in a blockchain-powered fishing game that boasts a comprehensive ecosystem, rewarding players for the effort of catching exotic marine species.",
+        "Explore": "Explore"
+    },
+    "Billing": {
+        "Title1": "Enjoy the game while",
+        "Title2": "earning exclusive rewards",
+        "Paragraph": "In our immersive game, players have the thrilling opportunity to catch exclusive NFTs that offer additional stats, providing a significant advantage in gameplay. These valuable digital assets can be obtained through fishing in the game. Beyond their in-game benefits, players can also sell these exclusive NFTs on our marketplace, earning Poseidon tokens, our game's native cryptocurrency."
+    },
+    "CTA": {
+        "Title": "Shop NFTs now!",
+        "Paragraph": "Best NFTs ever created. Perfect, beautiful, astonishing! Boost your stats and impress others.",
+        "ShopNow": "Shop Now!"
+    },
+    "CardDeal": {
+        "Title": "Monthly updates",
+        "Paragraph": "Read latest news about MetaOcean",
+        "PatchNotes": "Patch Notes"
+    },
+    "Testimonials": {
+        "Title1": "Our MetaOcean",
+        "Title2": "development team",
+        "Paragraph": "GG WP BETTER TEAM WINS! GOOD LUCK NEXT TIME, SOLDIER!"
+    },
+    "Footer": {
+        "Paragraph": "MetaOcean is the best game you will ever find! Pls buy some NFTs",
+        "Useful Links": "Useful Links",
+        "Community": "Community",
+        "Partner": "Partner",
+        "Content": "Content",
+        "How it Works": "How it Works",
+        "Create": "Create",
+        "Explore": "Explore",
+        "Terms & Services": "Terms & Services",
+        "Help Center": "Help Center",
+        "Partners": "Partners",
+        "Suggestions": "Suggestions",
+        "Blog": "Blog",
+        "Newsletters": "Newsletters",
+        "Our Partner": "Our Partner",
+        "Become a Partner": "Become a Partner",
+        "Rights": "2023 MetaOcean. All Rights Reserved."
+    }
+}

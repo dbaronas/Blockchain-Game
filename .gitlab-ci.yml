@@ -1,0 +1,112 @@
+stages:
+  - build_web_stage
+  - build_server_stage
+  - deploy_frontend_stage
+  - build_backend_stage
+  - deploy_backend_stage
+
+.base-rules:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      changes:
+        - frontend-webserver/**/*
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: never
+    - if: $CI_COMMIT_TAG
+      when: never
+.base-rules2:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      changes:
+        - backend-webserver/**/*
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: never
+    - if: $CI_COMMIT_TAG
+      when: never
+
+buildweb:
+  stage: build_web_stage
+  extends: .base-rules
+  before_script:
+    - cd frontend-webserver
+  script:
+    - "node --version"
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - frontend-webserver/build
+  cache:
+    paths:
+      - frontend-webserver/node_modules/
+      - frontend-webserver/package-lock.json
+    policy: pull-push
+  tags:
+    - local_runner
+
+
+buildserver:
+  stage: build_server_stage
+  extends: .base-rules
+  before_script:
+    - cd frontend-webserver/server
+  script:
+    - "node --version"
+    - npm ci
+  cache:
+    paths:
+      - frontend-webserver/server/node_modules/
+      - frontend-webserver/server/package-lock.json
+    policy: pull-push
+  tags:
+    - local_runner
+
+
+deployfront:
+  stage: deploy_frontend_stage
+  extends: .base-rules
+  before_script:
+    - cd frontend-webserver/server
+  script:
+    - "pm2 start ecosystem.config.js"
+  cache:
+    paths:
+      - frontend-webserver/server/node_modules/
+      - frontend-webserver/server/package-lock.json
+    policy: pull-push
+  tags:
+    - local_runner
+
+
+buildback:
+  stage: build_backend_stage
+  extends: .base-rules2
+  before_script:
+    - cd backend-webserver
+  script:
+    - "node --version"
+    - npm ci
+  cache:
+    paths:
+      - backend-webserver/node_modules/
+      - backend-webserver/package-lock.json
+    policy: pull-push
+  tags:
+    - local-runner2
+
+deployback:
+  stage: deploy_backend_stage
+  extends: .base-rules2
+  before_script:
+     - cd backend-webserver
+  script:
+    - "pm2 start ecosystem.config.js"
+  cache:
+    paths:
+      - backend-webserver/node_modules/
+      - backend-webserver/package-lock.json
+    policy: pull-push
+  tags:
+    - local-runner2

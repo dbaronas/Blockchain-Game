@@ -1,0 +1,77 @@
+{
+    "NavBar": {
+        "Home": "Pagrindinis",
+        "News": "Naujienos",
+        "Marketplace": "Prekyvietė",
+        "Play Now": "Žaisti Dabar",
+        "Wallet": "Prijungti Piniginę",
+        "Connecting": "Jungiamasi...",
+        "My NFTs": "Mano NFTs",
+        "My Listings": "Mano Skelbimai",
+        "Claim tokens": "Atsiimti Žetonus"
+    },
+    "Hero": {
+        "Tag": "#1 NFT žaidimas Lietuvoje",
+        "Title1": "Naujos",
+        "Title2": "Kartos",
+        "Title3": "NFT Žaidimas",
+        "Paragraph": "Mūsų ekspertų komanda naudojo pažangią blokų grandinės technologiją, kad sukurtų šį beprotiškai smagų, priklausomybę keliantį ir saugų NFT žaidimą. Ši 2D patirtis ne tik sugrąžins nostalgiją, bet ir padarys jums kiek pinigų!",
+        "Play": "Žaisti",
+        "Now": "Dabar"
+    },
+    "Stats": {
+        "stats-1": "Aktyvūs vartotojai",
+        "stats-2": "Pasaulių ištyrinėti",
+        "stats-3": "Prekių įsigyti"
+    },
+    "Business": {
+        "feature-1-title": "Apdovanojimai",
+        "feature-1-content": "Žvejokite, kad gautumėte ekskliuzyvių NFT ir daugybę kitų daiktų",
+        "feature-2-title": "100% Saugumas",
+        "feature-2-content": "Visos operacijos atliekamos naudojant blokų grandinės technologiją",
+        "feature-3-title": "Prekyvietė",
+        "feature-3-content": "Mainykite ir parduokite gautus NFT ir kitus daiktus MetaOcean prekyvietėje",
+        "Paragraph1": "Išleisk savo kūrybiškumą į skaitmeninius vandenis - žvejojant NFTs, galimybės neribotos kaip nesibaigiančio vandenyno!",
+        "Paragraph2": "Dalyvaukite blokų grandinės pagrindu veikiančiame žvejybos žaidime, kuriame yra visapusiška ekosistema, kurioje žaidėjai gauna atlygį už pastangas gaudant egzotiškas jūros rūšis.",
+        "Explore": "Tyrinėti"
+    },
+    "Billing": {
+        "Title1": "Mėgaukitės žaidimu ir tuo pačiu",
+        "Title2": "uždirbkite ekskliuzyvių apdovanojimų",
+        "Paragraph": "Mūsų įdomiame žaidime žaidėjai turi įspūdingą galimybę pagauti ekskliuzyvius NFT, kurie suteikia papildomų bonusų, suteikiančius didelį pranašumą žaidime. Šie skaitmeniniai žetonai gali būti pagauti žvejojant žaidime. Be to, žaidėjai gali parduoti šiuos ekskliuzyvius NFT mūsų prekybvietėje ir užsidirbti Poseidon žetonų, mūsų žaidimo kriptovaliutos."
+    },
+    "CTA": {
+        "Title": "Pirkite NFT dabar!",
+        "Paragraph": "Geriausi NFT, kurie kada nors buvo sukurti. Tobuli, gražūs, nuostabūs! Padidinkite savo statistiką ir nustebinkite kitus.",
+        "ShopNow": "Pirkti dabar!"
+    },
+    "CardDeal": {
+        "Title": "Mėnesiniai atnaujinimai",
+        "Paragraph": "Skaitykite naujausias naujienas apie MetaOcean",
+        "PatchNotes": "Pakeitimų Žinynas"
+    },
+    "Testimonials": {
+        "Title1": "Mūsų MetaOcean",
+        "Title2": "vystymo komanda",
+        "Paragraph": "GG WP GERESNĖ KOMANDA LAIMĖJO! SEKMĖS KITĄ KARTĄ, KAREIVI!"
+    },
+    "Footer": {
+        "Paragraph": "MetaOcean yra geriausias žaidimas, kurį rasite! Prašome įsigyti NFT.",
+        "Useful Links": "Naudingos nuorodos",
+        "Community": "Bendruomenė",
+        "Partner": "Partneriai",
+        "Content": "Turinys",
+        "How it Works": "Kaip tai veikia",
+        "Create": "Sukurti",
+        "Explore": "Tyrinėti",
+        "Terms & Services": "Sąlygos ir paslaugos",
+        "Help Center": "Pagalbos centras",
+        "Partners": "Partneriai",
+        "Suggestions": "Pasiūlymai",
+        "Blog": "Tinklaraštis",
+        "Newsletters": "Naujienlaiškiai",
+        "Our Partner": "Mūsų partneriai",
+        "Become a Partner": "Tapti partneriu",
+        "Rights": "2023 MetaOcean. Visos teisės saugomos."
+    }
+}
